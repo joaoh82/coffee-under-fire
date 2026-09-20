@@ -1,4 +1,12 @@
 import {
+  boardOptionsSchema,
+  DEFAULT_BOARD,
+  scoreSubmissionSchema,
+  reportPoints,
+  type BoardOptions,
+  type BoardEntry,
+} from "../../../packages/shared/leaderboard";
+import {
   AccessLimit,
   DEFAULT_PUBLIC_SETTINGS,
   type PublicSettings,
@@ -32,6 +40,10 @@ type Row = Record<string, any>;
 /** Single-process durable state. Put the database on a persistent disk in production. */
 export class Store {
   private db: DatabaseSync;
+  private boardCache = new Map<
+    string,
+    { until: number; entries: BoardEntry[] }
+  >();
   constructor(
     path: string,
     private now = Date.now,
@@ -63,6 +75,7 @@ export class Store {
         this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${name} ${definition}`);
     };
     add("sessions", "ip_key", "TEXT NOT NULL DEFAULT ''");
+    add("sessions", "board_options", "TEXT");
     add("usage", "day", "TEXT");
     add("usage", "cost", "INTEGER NOT NULL DEFAULT 0");
     add("usage", "unit_cost", "INTEGER NOT NULL DEFAULT 0");
@@ -73,6 +86,9 @@ export class Store {
       .run(this.month(), this.day(), this.unitCost(), this.unitCost());
     this.db.exec(
       "CREATE TABLE IF NOT EXISTS guests (invite_id TEXT PRIMARY KEY REFERENCES invites(id),created INTEGER NOT NULL,ip_key TEXT NOT NULL); CREATE INDEX IF NOT EXISTS usage_day ON usage(day); CREATE INDEX IF NOT EXISTS sessions_ip ON sessions(ip_key,ended); CREATE INDEX IF NOT EXISTS guests_ip ON guests(ip_key,created)",
+    );
+    this.db.exec(
+      "CREATE TABLE IF NOT EXISTS leaderboard (id TEXT PRIMARY KEY, session_id TEXT NOT NULL UNIQUE REFERENCES sessions(id), invite_id TEXT NOT NULL REFERENCES invites(id), name TEXT NOT NULL, score INTEGER NOT NULL, time REAL NOT NULL, kills INTEGER NOT NULL, deliveries INTEGER NOT NULL, map_id TEXT NOT NULL, difficulty TEXT NOT NULL, mission_mode TEXT NOT NULL, created INTEGER NOT NULL, hidden INTEGER NOT NULL DEFAULT 0); CREATE INDEX IF NOT EXISTS leaderboard_category ON leaderboard(map_id,difficulty,mission_mode,hidden,score DESC)",
     );
     this.db
       .prepare("UPDATE sessions SET ended=? WHERE ended IS NULL")
@@ -289,7 +305,8 @@ export class Store {
       .prepare("UPDATE logins SET logged_out=1 WHERE token_hash=?")
       .run(hash(token));
   }
-  startSession(id: string, inviteId: string, ipKey = "") {
+  startSession(id: string, inviteId: string, ipKey = "", board?: BoardOptions) {
+    if (board) boardOptionsSchema.parse(board);
     if (!id || id.length > 256) throw new Error("Invalid session ID");
     this.expireSessions();
     this.transaction(() => {
@@ -316,9 +333,17 @@ export class Store {
       const now = this.now();
       this.db
         .prepare(
-          "INSERT INTO sessions(id,management_id,invite_id,started,heartbeat,ip_key) VALUES(?,?,?,?,?,?)",
+          "INSERT INTO sessions(id,management_id,invite_id,started,heartbeat,ip_key,board_options) VALUES(?,?,?,?,?,?,?)",
         )
-        .run(id, hash(id), inviteId, now, now, ipKey);
+        .run(
+          id,
+          hash(id),
+          inviteId,
+          now,
+          now,
+          ipKey,
+          board ? JSON.stringify(board) : null,
+        );
     });
   }
   sessionActive(id: string): boolean {
@@ -402,6 +427,123 @@ export class Store {
         "SELECT invite_id AS inviteId,created,expires,logged_out AS loggedOut FROM logins ORDER BY created DESC LIMIT 100",
       )
       .all();
+  }
+  submitScore(
+    sessionId: string,
+    inviteId: string,
+    network: string,
+    raw: unknown,
+  ) {
+    const input = scoreSubmissionSchema.parse(raw);
+    return this.transaction(() => {
+      const session = this.db
+        .prepare("SELECT * FROM sessions WHERE id=? AND invite_id=?")
+        .get(sessionId, inviteId) as Row | undefined;
+      if (
+        !session ||
+        !this.getInvite(inviteId)?.enabled ||
+        (this.isGuest(inviteId) && session.ip_key !== network)
+      )
+        throw new Error("Score session not owned");
+      const existing = this.db
+        .prepare("SELECT id,hidden FROM leaderboard WHERE session_id=?")
+        .get(sessionId) as Row | undefined;
+      if (existing) {
+        if (existing.hidden) throw new Error("Entry removed by moderator");
+        return { id: existing.id, alreadySubmitted: true };
+      }
+      if (!session.board_options)
+        throw new Error("Start a new run to enter the leaderboard");
+      const options = boardOptionsSchema.parse(
+        JSON.parse(session.board_options),
+      );
+      const finish = session.ended ?? this.now();
+      if (session.ended === null && session.heartbeat < this.now() - 90000)
+        throw new Error("Run expired");
+      if (
+        finish < this.now() - 3600000 ||
+        this.now() - session.started < 5000 ||
+        input.report.time > (finish - session.started) / 1000 + 5
+      )
+        throw new Error("Run timing is not eligible");
+      const usage = this.db
+        .prepare(
+          "SELECT COUNT(*) AS n FROM usage WHERE session_id=? AND reported=1 AND failed=0",
+        )
+        .get(sessionId) as Row;
+      if (!usage.n)
+        throw new Error("Only runs with live Jev decisions can enter");
+      const r = input.report;
+      if (
+        (options.missionMode === "mission" && r.time > 481) ||
+        (r.won && (options.missionMode !== "mission" || r.time < 479)) ||
+        r.kills > r.time * 20 + 10 ||
+        r.deliveries > r.time / 1.2 + 1 ||
+        r.score > r.kills * 500 + r.deliveries * 1000 + r.time * 100 + 10000
+      )
+        throw new Error("Invalid run totals");
+      const total = this.db
+        .prepare("SELECT COUNT(*) AS n FROM leaderboard")
+        .get() as Row;
+      if (total.n >= 100000) throw new Error("Leaderboard is temporarily full");
+      const id = random();
+      this.db
+        .prepare(
+          "INSERT INTO leaderboard(id,session_id,invite_id,name,score,time,kills,deliveries,map_id,difficulty,mission_mode,created) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+        )
+        .run(
+          id,
+          sessionId,
+          inviteId,
+          input.name,
+          reportPoints(r),
+          r.time,
+          r.kills,
+          r.deliveries,
+          options.mapId,
+          options.difficulty,
+          options.missionMode,
+          this.now(),
+        );
+      this.db
+        .prepare("UPDATE sessions SET ended=COALESCE(ended,?) WHERE id=?")
+        .run(this.now(), sessionId);
+      this.boardCache.clear();
+      return { id, alreadySubmitted: false };
+    });
+  }
+  leaderboard(options: BoardOptions = DEFAULT_BOARD): BoardEntry[] {
+    boardOptionsSchema.parse(options);
+    const key = [options.mapId, options.difficulty, options.missionMode].join(
+      ":",
+    );
+    const cached = this.boardCache.get(key);
+    if (cached && cached.until > this.now()) return cached.entries;
+    const entries = this.db
+      .prepare(
+        `SELECT id,name,score,time,kills,deliveries,created FROM (
+      SELECT *,ROW_NUMBER() OVER(PARTITION BY invite_id ORDER BY score DESC,created ASC,id ASC) AS place
+      FROM leaderboard WHERE map_id=? AND difficulty=? AND mission_mode=? AND hidden=0
+    ) WHERE place=1 ORDER BY score DESC,created ASC,id ASC LIMIT 20`,
+      )
+      .all(
+        options.mapId,
+        options.difficulty,
+        options.missionMode,
+      ) as BoardEntry[];
+    this.boardCache.set(key, { until: this.now() + 5000, entries });
+    return entries;
+  }
+  recentScores() {
+    return this.db
+      .prepare(
+        "SELECT id,name,score,map_id AS mapId,difficulty,mission_mode AS missionMode FROM leaderboard WHERE hidden=0 ORDER BY created DESC LIMIT 100",
+      )
+      .all() as Row[];
+  }
+  hideScore(id: string) {
+    this.boardCache.clear();
+    this.db.prepare("UPDATE leaderboard SET hidden=1 WHERE id=?").run(id);
   }
   publicSettings(): PublicSettings {
     const row = this.db

@@ -1,3 +1,5 @@
+import { ReportCommunity } from "./ReportCommunity";
+import { reportPoints } from "../../../../packages/shared/leaderboard";
 import { SupportCallout } from "./SupportCallout";
 import { MAPS, type MapId } from "../game/maps";
 import { DIFFICULTIES, type Difficulty } from "../game/difficulty";
@@ -128,10 +130,12 @@ export function MissionReport({
   data,
   onRestart,
   onSave,
+  onSubmitScore,
 }: {
   data: ReportData;
   onRestart: () => void;
   onSave?: () => void;
+  onSubmitScore?: (name: string) => Promise<unknown>;
 }) {
   const seconds = Math.floor(data.time);
   const elapsed = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
@@ -176,9 +180,7 @@ export function MissionReport({
           </h1>
           <p id="report-reason">{data.reason}</p>
           <div className="report-score">
-            <strong>
-              {Math.round(data.score + data.time).toLocaleString("en-US")}
-            </strong>
+            <strong>{reportPoints(data).toLocaleString("en-US")}</strong>
             <span>points earned</span>
           </div>
         </div>
@@ -213,6 +215,15 @@ export function MissionReport({
       <p className="report-footnote">
         A fresh run. A fresh cup. Upgrades reset each mission.
       </p>
+      <ReportCommunity
+        data={data}
+        options={{
+          mapId: data.mapId ?? "woodland.v1",
+          difficulty: data.difficulty ?? "normal.v1",
+          missionMode: data.missionMode,
+        }}
+        onSubmit={onSubmitScore}
+      />
       <SupportCallout />
     </section>
   );
