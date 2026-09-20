@@ -495,6 +495,7 @@ export default function App() {
               }}
               onRestart={restart}
               onSave={save}
+              onSubmitScore={s.recording.mode === "strict" ? (name) => driver.submitScore(name) : undefined}
             />
           </div>
         )}
