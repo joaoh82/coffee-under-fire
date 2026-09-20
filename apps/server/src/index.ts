@@ -1,3 +1,8 @@
+import {
+  boardOptionsSchema,
+  DEFAULT_BOARD,
+} from "../../../packages/shared/leaderboard";
+import { leaderboardPage } from "./leaderboard-page";
 import { GuestAccess } from "./guests";
 import { AccessLimit, limitMessage } from "./public-policy";
 import { InviteAccess } from "./access";
@@ -108,6 +113,46 @@ const server = createServer(async (req, res) => {
   );
   if (production)
     res.setHeader("Strict-Transport-Security", "max-age=31536000");
+  let requestUrl: URL;
+  try {
+    requestUrl = new URL(req.url ?? "/", "http://local");
+  } catch {
+    send(400, { error: "invalid_url" });
+    return;
+  }
+  if (
+    req.method === "GET" &&
+    ["/leaderboard", "/api/leaderboard"].includes(requestUrl.pathname)
+  ) {
+    const parsed = boardOptionsSchema.safeParse({
+      ...DEFAULT_BOARD,
+      ...Object.fromEntries(requestUrl.searchParams),
+    });
+    if (!parsed.success) {
+      send(400, { error: "invalid_leaderboard_filter" });
+      return;
+    }
+    if (!store) {
+      send(503, { error: "leaderboard_unavailable" });
+      return;
+    }
+    try {
+      const entries = store.leaderboard(parsed.data);
+      if (requestUrl.pathname === "/api/leaderboard")
+        send(200, { entries, communityReported: true });
+      else {
+        res.writeHead(200, {
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Security-Policy":
+            "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+        });
+        res.end(leaderboardPage(parsed.data, entries));
+      }
+    } catch {
+      send(503, { error: "leaderboard_unavailable" });
+    }
+    return;
+  }
   try {
     if (access && (await access.handle(req, res))) return;
   } catch {
@@ -147,15 +192,68 @@ const server = createServer(async (req, res) => {
       });
       return;
     }
+    if (req.method === "POST" && req.url === "/api/leaderboard") {
+      if (!store || !invite || mode !== "strict") {
+        send(403, {
+          error: "Only hosted live Jev runs can enter the leaderboard.",
+        });
+        return;
+      }
+      if (origin !== publicOrigin) {
+        send(403, { error: "origin_denied" });
+        return;
+      }
+      let data = "";
+      for await (const chunk of req) {
+        data += chunk;
+        if (Buffer.byteLength(data) > 4096) {
+          send(413, { error: "body_too_large" });
+          return;
+        }
+      }
+      try {
+        const result = store.submitScore(
+          token,
+          invite,
+          network,
+          JSON.parse(data),
+        );
+        pipeline.close(token);
+        send(200, result);
+      } catch {
+        send(400, {
+          error:
+            "This score cannot be submitted. Check the name (1–24 letters/numbers) and use a completed live run from the past hour.",
+        });
+      }
+      return;
+    }
     if (store && token && !store.ownsSession(token, invite ?? "")) {
       send(403, { error: "session_expired_or_not_owned" });
       return;
     }
     if (req.method === "POST" && req.url === "/api/session") {
+      let options;
+      let sessionBody = "";
+      for await (const chunk of req) {
+        sessionBody += chunk;
+        if (Buffer.byteLength(sessionBody) > 4096) {
+          send(413, { error: "body_too_large" });
+          return;
+        }
+      }
+      if (sessionBody) {
+        try {
+          options = boardOptionsSchema.parse(JSON.parse(sessionBody));
+        } catch {
+          send(400, { error: "invalid_run_options" });
+          return;
+        }
+      }
       const id = pipeline.create();
       if (store) {
         try {
-          store.startSession(id, invite!, network);
+          store.startSession(id, invite!, network, options);
         } catch (e) {
           pipeline.close(id);
           if (e instanceof AccessLimit) throw e;

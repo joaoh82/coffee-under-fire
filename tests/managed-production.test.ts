@@ -1,3 +1,5 @@
+import { Store } from "../apps/server/src/store";
+import { DEFAULT_BOARD } from "../packages/shared/leaderboard";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -15,6 +17,22 @@ test("managed production binds games to invites and enforces admin revocation", 
   const origin = "https://game.example";
   const password = "production-fixture-password-12345";
   const owner = "fixture-owner-token-at-least-32-characters";
+  // Seed an explicitly synthetic completed Jev run; no provider requests occur.
+  let fixtureNow = Date.now() - 20000;
+  const fixtureStore = new Store(join(dir, "access.sqlite"), () => fixtureNow);
+  await fixtureStore.saveInvite("alice", password, 1, true);
+  fixtureStore.startSession(
+    "score-fixture-session",
+    "alice",
+    "",
+    DEFAULT_BOARD,
+  );
+  const reservationId = fixtureStore.reserveUsage("score-fixture-session", 10);
+  fixtureStore.settleUsage(reservationId, 10);
+  fixtureNow += 20000;
+  fixtureStore.endSession("score-fixture-session");
+  const fixtureLogin = fixtureStore.createLogin("alice");
+  fixtureStore.close();
   const child = spawn(
     process.execPath,
     ["--import", "tsx", "apps/server/src/index.ts"],
@@ -60,6 +78,54 @@ test("managed production binds games to invites and enforces admin revocation", 
       await new Promise((r) => setTimeout(r, 50));
     }
     assert.ok(ready);
+    assert.equal((await request("//")).status, 400);
+    assert.equal((await request("/healthz")).status, 200);
+    const publicBoard = await request("/api/leaderboard");
+    assert.equal(publicBoard.status, 200);
+    assert.deepEqual((await publicBoard.json()).entries, []);
+    assert.equal((await request("/leaderboard")).status, 200);
+    const scoreResponse = await request("/api/leaderboard", {
+      method: "POST",
+      headers: {
+        Origin: origin,
+        "Content-Type": "application/json",
+        Cookie: `coffee_access=${fixtureLogin}`,
+        Authorization: "Bearer score-fixture-session",
+      },
+      body: JSON.stringify({
+        name: "Fixture Captain",
+        report: {
+          score: 120,
+          time: 20,
+          kills: 3,
+          deliveries: 0,
+          level: 2,
+          won: false,
+        },
+      }),
+    });
+    assert.equal(scoreResponse.status, 200);
+    const publicScores = await (await request("/api/leaderboard")).json();
+    assert.equal(publicScores.entries[0].name, "Fixture Captain");
+    assert.equal(publicScores.entries[0].score, 140);
+    assert.ok(!JSON.stringify(publicScores).includes("alice"));
+    assert.ok(!JSON.stringify(publicScores).includes("score-fixture-session"));
+
+    assert.equal(
+      (await request("/api/leaderboard?difficulty=invalid")).status,
+      400,
+    );
+    assert.equal(
+      (
+        await request("/api/leaderboard", {
+          method: "POST",
+          headers: { Origin: origin, "Content-Type": "application/json" },
+          body: "{}",
+        })
+      ).status,
+      401,
+    );
+
     const alice = (
       await form("/access/login", { invite: "alice", password })
     ).headers

@@ -128,3 +128,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes and [SECURITY.
 ## Public guest play
 
 Optional signup-free guest access is controlled from `/admin`. It defaults off and requires server-validated Turnstile and a trusted network configuration. Daily Jev accounting defaults to $2 shared across guests and invited players, with a 5% reservation margin, guest/network allowances, and concurrency limits. See [public play setup and limitations](docs/deployment/public-play.md). This is a bounded public pilot, not unlimited hosting or a provider billing guarantee.
+
+## Sharing and leaderboard
+
+End-game reports include native social sharing (with X/WhatsApp/copy fallbacks) and optional public nickname submission. `/leaderboard` shows the top 20 best scores per player for each map/difficulty/mode. Rankings are explicitly community-reported, not anti-cheat verified. See [leaderboard integrity, moderation and deployment](docs/deployment/leaderboard.md).

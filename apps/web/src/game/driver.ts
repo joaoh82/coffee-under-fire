@@ -213,7 +213,11 @@ export class Driver {
     mapId: MapId = "woodland.v1",
   ) {
     mapPreset(mapId);
-    const response = await this.transport("/api/session", { method: "POST" });
+    const response = await this.transport("/api/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mapId, difficulty, missionMode }),
+    });
     const data = await response.json();
     if (!response.ok) {
       this.blockAccess(data);
@@ -239,6 +243,41 @@ export class Driver {
       missionMode,
       difficulty,
     );
+  }
+  async submitScore(name: string) {
+    if (
+      !["won", "lost"].includes(this.sim.status) ||
+      this.sim.recording.mode !== "strict"
+    )
+      throw new Error(
+        "Only completed live Jev runs can enter the leaderboard.",
+      );
+    const s = this.sim;
+    const response = await this.transport("/api/leaderboard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${s.session}`,
+      },
+      body: JSON.stringify({
+        name,
+        report: {
+          score: s.score,
+          time: s.time,
+          kills: s.kills,
+          deliveries: s.deliveries,
+          level: s.level,
+          won: s.status === "won",
+        },
+      }),
+      signal: AbortSignal.timeout(10000),
+    });
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(
+        data.error || "Unable to submit score. Please try again.",
+      );
+    return data as { id: string; alreadySubmitted: boolean };
   }
   cancel() {
     for (const c of this.pending.values()) c.abort();

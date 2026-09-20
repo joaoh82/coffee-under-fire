@@ -22,7 +22,10 @@ export default defineConfig({
   server: {
     host: "127.0.0.1",
     allowedHosts,
-    proxy: { "/api": { target: "http://127.0.0.1:8787", changeOrigin: false } },
+    proxy: {
+      "/api": { target: "http://127.0.0.1:8787", changeOrigin: false },
+      "/leaderboard": { target: "http://127.0.0.1:8787", changeOrigin: false },
+    },
   },
   build: { outDir: "../../dist/web", emptyOutDir: true },
 });
