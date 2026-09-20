@@ -19,7 +19,19 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
   const a = server.address() as { port: number };
   const origin = `http://127.0.0.1:${a.port}`;
   const owner = "test-owner-token-with-at-least-32-characters";
-  access = new ManagedAccess(store, owner, origin, () => {}, false);
+  let reconciled = 0;
+  access = new ManagedAccess(
+    store,
+    owner,
+    origin,
+    () => {},
+    false,
+    Date.now,
+    0.042,
+    () => {
+      reconciled++;
+    },
+  );
   const req = (path: string, init: RequestInit = {}) =>
     fetch(origin + path, { redirect: "manual", ...init });
   const post = (
@@ -107,6 +119,78 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
       (await req("/", { headers: { Cookie: playerCookie } })).status,
       401,
     );
+    for (const route of ["/admin/generate-password", "/admin/reset-password"]) {
+      assert.equal(
+        (await post(route, { id: "alice" }, playerCookie)).status,
+        401,
+      );
+      assert.equal(
+        (
+          await post(
+            route,
+            { id: "alice" },
+            adminCookie,
+            "https://foreign.example",
+          )
+        ).status,
+        403,
+      );
+    }
+    const generated = await post(
+      "/admin/generate-password",
+      { id: "alice", maxSessions: "3", enabled: "no" },
+      adminCookie,
+    );
+    const generatedHtml = await generated.text();
+    const draft = generatedHtml.match(
+      /id="new-password"[^>]*value="([^"]+)"/,
+    )![1];
+    assert.equal(draft.length, 24);
+    assert.match(generatedHtml, /Save the invite to apply it/);
+    assert.ok(
+      generatedHtml.indexOf("<button>Save invite") <
+        generatedHtml.indexOf('formaction="/admin/generate-password"'),
+    );
+    assert.match(generatedHtml, /name="maxSessions"[^>]*value="3"/);
+    assert.equal(
+      await store.authenticate("alice", "test-password-long-enough"),
+      true,
+    );
+    assert.equal(await store.authenticate("alice", draft), false);
+    const oldLogin = store.createLogin("alice");
+    store.startSession("active-reset-test", "alice");
+    const beforeReset = reconciled;
+    const reset = await post(
+      "/admin/reset-password",
+      { id: "alice" },
+      adminCookie,
+    );
+    const resetHtml = await reset.text();
+    const replacement = resetHtml.match(
+      /id="one-time-password"[^>]*value="([^"]+)"/,
+    )![1];
+    assert.equal(replacement.length, 24);
+    assert.notEqual(replacement, draft);
+    assert.equal(await store.authenticate("alice", replacement), true);
+    assert.equal(
+      await store.authenticate("alice", "test-password-long-enough"),
+      false,
+    );
+    assert.equal(store.identity(oldLogin), null);
+    assert.equal(store.sessionActive("active-reset-test"), false);
+    assert.equal(reconciled, beforeReset + 1);
+    assert.equal(store.getInvite("alice")?.maxSessions, 1);
+    assert.equal(store.getInvite("alice")?.enabled, true);
+    const refreshed = await (
+      await req("/admin", { headers: { Cookie: adminCookie } })
+    ).text();
+    assert.ok(!refreshed.includes(replacement));
+    assert.match(refreshed, /Reset password for alice/);
+    store.revokeInvite("alice");
+    await post("/admin/reset-password", { id: "alice" }, adminCookie);
+    assert.equal(store.getInvite("alice")?.enabled, false);
+    await post("/admin/reset-password", { id: "missing" }, adminCookie);
+    assert.equal(store.getInvite("missing"), undefined);
     await post("/admin/logout", {}, adminCookie);
     assert.equal(
       (await req("/admin", { headers: { Cookie: adminCookie } })).status,

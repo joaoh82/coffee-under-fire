@@ -231,6 +231,36 @@ export class ManagedAccess {
         res.end();
         return true;
       }
+      if (path === "/admin/generate-password") {
+        this.dashboard(
+          res,
+          "Password generated. Save the invite to apply it.",
+          null,
+          {
+            id: form.get("id") ?? "",
+            password: randomBytes(18).toString("base64url"),
+            maxSessions: form.get("maxSessions") ?? "1",
+            enabled: form.get("enabled") !== "no",
+          },
+        );
+        return true;
+      }
+      if (path === "/admin/reset-password") {
+        const id = form.get("id") ?? "";
+        const password = randomBytes(18).toString("base64url");
+        if (!this.store.getInvite(id)) {
+          this.dashboard(res, "Invite not found. No password was changed.");
+          return true;
+        }
+        await this.store.resetPassword(id, password);
+        this.reconcileGames();
+        this.dashboard(
+          res,
+          `Password reset for ${id}. Old logins and games are revoked. Copy the new password now; it is not displayed again.`,
+          password,
+        );
+        return true;
+      }
       if (path === "/admin/invite") {
         const id = form.get("id") ?? "";
         const exists = this.store.getInvite(id);
@@ -287,6 +317,7 @@ export class ManagedAccess {
     res: ServerResponse,
     notice = "",
     password: string | null = null,
+    draft = { id: "", password: "", maxSessions: "1", enabled: true },
   ) {
     const invites = this.store.listInvites();
     const sessions = this.store.activeSessions();
@@ -295,9 +326,9 @@ export class ManagedAccess {
       res,
       200,
       "Field command",
-      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label>One-time password</label><input readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Invites</small><strong>${invites.length}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section><section><small>Monthly token safety budget</small><strong>${Math.round((100 * budget.charged) / budget.cap)}% used</strong><small>${budget.charged.toLocaleString()} / ${budget.cap.toLocaleString()} tokens · ${escape(budget.month)} UTC. Includes conservative reservations, not an invoice.</small></section></div>
-    <section><h2>Create or update an invite</h2><p class="muted">Use an existing name to update it. Leave its password blank to keep it. A new invite gets a generated password when blank. Resetting a password or disabling access revokes its sessions.</p><form method="post" action="/admin/invite"><div class="grid"><div><label for="id">Invite name</label><input id="id" name="id" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" required></div><div><label for="new-password">Password (16+ characters)</label><input id="new-password" name="password" type="password" minlength="16" maxlength="256" autocomplete="new-password"></div><div><label for="maxSessions">Concurrent games</label><input id="maxSessions" name="maxSessions" type="number" min="1" max="8" value="1" required></div><div><label for="enabled">Access</label><select id="enabled" name="enabled"><option value="yes">Enabled</option><option value="no">Disabled</option></select></div></div><button>Save invite</button></form></section>
-    <section><h2>Players and usage</h2><p class="muted">Play time is estimated from visible, running-game heartbeats, not login duration or verified human activity. Usage excludes unreported provider billing.</p><div class="scroll"><table><thead><tr><th>Invite</th><th>Access / games</th><th>Logins / runs</th><th>Last login</th><th>Play time</th><th>Jev usage</th><th>Est. cost</th></tr></thead><tbody>${invites.map((i: any) => `<tr><td>${escape(i.id)}</td><td>${i.enabled ? "Enabled" : "Disabled"} · ${i.activeSessions}/${i.maxSessions}</td><td>${i.loginCount} / ${i.runs}</td><td>${date(i.lastLogin)}</td><td>${Math.round(i.activeMs / 60000)} min</td><td>${i.requests} requests<br>${Number(i.inputTokens).toLocaleString()} input tokens<br>${i.failures} failures</td><td>$${((i.inputTokens / 1e6) * this.inputRate).toFixed(4)}</td></tr>`).join("") || '<tr><td colspan="7">No invites yet. Create your first field pass above.</td></tr>'}</tbody></table></div></section>
+      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label for="one-time-password">One-time password</label><input id="one-time-password" readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Invites</small><strong>${invites.length}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section><section><small>Monthly token safety budget</small><strong>${Math.round((100 * budget.charged) / budget.cap)}% used</strong><small>${budget.charged.toLocaleString()} / ${budget.cap.toLocaleString()} tokens · ${escape(budget.month)} UTC. Includes conservative reservations, not an invoice.</small></section></div>
+    <section><h2>Create or update an invite</h2><p class="muted">Use an existing name to update it. Leave its password blank to keep it. A new invite gets a generated password when blank. Resetting a password or disabling access revokes its sessions.</p><form method="post" action="/admin/invite"><div class="grid"><div><label for="id">Invite name</label><input id="id" name="id" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" value="${escape(draft.id)}" required></div><div><label for="new-password">Password (16+ characters)</label><input id="new-password" name="password" type="${draft.password ? "text" : "password"}" value="${escape(draft.password)}" minlength="16" maxlength="256" autocomplete="new-password"></div><div><label for="maxSessions">Concurrent games</label><input id="maxSessions" name="maxSessions" type="number" min="1" max="8" value="${escape(draft.maxSessions)}" required></div><div><label for="enabled">Access</label><select id="enabled" name="enabled"><option value="yes" ${draft.enabled ? "selected" : ""}>Enabled</option><option value="no" ${!draft.enabled ? "selected" : ""}>Disabled</option></select></div></div><button>Save invite</button><button type="submit" formaction="/admin/generate-password" formnovalidate>Generate password</button></form></section>
+    <section><h2>Players and usage</h2><p class="muted">Play time is estimated from visible, running-game heartbeats, not login duration or verified human activity. Usage excludes unreported provider billing.</p><div class="scroll"><table><thead><tr><th>Invite</th><th>Access / games</th><th>Logins / runs</th><th>Last login</th><th>Play time</th><th>Jev usage</th><th>Est. cost</th><th>Password</th></tr></thead><tbody>${invites.map((i: any) => `<tr><td>${escape(i.id)}</td><td>${i.enabled ? "Enabled" : "Disabled"} · ${i.activeSessions}/${i.maxSessions}</td><td>${i.loginCount} / ${i.runs}</td><td>${date(i.lastLogin)}</td><td>${Math.round(i.activeMs / 60000)} min</td><td>${i.requests} requests<br>${Number(i.inputTokens).toLocaleString()} input tokens<br>${i.failures} failures</td><td>$${((i.inputTokens / 1e6) * this.inputRate).toFixed(4)}</td><td><form method="post" action="/admin/reset-password"><input type="hidden" name="id" value="${escape(i.id)}"><button class="danger" aria-label="Reset password for ${escape(i.id)}">Reset password</button></form><small>Signs out this player</small></td></tr>`).join("") || '<tr><td colspan="8">No invites yet. Create your first field pass above.</td></tr>'}</tbody></table></div></section>
     <section><h2>Active games</h2><div class="scroll"><table><thead><tr><th>Invite</th><th>Session</th><th>Action</th></tr></thead><tbody>${sessions.map((s: any) => `<tr><td>${escape(s.inviteId)}</td><td>${escape(s.managementId.slice(0, 12))}<br>Started ${date(s.started)}<br>Last seen ${date(s.heartbeat)}</td><td><form method="post" action="/admin/end-session"><input type="hidden" name="session" value="${escape(s.managementId)}"><button class="danger">End game</button></form></td></tr>`).join("") || '<tr><td colspan="3">No active games.</td></tr>'}</tbody></table></div></section>
     <section><h2>Recent successful logins</h2><div class="scroll"><table><thead><tr><th>Invite</th><th>Signed in</th><th>Login state</th></tr></thead><tbody>${this.store
       .recentLogins()
