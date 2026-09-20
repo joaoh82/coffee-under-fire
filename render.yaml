@@ -7,6 +7,10 @@ services:
     buildCommand: npm ci --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /healthz
+    disk:
+      name: coffee-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "24"
@@ -20,6 +24,12 @@ services:
         sync: false
       - key: PLAYTEST_INVITES
         sync: false
+      - key: ACCESS_DB_PATH
+        value: /var/data/coffee/access.sqlite
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: MONTHLY_INPUT_TOKEN_LIMIT
+        value: "100000000"
       - key: PLAYTEST_COOKIE_SECRET
         generateValue: true
       - key: VITE_SUPPORT_URL

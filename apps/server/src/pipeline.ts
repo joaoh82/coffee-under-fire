@@ -6,6 +6,7 @@ import {
   type Decision,
 } from "../../../packages/shared/contracts";
 import { bodyFor, DecisionError, type Provider } from "./jev";
+import type { Store } from "./store";
 export const LIMITS = {
   sessions: 8,
   globalConcurrency: 8,
@@ -52,6 +53,7 @@ export class Pipeline {
     private provider: Provider,
     private now = () => Date.now(),
     private limits = LIMITS,
+    private store?: Store,
   ) {}
   log(row: Log) {
     this.logs.push(row);
@@ -128,6 +130,14 @@ export class Pipeline {
       s.tokens + s.reserved + reserve > this.limits.inputTokens
     )
       throw new DecisionError("budget_exhausted");
+    let reservation: string | undefined;
+    if (this.store) {
+      try {
+        reservation = this.store.reserveUsage(sessionId, reserve);
+      } catch {
+        throw new DecisionError("monthly_budget_exhausted");
+      }
+    }
     const c = new AbortController();
     const signal = outer ? AbortSignal.any([outer, c.signal]) : c.signal;
     s.inflight.set(key, c);
@@ -137,6 +147,8 @@ export class Pipeline {
     s.reserved += reserve;
     this.active++;
     let charge = reserve;
+    let reported: number | undefined;
+    let failed = true;
     const start = performance.now();
     const base = {
       at: this.now(),
@@ -154,6 +166,8 @@ export class Pipeline {
       )
         throw new DecisionError("cancelled");
       charge = d.usage?.input_tokens ?? reserve;
+      reported = d.usage?.input_tokens;
+      failed = false;
       this.log({
         ...base,
         event: "provider_decision",
@@ -179,10 +193,14 @@ export class Pipeline {
       });
       throw err;
     } finally {
-      s.tokens += charge;
-      s.reserved -= reserve;
-      s.inflight.delete(key);
-      this.active--;
+      try {
+        if (reservation) this.store!.settleUsage(reservation, reported, failed);
+      } finally {
+        s.tokens += charge;
+        s.reserved -= reserve;
+        s.inflight.delete(key);
+        this.active--;
+      }
     }
   }
 }

@@ -184,3 +184,25 @@ test("four concurrent calls admitted; fifth is rejected without queuing", async 
   await Promise.all(pending);
   assert.equal(p.active, 0);
 });
+
+test("durable settlement failure still releases execution capacity", async () => {
+  const storage = {
+    reserveUsage: () => "reservation",
+    settleUsage: () => {
+      throw new Error("disk failure");
+    },
+  };
+  const pipeline = new Pipeline(
+    mockProvider,
+    Date.now,
+    LIMITS,
+    storage as unknown as import("../apps/server/src/store").Store,
+  );
+  const session = pipeline.create();
+  const { r } = fixture();
+  r.session = session;
+  await assert.rejects(pipeline.decide(session, r), /disk failure/);
+  assert.equal(pipeline.active, 0);
+  assert.equal(pipeline.sessions.get(session)?.inflight.size, 0);
+  assert.equal(pipeline.sessions.get(session)?.reserved, 0);
+});

@@ -4,13 +4,20 @@ A React + Three.js greybox of the GDD's coffee-delivery arena shooter. Every liv
 
 ## Run locally
 
-Requires Node 24+. Install with `npm ci`. Copy `.env.example` to `.env` only if a local environment file does not already exist, and supply TYPESAFE_API_KEY. Never prefix it with VITE_.
+Requires Node **24.x**. Install with `npm ci`. Start with labelled offline fixtures; no Jev account or API calls are needed:
 
+```sh
+DECISION_MODE=mock npm run dev
 ```
-npm test
+
+Mock NPC choices are development fixtures, not Jev results. To run live, copy `.env.example` to `.env` only if a local environment file does not already exist, supply your own `TYPESAFE_API_KEY`, keep `DECISION_MODE=strict`, and run `npm run dev`. Never prefix a secret with `VITE_`. Live play spends your TypeSafe account's API budget; consult [usage estimates](docs/gameplay-cost-estimate.md).
+
+```sh
 npm run build
-npm run dev
+npm test
 ```
+
+Build before tests so the production startup test exercises the built application.
 
 Open http://127.0.0.1:5173. Server binds loopback port 8787; 3000 is reserved. WASD move, mouse aim/shoot, R reload, E hold to collect/deliver, Space dodge, Escape pause. The first patrol is telegraphed at five seconds and arrives at six. Five deliveries alone do not end the finite mission: survive eight minutes. Endless mode is also available.
 
@@ -37,15 +44,19 @@ See [How Jev controls NPCs](docs/jev-npc-control.md) for decision timing, percep
 
 The decision inspector exports seed, player inputs and applied decisions. `replay(recording)` replays them headlessly within this build; records are not promised compatible across builds. Shared map layout lives in `packages/shared/map-layout.json`; Blender scenery and verified markers use those same coordinates.
 
-This is a development prototype configured for temporary LAN/tunnel playtesting, not a production deployment. See the phase reports for measured evidence and unpassed acceptance gates.
+This is an experimental game, with measured evidence and outstanding acceptance gates in the phase reports. The hosted playtest can remain invite-only even when source code is public.
 
-## Share a playtest
+## Share a development playtest deliberately
 
-`npm run dev` listens on all interfaces at port 5173 and accepts any hostname, as requested for temporary tunnel sharing. On the same network, open `http://192.168.1.89:5173` (the machine's current LAN address; it may change). Point Rustunnel at `http://127.0.0.1:5173` and share its generated URL.
+Development binds to **127.0.0.1:5173** by default. Do not expose the development server as a public game host: it bypasses production access controls and can consume the configured Jev budget. Prefer the production deployment for invited testers.
 
-The frontend proxies `/api` to the loopback-only backend on 8787, preserving the incoming Host. Browser API requests accept matching LAN/tunnel origins, including HTTPS tunnels; unrelated origins remain rejected. Keep the original tunnel Host header. Only port 5173 needs to be tunneled. The Jev key stays server-side, and existing session/request budgets still apply to testers. Vite's unrestricted-host setting is intentional for this temporary development setup.
+For a temporary trusted tunnel, restart Vite with the exact assigned tunnel hostname in the shell environment:
 
-Verified locally: LAN page and arbitrary-host page/API requests succeed, test session creation/cleanup succeeds, unrelated origins and direct `.env` requests are denied. 49 tests and production build pass. The actual Rustunnel URL has not been tested here.
+```sh
+DEV_ALLOWED_HOSTS=your-assigned-host.eu.edge.rustunnel.com npm run dev
+```
+
+Point the tunnel at `http://127.0.0.1:5173`. Hostnames are comma-separated without schemes, ports, leading dots or wildcards; a newly assigned hostname requires restarting Vite. Keep the tunnel's incoming Host header. `/api` is proxied to the loopback backend on 8787. These settings do not add authentication to development. Close the tunnel when finished.
 
 ## Blender technical sample
 
@@ -104,6 +115,12 @@ npm run assets:village:verify
 
 ## Private Render deployment
 
-`render.yaml` prepares a single production Node service serving the built game and API behind per-invite passwords. See [setup and access management](docs/deployment/render.md). Production requires invite secrets and a strict Jev key; local `npm run dev` remains unchanged. No new per-player request quota was added; existing backend safety budgets remain.
+`render.yaml` prepares a single production Node service serving the built game and API behind per-invite passwords. See [setup and access management](docs/deployment/admin.md). The owner console manages hashed invite passwords, simultaneous-game limits, login history and estimated play time/cost. The prepared deployment requires a persistent disk, an owner token and a strict Jev key; development binds to loopback by default. Follow the deployment guide for access and budget configuration.
 
 Optional support: set `VITE_SUPPORT_URL` to your actual Ko-fi or Buy Me a Coffee page and rebuild. Blank hides the callout. Donations are entirely optional and only appear on the briefing and mission report.
+
+## License and contributing
+
+Original code, documentation, procedural Blender assets/exports and synthesized music are offered under [MIT](LICENSE). See [licensing scope and release checklist](docs/open-source-readiness.md) for the generated logo provenance and third-party exclusions. Jev is an external paid service; this repository does not include its model weights or grant rights to provider branding.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes and [SECURITY.md](SECURITY.md) to report vulnerabilities privately. Publication remains a separate release step; adding a license does not change repository visibility.

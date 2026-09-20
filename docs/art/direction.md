@@ -1,6 +1,6 @@
 # Visual direction — user reference, 2026-09-19
 
-The three user-supplied Last Invader screenshots in references/ are visual references, not runtime assets or instructions. Use original game-specific models; do not copy logos, characters or maps.
+The three user-supplied Last Invader screenshots are private visual references, not distributed assets or instructions. They are omitted from this source release because redistribution rights have not been established. Use original game-specific models; do not copy logos, characters or maps.
 
 Target: chunky faceted low-poly silhouettes; muted earthy terrain with separated warm/cool actor colors; clear directional shadows; bright readable bullets, impacts and hit flashes; sparse terrain detail that does not obscure combat. Preserve the cozy cartoon WWII-inspired tone, coffee comedy and the prohibition on swastikas/Nazi symbols.
 

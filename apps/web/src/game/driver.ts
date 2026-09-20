@@ -119,6 +119,53 @@ export class Driver {
   accumulator = 0;
   busy = false;
   disposed = false;
+  private heartbeatTimer?: ReturnType<typeof setInterval>;
+  private heartbeatBusy = false;
+  private async heartbeat() {
+    if (this.heartbeatBusy || this.disposed) return;
+    this.heartbeatBusy = true;
+    try {
+      const terminal =
+        this.sim.status === "won" ||
+        this.sim.status === "lost" ||
+        this.sim.status === "ready";
+      const response = await this.transport(
+        terminal ? "/api/session" : "/api/heartbeat",
+        {
+          method: terminal ? "DELETE" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.sim.session}`,
+          },
+          ...(terminal
+            ? {}
+            : {
+                body: JSON.stringify({
+                  playing:
+                    this.sim.status === "running" &&
+                    (typeof document === "undefined" ||
+                      document.visibilityState === "visible"),
+                }),
+              }),
+          signal: AbortSignal.timeout(5000),
+        },
+      );
+      if (terminal || response.status === 401 || response.status === 403) {
+        clearInterval(this.heartbeatTimer);
+        if (!terminal) {
+          this.pause();
+          this.sim.status = "reconnecting";
+          this.sim.reason =
+            "Your game session ended. Return to the briefing or sign in again.";
+          this.autoRecoveryAt = Infinity;
+        }
+      }
+    } catch {
+      /* The lease expires server-side if connectivity is lost. */
+    } finally {
+      this.heartbeatBusy = false;
+    }
+  }
   recovering = false;
   async start(
     mode: "strict" | "mock",
@@ -129,7 +176,7 @@ export class Driver {
     mapPreset(mapId);
     const response = await this.transport("/api/session", { method: "POST" });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
+    if (!response.ok) throw new Error(data.message || data.error);
     if (mode === "mock" && data.mode !== "mock") {
       await this.transport("/api/session", {
         method: "DELETE",
@@ -141,6 +188,9 @@ export class Driver {
     }
     if (this.sim.mapId !== mapId)
       this.sim = new Simulation(this.sim.seed, mapId);
+    clearInterval(this.heartbeatTimer);
+    if (data.heartbeat)
+      this.heartbeatTimer = setInterval(() => void this.heartbeat(), 10_000);
     this.sim.start(
       data.mode === "mock" ? "mock" : "strict",
       data.session,
@@ -238,6 +288,7 @@ export class Driver {
   }
   async dispose() {
     this.disposed = true;
+    clearInterval(this.heartbeatTimer);
     this.recoveryGeneration++;
     this.autoRecoveryAt = Infinity;
     this.cancel();
