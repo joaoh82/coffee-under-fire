@@ -1,5 +1,6 @@
+import { generateScoreCard } from "./score-card";
 import { shareMessage, cleanShareUrl } from "./share-result";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   nicknameSchema,
   type BoardEntry,
@@ -16,6 +17,8 @@ export function ReportCommunity({
   onSubmit?: (name: string) => Promise<unknown>;
 }) {
   const [name, setName] = useState("");
+  const currentName = useRef(name);
+  currentName.current = name;
   const [nameEdited, setNameEdited] = useState(false);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
@@ -25,7 +28,7 @@ export function ReportCommunity({
   const [version, setVersion] = useState(0);
   const [sharing, setSharing] = useState(false);
   const [shareStatus, setShareStatus] = useState("");
-  const [alternatives, setAlternatives] = useState(false);
+  const [card, setCard] = useState("");
   const query = new URLSearchParams(options).toString();
   const url = cleanShareUrl(
     typeof location === "undefined" ? "" : location.origin,
@@ -59,69 +62,62 @@ export function ReportCommunity({
       .catch(() => {});
     return () => controller.abort();
   }, [Boolean(onSubmit), nameEdited]);
-  async function share() {
+  async function makeCard() {
     if (sharing) return;
-    setShareStatus("");
-    if (!navigator.share) {
-      setAlternatives(true);
-      return;
-    }
     setSharing(true);
+    setShareStatus("");
+    setCard("");
     try {
-      await navigator.share({ title: "Coffee Under Fire", text, url });
-      setShareStatus("Share sheet completed.");
+      const image = await generateScoreCard(data, name, url);
+      if (currentName.current === name) setCard(image);
+      else
+        setShareStatus("Name changed. Generate a fresh image to include it.");
     } catch (error) {
-      if (!(error instanceof DOMException && error.name === "AbortError")) {
-        setAlternatives(true);
-        setShareStatus("Choose a sharing option below.");
-      }
+      setShareStatus(
+        error instanceof Error
+          ? error.message
+          : "Could not generate image. Please try again.",
+      );
     } finally {
       setSharing(false);
     }
   }
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(`${text}\n${url}`);
-      setShareStatus("Result and game link copied.");
-    } catch {
-      setShareStatus("Copy the message below to share it.");
-      setAlternatives(true);
-    }
-  }
   return (
     <div className="report-community">
-      <section aria-label="Share your run" className="report-share">
-        <button onClick={() => void share()} disabled={sharing}>
-          Share your run ↗
-        </button>
-        <button onClick={() => void copy()}>Copy result & link</button>
-        {alternatives && (
-          <div className="share-options">
-            <a
-              href={`https://twitter.com/intent/tweet?${new URLSearchParams({ text, url })}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Share on X
-            </a>
-            <a
-              href={`https://wa.me/?${new URLSearchParams({ text: `${text} ${url}` })}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-            <label>
-              Share message
-              <textarea
-                readOnly
-                value={`${text}\n${url}`}
-                onFocus={(e) => e.currentTarget.select()}
-              />
-            </label>
-          </div>
+      <section aria-label="Share" className="report-share">
+        <h2>Share</h2>
+        <div className="share-actions">
+          <a
+            href={`https://twitter.com/intent/tweet?${new URLSearchParams({ text, url })}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <b aria-hidden="true">𝕏</b> Twitter
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?${new URLSearchParams({ url })}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <b aria-hidden="true">in</b> LinkedIn
+          </a>
+          <button onClick={() => void makeCard()} disabled={sharing}>
+            <b aria-hidden="true">▧</b>{" "}
+            {sharing ? "Generating…" : "Generate Image"}
+          </button>
+        </div>
+        {card && (
+          <figure className="score-card-preview">
+            <img src={card} alt="Your Coffee Under Fire score card" />
+            <figcaption>
+              <a href={card} download="coffee-under-fire-score.png">
+                Save PNG ↓
+              </a>
+              <span>Save the image, then attach it to your post.</span>
+            </figcaption>
+          </figure>
         )}
-        <p role="status">{shareStatus}</p>
+        {shareStatus && <p role="status">{shareStatus}</p>}
       </section>
       <section
         className="report-leaderboard"
@@ -167,6 +163,7 @@ export function ReportCommunity({
               onChange={(e) => {
                 setNameEdited(true);
                 setName(e.target.value);
+                setCard("");
               }}
               placeholder="Coffee Captain"
               autoComplete="off"

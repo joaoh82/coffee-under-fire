@@ -1,6 +1,6 @@
 # Sharing and the community leaderboard
 
-Players can share their result from the mission report. Supported browsers open the native share sheet on a button click; other browsers offer X, WhatsApp, and a copyable message/link. Cancelling native sharing does not post or copy anything. Links include only the game root, never session credentials or private query parameters. Opening a social compose page is not evidence that a post was published.
+The report has three direct sharing options: Twitter, LinkedIn, and Generate Image. Twitter opens a prefilled text/link composer; LinkedIn opens its link-sharing page (it does not accept a custom score message through this link). Neither posts automatically. Generate Image creates a 1200×630 PNG locally with the current nickname, score, deliveries, survival time, game logo, Jev callout and game address. The preview offers Save PNG; users attach the downloaded file to social posts themselves. No image-generation API or additional Jev call is used. Image generation failure shows a retryable message. Editing the name clears the old preview. Links use the clean game root, never session credentials or private query parameters.
 
 After a completed live Jev run, the player can explicitly submit a public nickname (1–40 visible characters) with their score. The game shows that the name and score are public and recommends a nickname. Guests do not need to create a password or disclose an email. Names are not unique or verified identities.
 
@@ -31,3 +31,5 @@ Guest admission offers an optional display name. It is stored in a new `invites.
 The authenticated `/api/profile` endpoint returns only the current player's ID and display name. At game over, this pre-fills the editable leaderboard name, using the full guest ID when no name exists. Submitting a valid score remembers the chosen name for subsequent runs; it does not rename older scores. Duplicate score submissions do not change the profile. Names are not unique or verified, and publishing a guest ID makes that pseudonym visible on the board (it is not an authentication credential).
 
 Admission and score submission both enforce the name policy on the server. Names support Unicode and emoji, up to 40 characters; invisible formatting, line breaks and HTML angle brackets are rejected. The browser explains public visibility before submitting a score. Name filtering makes no Jev/API calls. Owners should continue reviewing public names; this filter does not guarantee that every sexual phrase or non-English profanity will be caught.
+
+Wave announcements appear for the first 2.6 simulation seconds of each wave, including wave 1. They do not intercept controls or pause the mission, hide while paused/recovering, and respect reduced-motion preferences.
