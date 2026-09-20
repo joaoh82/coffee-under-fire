@@ -1,3 +1,4 @@
+import { publicName } from "./name-policy";
 import {
   boardOptionsSchema,
   DEFAULT_BOARD,
@@ -74,6 +75,7 @@ export class Store {
       if (!cols.some((c) => c.name === name))
         this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${name} ${definition}`);
     };
+    add("invites", "display_name", "TEXT NOT NULL DEFAULT ''");
     add("sessions", "ip_key", "TEXT NOT NULL DEFAULT ''");
     add("sessions", "board_options", "TEXT");
     add("usage", "day", "TEXT");
@@ -406,7 +408,7 @@ export class Store {
     return (
       this.db
         .prepare(
-          `SELECT i.id,i.enabled,i.max_sessions AS maxSessions,i.revision,
+          `SELECT i.id,i.display_name AS displayName,i.enabled,i.max_sessions AS maxSessions,i.revision,
       (SELECT COUNT(*) FROM logins l WHERE l.invite_id=i.id) AS loginCount,
       (SELECT MAX(created) FROM logins l WHERE l.invite_id=i.id) AS lastLogin,
       (SELECT MAX(heartbeat) FROM sessions s WHERE s.invite_id=i.id) AS lastSeen,
@@ -435,6 +437,11 @@ export class Store {
     raw: unknown,
   ) {
     const input = scoreSubmissionSchema.parse(raw);
+    // A guest may publish their own generated ID as the no-name fallback.
+    const name =
+      this.isGuest(inviteId) && input.name === inviteId
+        ? inviteId
+        : publicName(input.name);
     return this.transaction(() => {
       const session = this.db
         .prepare("SELECT * FROM sessions WHERE id=? AND invite_id=?")
@@ -495,7 +502,7 @@ export class Store {
           id,
           sessionId,
           inviteId,
-          input.name,
+          name,
           reportPoints(r),
           r.time,
           r.kills,
@@ -508,6 +515,10 @@ export class Store {
       this.db
         .prepare("UPDATE sessions SET ended=COALESCE(ended,?) WHERE id=?")
         .run(this.now(), sessionId);
+      // Remember the chosen name for future runs, but keep an ID fallback unnamed.
+      this.db
+        .prepare("UPDATE invites SET display_name=? WHERE id=?")
+        .run(name === inviteId ? "" : name, inviteId);
       this.boardCache.clear();
       return { id, alreadySubmitted: false };
     });
@@ -577,7 +588,17 @@ export class Store {
   isGuest(id: string) {
     return !!this.db.prepare("SELECT 1 FROM guests WHERE invite_id=?").get(id);
   }
-  createGuest(ipKey: string): string {
+  playerProfile(id: string) {
+    const row = this.db
+      .prepare(
+        "SELECT id,display_name AS displayName FROM invites WHERE id=? AND enabled=1",
+      )
+      .get(id) as { id: string; displayName: string } | undefined;
+    if (!row) throw new Error("Player unavailable");
+    return row;
+  }
+  createGuest(ipKey: string, displayName = ""): string {
+    const name = displayName.trim() ? publicName(displayName) : "";
     return this.transaction(() => {
       this.checkDaily(undefined, ipKey);
       if (!this.publicSettings().publicEnabled)
@@ -602,6 +623,9 @@ export class Store {
       this.db
         .prepare("INSERT INTO guests VALUES(?,?,?)")
         .run(id, this.now(), ipKey);
+      this.db
+        .prepare("UPDATE invites SET display_name=? WHERE id=?")
+        .run(name, id);
       return this.createLogin(id);
     });
   }

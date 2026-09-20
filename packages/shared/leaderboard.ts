@@ -26,12 +26,14 @@ export type ScoreReport = z.infer<typeof scoreReportSchema>;
 export const nicknameSchema = z
   .string()
   .trim()
+  .normalize()
   .min(1)
-  .max(24)
+  .max(40)
   .regex(
-    /^[\p{L}\p{N} _.'-]+$/u,
-    "Use letters, numbers, spaces, apostrophes, dots, underscores or hyphens.",
-  );
+    /^[\p{L}\p{M}\p{N}\p{P}\p{S} ]+$/u,
+    "Use visible characters without line breaks or hidden formatting.",
+  )
+  .refine((name) => !/[<>]/.test(name), "HTML is not allowed.");
 export const scoreSubmissionSchema = z
   .object({ name: nicknameSchema, report: scoreReportSchema })
   .strict();

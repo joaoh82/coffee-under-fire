@@ -105,14 +105,17 @@ test("public guest admission uses verified single-use challenge, exact origin, s
   );
   const request = (path: string, init: RequestInit = {}) =>
     fetch(origin + path, { redirect: "manual", ...init });
-  const post = (token: string, from = origin) =>
+  const post = (token: string, from = origin, displayName = "") =>
     request("/access/guest", {
       method: "POST",
       headers: {
         Origin: from,
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: new URLSearchParams({ "cf-turnstile-response": token }),
+      body: new URLSearchParams({
+        "cf-turnstile-response": token,
+        displayName,
+      }),
     });
   try {
     assert.equal((await request("/")).status, 401);
@@ -126,8 +129,15 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     assert.ok(!page.includes(config.ipSalt));
     assert.equal((await post("valid", "https://evil.example")).status, 403);
     assert.equal(calls, 0);
+    assert.match(page, /Display name \(optional\)/);
+    assert.equal((await post("valid", origin, "porn star")).status, 400);
+    assert.equal(
+      calls,
+      0,
+      "invalid names are rejected before spending a challenge",
+    );
     assert.equal((await post("bad")).status, 403);
-    const admitted = await post("valid");
+    const admitted = await post("valid", origin, "Coffee Captain");
     assert.equal(admitted.status, 303);
     const cookie = admitted.headers.get("set-cookie")!.split(";")[0];
     assert.match(
@@ -144,6 +154,7 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     );
     assert.equal((await post("valid")).status, 403);
     assert.equal(store.listInvites().length, 1);
+    assert.equal(store.listInvites()[0].displayName, "Coffee Captain");
     store.savePublicSettings({ ...store.publicSettings(), dailyCents: 0 });
     const empty = await (await request("/")).text();
     assert.match(empty, /coffee fund is empty/);

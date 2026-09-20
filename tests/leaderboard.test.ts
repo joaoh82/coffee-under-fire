@@ -40,7 +40,7 @@ test("community leaderboard binds runs, validates submissions, prevents duplicat
     );
     for (const bad of [
       { ...input, name: "<script>" },
-      { ...input, name: "x".repeat(25) },
+      { ...input, name: "x".repeat(41) },
       { ...input, report: { ...report, score: Infinity } },
       { ...input, report: { ...report, time: 1800 } },
       { ...input, report: { ...report, won: true } },
@@ -137,7 +137,7 @@ test("share text matches report points, strips private URL parts; public HTML es
     "https://coffee-under-fire.onrender.com/",
   );
   assert.equal(nicknameSchema.parse(" João 82 "), "João 82");
-  assert.equal(nicknameSchema.safeParse("https://spam").success, false);
+  assert.equal(nicknameSchema.safeParse("Café ☕!").success, true);
   const html = leaderboardPage(DEFAULT_BOARD, [
     {
       id: "public",

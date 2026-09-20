@@ -84,6 +84,14 @@ test("managed production binds games to invites and enforces admin revocation", 
     assert.equal(publicBoard.status, 200);
     assert.deepEqual((await publicBoard.json()).entries, []);
     assert.equal((await request("/leaderboard")).status, 200);
+    assert.equal((await request("/api/profile")).status, 401);
+    const profileBefore = await request("/api/profile", {
+      headers: { Cookie: `coffee_access=${fixtureLogin}` },
+    });
+    assert.deepEqual(await profileBefore.json(), {
+      id: "alice",
+      displayName: "",
+    });
     const scoreResponse = await request("/api/leaderboard", {
       method: "POST",
       headers: {
@@ -105,6 +113,13 @@ test("managed production binds games to invites and enforces admin revocation", 
       }),
     });
     assert.equal(scoreResponse.status, 200);
+    const profileAfter = await request("/api/profile", {
+      headers: { Cookie: `coffee_access=${fixtureLogin}` },
+    });
+    assert.deepEqual(await profileAfter.json(), {
+      id: "alice",
+      displayName: "Fixture Captain",
+    });
     const publicScores = await (await request("/api/leaderboard")).json();
     assert.equal(publicScores.entries[0].name, "Fixture Captain");
     assert.equal(publicScores.entries[0].score, 140);

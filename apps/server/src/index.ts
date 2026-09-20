@@ -1,3 +1,4 @@
+import { NameRejected } from "./name-policy";
 import {
   boardOptionsSchema,
   DEFAULT_BOARD,
@@ -183,6 +184,14 @@ const server = createServer(async (req, res) => {
       return;
     }
     const invite = managed?.user(req);
+    if (req.method === "GET" && req.url === "/api/profile") {
+      if (!store || !invite) {
+        send(401, { error: "login_required" });
+        return;
+      }
+      send(200, store.playerProfile(invite));
+      return;
+    }
     const guest = store && invite && store.isGuest(invite);
     const network = guest ? guests!.network(req) : "";
     if (guest && token && store!.sessionNetwork(token) !== network) {
@@ -220,10 +229,14 @@ const server = createServer(async (req, res) => {
         );
         pipeline.close(token);
         send(200, result);
-      } catch {
+      } catch (e) {
+        if (e instanceof NameRejected) {
+          send(400, { error: e.message });
+          return;
+        }
         send(400, {
           error:
-            "This score cannot be submitted. Check the name (1–24 letters/numbers) and use a completed live run from the past hour.",
+            "This score cannot be submitted. Check the name (1–40 visible characters) and use a completed live run from the past hour.",
         });
       }
       return;

@@ -16,6 +16,7 @@ export function ReportCommunity({
   onSubmit?: (name: string) => Promise<unknown>;
 }) {
   const [name, setName] = useState("");
+  const [nameEdited, setNameEdited] = useState(false);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -45,6 +46,19 @@ export function ReportCommunity({
       });
     return () => controller.abort();
   }, [query, version]);
+  useEffect(() => {
+    if (!onSubmit || nameEdited) return;
+    const controller = new AbortController();
+    void fetch("/api/profile", { signal: controller.signal })
+      .then(async (r) => {
+        if (!r.ok) return;
+        const profile = await r.json();
+        if (!controller.signal.aborted)
+          setName(profile.displayName || profile.id || "");
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, [Boolean(onSubmit), nameEdited]);
   async function share() {
     if (sharing) return;
     setShareStatus("");
@@ -121,9 +135,7 @@ export function ReportCommunity({
             if (busy || saved || !onSubmit) return;
             const parsed = nicknameSchema.safeParse(name);
             if (!parsed.success) {
-              setStatus(
-                "Choose a name of 1–24 letters or numbers; spaces and simple punctuation are allowed.",
-              );
+              setStatus("Choose a name of 1–40 visible characters.");
               return;
             }
             setBusy(true);
@@ -150,9 +162,12 @@ export function ReportCommunity({
           <div className="score-submit">
             <input
               id="leaderboard-name"
-              maxLength={24}
+              maxLength={40}
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setNameEdited(true);
+                setName(e.target.value);
+              }}
               placeholder="Coffee Captain"
               autoComplete="off"
               disabled={!onSubmit || saved || busy}
@@ -168,7 +183,8 @@ export function ReportCommunity({
           </div>
           <small>
             This name and score will be public. Use a nickname, not personal
-            information.
+            information. You can edit this name; submitting remembers it for
+            your next run. No profanity or sexual content.
           </small>
           {!onSubmit && (
             <p>Leaderboard submissions are available after a live Jev run.</p>
