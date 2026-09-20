@@ -40,7 +40,7 @@ export function SupportCallout({
           Buy the developer a coffee <span aria-hidden="true">↗</span>
         </a>
         <small>
-          Completely optional. No gameplay perks—just a grateful developer.
+          Completely optional. No gameplay perks, just a grateful developer.
         </small>
       </div>
     </aside>

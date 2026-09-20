@@ -96,7 +96,7 @@ export function Briefing({
           <strong>NPCs powered by Jev</strong>
           <p>
             A playable AI proof of concept. TypeSafe AI’s Jev model chooses the
-            tactics for every NPC—from infantry and tanks to the general. The
+            tactics for every NPC, from infantry and tanks to the general. The
             game handles movement, aiming and combat.
           </p>
           <button onClick={onShowDecisions}>See the decision dashboard</button>
@@ -211,7 +211,7 @@ export function Briefing({
           ))}
         </fieldset>
         <p className="tank-wave-note">
-          Tanks can arrive at wave 4—around three minutes in. Waves advance with
+          Tanks can arrive at wave 4, around three minutes in. Waves advance with
           time, independently of your XP level.
         </p>
       </div>

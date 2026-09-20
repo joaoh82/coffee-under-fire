@@ -168,14 +168,14 @@ export default function App() {
   const prompt =
     distance(s.player.pos, s.arena.kitchen) < 2
       ? s.cup
-        ? "Fresh coffee ready — take it to T on the map"
+        ? "Fresh coffee ready. Take it to T on the map"
         : "Hold E (or Coffee) for 0.6s to fill your cup"
       : distance(s.player.pos, s.tent) < 2 && usableCup
         ? "Hold E (or Coffee) for 0.6s to deliver"
         : usableCup
           ? "Carry your coffee to T on the map"
           : s.cup
-            ? "Coffee is cold or too low — refill at C"
+            ? "Coffee is cold or too low. Refill at C"
             : "Pick up coffee at C on the map";
   return (
     <main className={debug ? "command-open" : ""}>
@@ -263,7 +263,7 @@ export default function App() {
         </header>
         {s.mode === "mock" && (
           <div className="mode-banner">
-            Development mock — NPC choices are fixtures, not Jev
+            Development mock: NPC choices are fixtures, not Jev
           </div>
         )}
         <div className="objective">

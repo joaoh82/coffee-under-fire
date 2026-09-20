@@ -1,5 +1,5 @@
 export const SITE_URL = "https://coffee.yardsort.sh/";
-export const SITE_TITLE = "Coffee Under Fire — Free AI-Powered Browser Shooter";
+export const SITE_TITLE = "Coffee Under Fire | Free AI-Powered Browser Shooter";
 export const SITE_DESCRIPTION =
   "Survive enemy waves, deliver coffee and chase high scores in a free low-poly browser shooter. Every NPC’s tactical decisions are powered by Jev AI.";
 export const ICON_HEAD = `<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"><meta name="theme-color" content="#23382b">`;
