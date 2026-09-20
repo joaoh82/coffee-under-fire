@@ -119,6 +119,38 @@ export class Driver {
   accumulator = 0;
   busy = false;
   disposed = false;
+  accessBlock: { code: string; message: string; resetAt?: number } | null =
+    null;
+  private blockAccess(data: {
+    error?: string;
+    message?: string;
+    resetAt?: number;
+  }) {
+    if (
+      !data.error ||
+      ![
+        "daily_budget_exhausted",
+        "guest_daily_budget_exhausted",
+        "ip_daily_budget_exhausted",
+        "ip_session_limit",
+        "public_closed",
+        "public_unavailable",
+        "network_changed",
+      ].includes(data.error)
+    )
+      return;
+    this.accessBlock = {
+      code: data.error,
+      message: data.message || "Guest play is temporarily unavailable.",
+      resetAt: data.resetAt,
+    };
+    this.recoveryGeneration++;
+    this.autoRecoveryAt = Infinity;
+    this.backoff = Infinity;
+    this.sim.pause();
+    this.input = idleInput();
+    this.cancel();
+  }
   private heartbeatTimer?: ReturnType<typeof setInterval>;
   private heartbeatBusy = false;
   private async heartbeat() {
@@ -150,6 +182,13 @@ export class Driver {
           signal: AbortSignal.timeout(5000),
         },
       );
+      if (response.status === 403)
+        this.blockAccess(
+          await response
+            .clone()
+            .json()
+            .catch(() => ({})),
+        );
       if (terminal || response.status === 401 || response.status === 403) {
         clearInterval(this.heartbeatTimer);
         if (!terminal) {
@@ -176,7 +215,10 @@ export class Driver {
     mapPreset(mapId);
     const response = await this.transport("/api/session", { method: "POST" });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || data.error);
+    if (!response.ok) {
+      this.blockAccess(data);
+      throw new Error(data.message || data.error);
+    }
     if (mode === "mock" && data.mode !== "mock") {
       await this.transport("/api/session", {
         method: "DELETE",
@@ -238,7 +280,13 @@ export class Driver {
     void this.syncEpoch();
   }
   async resume() {
-    if (this.disposed || this.recovering || this.now() < this.backoff) return;
+    if (
+      this.accessBlock ||
+      this.disposed ||
+      this.recovering ||
+      this.now() < this.backoff
+    )
+      return;
     this.autoRecoveryAt = Infinity;
     this.recovering = true;
     this.sim.resume();
@@ -338,6 +386,7 @@ export class Driver {
     } else this.accumulator = 0;
   }
   schedule() {
+    if (this.accessBlock) return;
     for (const [id, c] of this.pending)
       if (!this.sim.npcs.some((n) => n.id === id && n.hp > 0)) {
         c.abort();
@@ -393,6 +442,7 @@ export class Driver {
       });
       const data = await res.json();
       if (!res.ok) {
+        this.blockAccess(data);
         this.backoff = Math.max(
           this.backoff,
           this.now() + Math.max(1000, data.retryMs || 0),

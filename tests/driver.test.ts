@@ -451,3 +451,34 @@ test("losing focus on the briefing does not invalidate a nonexistent session or 
   assert.equal(calls, 0);
   assert.equal(driver.sim.status, "ready");
 });
+
+test("daily budget denial freezes gameplay and prevents automatic decision retries", async () => {
+  let decisions = 0;
+  const driver = new Driver(async (url) => {
+    if (url === "/api/session")
+      return json({ session: "budget-fixture", mode: "mock" }, 201);
+    if (url === "/api/decision") {
+      decisions++;
+      return json(
+        {
+          error: "daily_budget_exhausted",
+          message: "The coffee fund is empty.",
+          resetAt: Date.now() + 86400000,
+        },
+        429,
+      );
+    }
+    return json({ ok: true });
+  });
+  await driver.start("mock");
+  const n = driver.sim.addNPC("rifleman", { x: 0, z: 0 });
+  await driver.decide(driver.sim.request(n), new AbortController());
+  assert.equal(driver.accessBlock?.code, "daily_budget_exhausted");
+  const tick = driver.sim.tick;
+  for (let i = 0; i < 100; i++) driver.update(1 / 60);
+  await driver.retry();
+  driver.schedule();
+  assert.equal(driver.sim.tick, tick);
+  assert.equal(decisions, 1);
+  await driver.dispose();
+});

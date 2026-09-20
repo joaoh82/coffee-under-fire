@@ -28,6 +28,14 @@ services:
         value: /var/data/coffee/access.sqlite
       - key: ADMIN_TOKEN
         generateValue: true
+      - key: TURNSTILE_SITE_KEY
+        sync: false
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: PUBLIC_IP_SALT
+        generateValue: true
+      - key: PUBLIC_IP_SOURCE
+        value: render
       - key: MONTHLY_INPUT_TOKEN_LIMIT
         value: "100000000"
       - key: PLAYTEST_COOKIE_SECRET

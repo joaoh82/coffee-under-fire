@@ -39,3 +39,7 @@ The console shows login counts, last login, runs, active games, approximate play
 Use Node 24. A local owner-console test can run on port 8787 with `ACCESS_DB_PATH`, `ADMIN_TOKEN`, `PUBLIC_ORIGIN=http://127.0.0.1:8787`, and `DECISION_MODE=mock`. `NODE_ENV` must remain development for HTTP cookies. For serving the complete game from this server, build first; production itself requires HTTPS origin and strict Jev configuration. Unit and HTTP tests use temporary databases and nonfunctional provider credentials.
 
 Run `npm run build` and `npm test`. No live Jev requests are required by those tests. The existing invitation prototype and the new managed path have separate production integration coverage.
+
+## Optional public guests
+
+The console now includes access mode, total daily USD budget, per-guest/network daily allowances and network concurrency. Defaults are invite-only, $2 total/day, $0.25/guest/day, $0.50/network/day and two concurrent guest games per network. A 5% safety margin is reserved. See [public guest deployment](public-play.md) for Turnstile, trusted IP configuration, migration and accounting limitations. Daily total applies to invited games too.

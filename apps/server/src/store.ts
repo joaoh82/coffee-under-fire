@@ -1,3 +1,8 @@
+import {
+  AccessLimit,
+  DEFAULT_PUBLIC_SETTINGS,
+  type PublicSettings,
+} from "./public-policy";
 import { DatabaseSync } from "node:sqlite";
 import { chmodSync, existsSync } from "node:fs";
 import { randomBytes, scrypt, timingSafeEqual, createHash } from "node:crypto";
@@ -31,9 +36,12 @@ export class Store {
     path: string,
     private now = Date.now,
     private monthlyCap = 100_000_000,
+    private inputRate = 0.042,
   ) {
     if (!Number.isSafeInteger(monthlyCap) || monthlyCap < 1)
       throw new Error("Monthly input token cap must be a positive integer");
+    if (!Number.isFinite(inputRate) || inputRate <= 0 || inputRate > 1000)
+      throw new Error("Invalid input token price");
     this.db = new DatabaseSync(path);
     if (path !== ":memory:") chmodSync(path, 0o600);
     this.db
@@ -47,6 +55,25 @@ export class Store {
       CREATE INDEX IF NOT EXISTS usage_month ON usage(month);
       CREATE INDEX IF NOT EXISTS usage_session ON usage(session_id);
       CREATE INDEX IF NOT EXISTS logins_invite ON logins(invite_id);`);
+    // Additive migration, preserving existing invites and usage. Legacy current-month
+    // usage is charged conservatively to migration day because its timestamps are unknown.
+    const add = (table: string, name: string, definition: string) => {
+      const cols = this.db.prepare(`PRAGMA table_info(${table})`).all();
+      if (!cols.some((c) => c.name === name))
+        this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${name} ${definition}`);
+    };
+    add("sessions", "ip_key", "TEXT NOT NULL DEFAULT ''");
+    add("usage", "day", "TEXT");
+    add("usage", "cost", "INTEGER NOT NULL DEFAULT 0");
+    add("usage", "unit_cost", "INTEGER NOT NULL DEFAULT 0");
+    this.db
+      .prepare(
+        "UPDATE usage SET day=CASE WHEN month=? THEN ? ELSE month || '-01' END,cost=tokens*?,unit_cost=? WHERE day IS NULL",
+      )
+      .run(this.month(), this.day(), this.unitCost(), this.unitCost());
+    this.db.exec(
+      "CREATE TABLE IF NOT EXISTS guests (invite_id TEXT PRIMARY KEY REFERENCES invites(id),created INTEGER NOT NULL,ip_key TEXT NOT NULL); CREATE INDEX IF NOT EXISTS usage_day ON usage(day); CREATE INDEX IF NOT EXISTS sessions_ip ON sessions(ip_key,ended); CREATE INDEX IF NOT EXISTS guests_ip ON guests(ip_key,created)",
+    );
     this.db
       .prepare("UPDATE sessions SET ended=? WHERE ended IS NULL")
       .run(this.now());
@@ -262,10 +289,11 @@ export class Store {
       .prepare("UPDATE logins SET logged_out=1 WHERE token_hash=?")
       .run(hash(token));
   }
-  startSession(id: string, inviteId: string) {
+  startSession(id: string, inviteId: string, ipKey = "") {
     if (!id || id.length > 256) throw new Error("Invalid session ID");
     this.expireSessions();
     this.transaction(() => {
+      this.checkDaily(inviteId, ipKey);
       const invite = this.getInvite(inviteId);
       if (!invite?.enabled) throw new Error("Invite unavailable");
       const row = this.db
@@ -273,14 +301,24 @@ export class Store {
           "SELECT COUNT(*) AS count FROM sessions WHERE invite_id=? AND ended IS NULL",
         )
         .get(inviteId) as Row;
-      if (row.count >= invite.maxSessions)
+      if (row.count >= (this.isGuest(inviteId) ? 1 : invite.maxSessions))
         throw new Error("Concurrent session limit reached");
+      if (this.isGuest(inviteId)) {
+        if (!ipKey) throw new AccessLimit("public_unavailable");
+        const active = this.db
+          .prepare(
+            "SELECT COUNT(*) AS n FROM sessions WHERE ip_key=? AND ended IS NULL",
+          )
+          .get(ipKey) as Row;
+        if (active.n >= this.publicSettings().ipConcurrent)
+          throw new AccessLimit("ip_session_limit");
+      }
       const now = this.now();
       this.db
         .prepare(
-          "INSERT INTO sessions(id,management_id,invite_id,started,heartbeat) VALUES(?,?,?,?,?)",
+          "INSERT INTO sessions(id,management_id,invite_id,started,heartbeat,ip_key) VALUES(?,?,?,?,?,?)",
         )
-        .run(id, hash(id), inviteId, now, now);
+        .run(id, hash(id), inviteId, now, now, ipKey);
     });
   }
   sessionActive(id: string): boolean {
@@ -353,7 +391,7 @@ export class Store {
       (SELECT COUNT(*) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id) AS requests,
       COALESCE((SELECT SUM(tokens) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id AND reported=1),0) AS inputTokens,
       COALESCE((SELECT SUM(failed) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id),0) AS failures
-      FROM invites i ORDER BY i.id`,
+      FROM invites i ORDER BY i.id LIMIT 200`,
         )
         .all() as Row[]
     ).map((row) => ({ ...row, enabled: !!row.enabled }));
@@ -364,6 +402,122 @@ export class Store {
         "SELECT invite_id AS inviteId,created,expires,logged_out AS loggedOut FROM logins ORDER BY created DESC LIMIT 100",
       )
       .all();
+  }
+  publicSettings(): PublicSettings {
+    const row = this.db
+      .prepare("SELECT value FROM metadata WHERE key='public_settings'")
+      .get() as Row | undefined;
+    return row ? JSON.parse(row.value) : { ...DEFAULT_PUBLIC_SETTINGS };
+  }
+  savePublicSettings(settings: PublicSettings) {
+    if (
+      typeof settings.publicEnabled !== "boolean" ||
+      ![settings.dailyCents, settings.guestCents, settings.ipCents].every(
+        (v) => Number.isSafeInteger(v) && v >= 0 && v <= 10000,
+      ) ||
+      !Number.isInteger(settings.ipConcurrent) ||
+      settings.ipConcurrent < 1 ||
+      settings.ipConcurrent > 8
+    )
+      throw new Error("Invalid public settings");
+    this.db
+      .prepare(
+        "INSERT INTO metadata(key,value) VALUES('public_settings',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+      )
+      .run(JSON.stringify(settings));
+    if (!settings.publicEnabled)
+      this.db
+        .prepare(
+          "UPDATE sessions SET ended=? WHERE ended IS NULL AND invite_id IN (SELECT invite_id FROM guests)",
+        )
+        .run(this.now());
+  }
+  isGuest(id: string) {
+    return !!this.db.prepare("SELECT 1 FROM guests WHERE invite_id=?").get(id);
+  }
+  createGuest(ipKey: string): string {
+    return this.transaction(() => {
+      this.checkDaily(undefined, ipKey);
+      if (!this.publicSettings().publicEnabled)
+        throw new AccessLimit("public_closed");
+      const total = this.db
+        .prepare("SELECT COUNT(*) AS n FROM guests")
+        .get() as Row;
+      const recent = this.db
+        .prepare(
+          "SELECT COUNT(*) AS n FROM guests WHERE ip_key=? AND created>=?",
+        )
+        .get(ipKey, Date.parse(this.day() + "T00:00:00Z")) as Row;
+      if (!ipKey || total.n >= 10000 || recent.n >= 4)
+        throw new AccessLimit("guest_creation_limit");
+      const id = "guest_" + randomBytes(12).toString("hex");
+      // Guests have no usable password. Secure random credential material is never returned.
+      this.db
+        .prepare(
+          "INSERT INTO invites(id,salt,password_hash,enabled,max_sessions) VALUES(?,?,?,1,1)",
+        )
+        .run(id, random(), randomBytes(64).toString("hex"));
+      this.db
+        .prepare("INSERT INTO guests VALUES(?,?,?)")
+        .run(id, this.now(), ipKey);
+      return this.createLogin(id);
+    });
+  }
+  sessionNetwork(id: string) {
+    return (
+      (
+        this.db.prepare("SELECT ip_key FROM sessions WHERE id=?").get(id) as
+          Row | undefined
+      )?.ip_key ?? ""
+    );
+  }
+  private day() {
+    return new Date(this.now()).toISOString().slice(0, 10);
+  }
+  private unitCost() {
+    return Math.ceil(this.inputRate * 1000);
+  } // nanodollars per input token
+  dailyBudget() {
+    const settings = this.publicSettings();
+    const row = this.db
+      .prepare("SELECT COALESCE(SUM(cost),0) AS cost FROM usage WHERE day=?")
+      .get(this.day()) as Row;
+    return {
+      day: this.day(),
+      chargedUsd: row.cost / 1e9,
+      limitUsd: settings.dailyCents / 100,
+      effectiveUsd: (settings.dailyCents / 100) * 0.95,
+      resetAt: Date.parse(this.day() + "T00:00:00Z") + 86400000,
+    };
+  }
+  checkDaily(inviteId?: string, ipKey = "", reserveTokens = 1) {
+    const p = this.publicSettings();
+    const budget = this.dailyBudget();
+    const cost = reserveTokens * this.unitCost();
+    if (
+      Math.round(budget.chargedUsd * 1e9) + cost >
+      p.dailyCents * 10000000 * 0.95
+    )
+      throw new AccessLimit("daily_budget_exhausted");
+    if (inviteId && this.isGuest(inviteId)) {
+      if (!p.publicEnabled) throw new AccessLimit("public_closed");
+      const usage = this.db
+        .prepare(
+          "SELECT COALESCE(SUM(u.cost),0) AS cost FROM usage u JOIN sessions s ON s.id=u.session_id WHERE u.day=? AND s.invite_id=?",
+        )
+        .get(this.day(), inviteId) as Row;
+      if (usage.cost + cost > p.guestCents * 10000000 * 0.95)
+        throw new AccessLimit("guest_daily_budget_exhausted");
+    }
+    if (ipKey) {
+      const usage = this.db
+        .prepare(
+          "SELECT COALESCE(SUM(u.cost),0) AS cost FROM usage u JOIN sessions s ON s.id=u.session_id WHERE u.day=? AND s.ip_key=?",
+        )
+        .get(this.day(), ipKey) as Row;
+      if (usage.cost + cost > p.ipCents * 10000000 * 0.95)
+        throw new AccessLimit("ip_daily_budget_exhausted");
+    }
   }
   private month() {
     return new Date(this.now()).toISOString().slice(0, 7);
@@ -382,19 +536,28 @@ export class Store {
       throw new Error("Invalid token reservation");
     return this.transaction(() => {
       const session = this.db
-        .prepare("SELECT invite_id FROM sessions WHERE id=?")
+        .prepare("SELECT invite_id,ip_key FROM sessions WHERE id=?")
         .get(sessionId) as Row | undefined;
       if (!session || !this.ownsSession(sessionId, session.invite_id))
         throw new Error("Session unavailable");
+      this.checkDaily(session.invite_id, session.ip_key, reserveTokens);
       const budget = this.budget();
       if (budget.charged + reserveTokens > budget.cap)
         throw new Error("Monthly token budget exhausted");
       const id = random();
       this.db
         .prepare(
-          "INSERT INTO usage(id,session_id,month,tokens) VALUES(?,?,?,?)",
+          "INSERT INTO usage(id,session_id,month,tokens,day,cost,unit_cost) VALUES(?,?,?,?,?,?,?)",
         )
-        .run(id, sessionId, budget.month, reserveTokens);
+        .run(
+          id,
+          sessionId,
+          budget.month,
+          reserveTokens,
+          this.day(),
+          reserveTokens * this.unitCost(),
+          this.unitCost(),
+        );
       return id;
     });
   }
@@ -406,9 +569,11 @@ export class Store {
       throw new Error("Invalid reported usage");
     this.db
       .prepare(
-        "UPDATE usage SET tokens=COALESCE(?,tokens),settled=1,reported=?,failed=? WHERE id=? AND settled=0",
+        "UPDATE usage SET tokens=COALESCE(?,tokens),cost=CASE WHEN ? IS NULL THEN cost ELSE ?*unit_cost END,settled=1,reported=?,failed=? WHERE id=? AND settled=0",
       )
       .run(
+        actualInputTokens ?? null,
+        actualInputTokens ?? null,
         actualInputTokens ?? null,
         Number(actualInputTokens !== undefined),
         Number(failed),
