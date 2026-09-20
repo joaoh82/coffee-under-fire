@@ -122,7 +122,7 @@ export function ReportCommunity({
         aria-labelledby="leaderboard-title"
       >
         <h2 id="leaderboard-title">Field honours</h2>
-        <p>Your best score for this map, difficulty and mode.</p>
+        <p>Highest score per nickname for this map, difficulty and mode.</p>
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -138,7 +138,7 @@ export function ReportCommunity({
               await onSubmit(parsed.data);
               setSaved(true);
               setStatus(
-                "Score submitted. The leaderboard shows your best eligible run.",
+                "Score submitted. The leaderboard shows the highest eligible score for this nickname.",
               );
               setVersion((v) => v + 1);
             } catch (err) {

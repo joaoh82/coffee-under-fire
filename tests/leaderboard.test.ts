@@ -1,3 +1,4 @@
+import { DatabaseSync } from "node:sqlite";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, rmSync } from "node:fs";
@@ -152,4 +153,85 @@ test("share text matches report points, strips private URL parts; public HTML es
   assert.ok(!html.includes("<script>"));
   assert.match(html, /&lt;script&gt;/);
   assert.match(html, /not anti-cheat verified/);
+});
+
+test("nickname ranking keeps the best score across identities with case and spacing normalization", async () => {
+  let now = Date.now();
+  const store = new Store(":memory:", () => now);
+  try {
+    await store.saveInvite("alice", "fixture-password-long", 1, true);
+    await store.saveInvite("bob", "fixture-password-long", 1, true);
+    const submit = (
+      session: string,
+      player: string,
+      name: string,
+      score: number,
+    ) => {
+      store.startSession(session, player, "", DEFAULT_BOARD);
+      const usage = store.reserveUsage(session, 10);
+      store.settleUsage(usage, 10);
+      now += 20000;
+      store.endSession(session);
+      return store.submitScore(session, player, "", {
+        name,
+        report: { ...report, score },
+      });
+    };
+    const first = submit("name1", "alice", "Coffee Captain", 200);
+    submit("name2", "bob", "coffee  captain", 100);
+    assert.equal(store.leaderboard().length, 1);
+    assert.equal(store.leaderboard()[0].id, first.id);
+    const best = submit("name3", "bob", "COFFEE CAPTAIN", 300);
+    assert.equal(store.leaderboard().length, 1);
+    assert.equal(store.leaderboard()[0].score, 320);
+    submit("name4", "alice", "Coffee Captain", 300);
+    assert.equal(store.leaderboard()[0].id, best.id, "ties retain earlier run");
+    store.hideScore(best.id);
+    assert.equal(store.leaderboard().length, 1);
+    assert.equal(store.leaderboard()[0].name, "Coffee Captain");
+  } finally {
+    store.close();
+  }
+});
+
+test("existing leaderboard rows are backfilled and deduplicated after migration", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "coffee-ranking-migration-"));
+  const path = join(dir, "scores.sqlite");
+  let now = Date.now();
+  let store = new Store(path, () => now);
+  try {
+    for (const [player, name, score] of [
+      ["alice", "Café Captain", 100],
+      ["bob", "CAFÉ CAPTAIN", 200],
+    ] as const) {
+      await store.saveInvite(player, "fixture-password-long", 1, true);
+      store.startSession(player, player, "", DEFAULT_BOARD);
+      const usage = store.reserveUsage(player, 10);
+      store.settleUsage(usage, 10);
+      now += 20000;
+      store.endSession(player);
+      store.submitScore(player, player, "", {
+        name,
+        report: { ...report, score },
+      });
+    }
+    store.close();
+    const legacy = new DatabaseSync(path);
+    legacy.exec(
+      "DROP INDEX leaderboard_name_category; ALTER TABLE leaderboard DROP COLUMN name_key",
+    );
+    legacy.close();
+    store = new Store(path, () => now);
+    assert.equal(store.leaderboard().length, 1);
+    assert.equal(store.leaderboard()[0].score, 220);
+    assert.equal(store.leaderboard()[0].name, "CAFÉ CAPTAIN");
+    assert.equal(
+      store.recentScores().length,
+      2,
+      "migration preserves moderation history",
+    );
+  } finally {
+    store.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
