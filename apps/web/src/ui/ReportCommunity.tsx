@@ -1,5 +1,5 @@
 import { generateScoreCard } from "./score-card";
-import { shareMessage, cleanShareUrl } from "./share-result";
+import { shareMessage, GAME_URL } from "./share-result";
 import { useEffect, useRef, useState } from "react";
 import {
   nicknameSchema,
@@ -30,9 +30,7 @@ export function ReportCommunity({
   const [shareStatus, setShareStatus] = useState("");
   const [card, setCard] = useState("");
   const query = new URLSearchParams(options).toString();
-  const url = cleanShareUrl(
-    typeof location === "undefined" ? "" : location.origin,
-  );
+  const url = GAME_URL;
   const text = shareMessage(data);
   useEffect(() => {
     const controller = new AbortController();

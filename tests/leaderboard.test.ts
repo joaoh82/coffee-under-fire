@@ -134,7 +134,7 @@ test("share text matches report points, strips private URL parts; public HTML es
   );
   assert.equal(
     cleanShareUrl("http://127.0.0.1:5173"),
-    "https://coffee-under-fire.onrender.com/",
+    "https://coffee.yardsort.sh/",
   );
   assert.equal(nicknameSchema.parse(" João 82 "), "João 82");
   assert.equal(nicknameSchema.safeParse("Café ☕!").success, true);
