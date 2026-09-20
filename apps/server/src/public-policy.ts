@@ -18,6 +18,12 @@ export class AccessLimit extends Error {
   }
 }
 export function limitMessage(code: string) {
+  if (code === "guest_daily_creation_limit")
+    return "This network has created its four new guest profiles for today. Private windows, different browsers and cleared cookies can count as new guests. Use a browser with an existing guest login, sign in with an invite, or try again after midnight UTC. The reset time is shown below.";
+  if (code === "guest_retry_limit")
+    return "Too many guest sign-in attempts right now. Please wait one minute before trying again.";
+  if (code === "guest_capacity_limit")
+    return "Guest registration is full for now. Use an existing guest login or sign in with an invite.";
   if (code === "daily_budget_exhausted")
     return "The general’s coffee fund is empty for today. We’ve reached today’s AI gameplay budget. Free play returns after midnight UTC.";
   if (code === "guest_daily_budget_exhausted")

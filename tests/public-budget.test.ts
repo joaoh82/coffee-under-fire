@@ -40,7 +40,7 @@ test("guest and network concurrency, repeated IDs, daily allowances and global i
     // Clearing cookies cannot clear shared network spending.
     const d = store.identity(store.createGuest("network-a"))!;
     assert.ok(d !== a);
-    assert.throws(() => store.createGuest("network-a"), /guest_creation_limit/);
+    assert.throws(() => store.createGuest("network-a"), /guest_daily_creation_limit/);
     await store.saveInvite("owner-player", "a-long-test-password", 1, true);
     store.startSession("owner-game", "owner-player");
     const reservation = store.reserveUsage("owner-game", 1400000);
@@ -153,5 +153,22 @@ test("legacy usage migration charges current month conservatively, excludes olde
   } finally {
     store.close();
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("new guest profile limit resets at midnight UTC without invalidating existing logins", () => {
+  let now = Date.UTC(2026, 8, 20, 23, 59, 59);
+  const store = new Store(":memory:", () => now);
+  try {
+    open(store);
+    const token = store.createGuest("same-network");
+    for (let i = 0; i < 3; i++) store.createGuest("same-network");
+    assert.throws(() => store.createGuest("same-network"), /guest_daily_creation_limit/);
+    assert.ok(store.identity(token));
+    now += 1000;
+    assert.ok(store.createGuest("same-network"));
+    assert.ok(store.identity(token));
+  } finally {
+    store.close();
   }
 });
