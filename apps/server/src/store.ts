@@ -1,6 +1,7 @@
 import { publicName } from "./name-policy";
 import {
   boardOptionsSchema,
+  leaderboardNameKey,
   DEFAULT_BOARD,
   scoreSubmissionSchema,
   reportPoints,
@@ -91,6 +92,20 @@ export class Store {
     );
     this.db.exec(
       "CREATE TABLE IF NOT EXISTS leaderboard (id TEXT PRIMARY KEY, session_id TEXT NOT NULL UNIQUE REFERENCES sessions(id), invite_id TEXT NOT NULL REFERENCES invites(id), name TEXT NOT NULL, score INTEGER NOT NULL, time REAL NOT NULL, kills INTEGER NOT NULL, deliveries INTEGER NOT NULL, map_id TEXT NOT NULL, difficulty TEXT NOT NULL, mission_mode TEXT NOT NULL, created INTEGER NOT NULL, hidden INTEGER NOT NULL DEFAULT 0); CREATE INDEX IF NOT EXISTS leaderboard_category ON leaderboard(map_id,difficulty,mission_mode,hidden,score DESC)",
+    );
+    add("leaderboard", "name_key", "TEXT");
+    this.transaction(() => {
+      const update = this.db.prepare(
+        "UPDATE leaderboard SET name_key=? WHERE id=?",
+      );
+      for (const row of this.db
+        .prepare("SELECT id,name FROM leaderboard WHERE name_key IS NULL")
+        .all()) {
+        update.run(leaderboardNameKey(String(row.name)), row.id);
+      }
+    });
+    this.db.exec(
+      "CREATE INDEX IF NOT EXISTS leaderboard_name_category ON leaderboard(map_id,difficulty,mission_mode,hidden,name_key,score DESC)",
     );
     this.db
       .prepare("UPDATE sessions SET ended=? WHERE ended IS NULL")
@@ -496,7 +511,7 @@ export class Store {
       const id = random();
       this.db
         .prepare(
-          "INSERT INTO leaderboard(id,session_id,invite_id,name,score,time,kills,deliveries,map_id,difficulty,mission_mode,created) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO leaderboard(id,session_id,invite_id,name,score,time,kills,deliveries,map_id,difficulty,mission_mode,created,name_key) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
         )
         .run(
           id,
@@ -511,6 +526,7 @@ export class Store {
           options.difficulty,
           options.missionMode,
           this.now(),
+          leaderboardNameKey(name),
         );
       this.db
         .prepare("UPDATE sessions SET ended=COALESCE(ended,?) WHERE id=?")
@@ -533,7 +549,7 @@ export class Store {
     const entries = this.db
       .prepare(
         `SELECT id,name,score,time,kills,deliveries,created FROM (
-      SELECT *,ROW_NUMBER() OVER(PARTITION BY invite_id ORDER BY score DESC,created ASC,id ASC) AS place
+      SELECT *,ROW_NUMBER() OVER(PARTITION BY name_key ORDER BY score DESC,created ASC,id ASC) AS place
       FROM leaderboard WHERE map_id=? AND difficulty=? AND mission_mode=? AND hidden=0
     ) WHERE place=1 ORDER BY score DESC,created ASC,id ASC LIMIT 20`,
       )

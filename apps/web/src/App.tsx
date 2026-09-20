@@ -187,7 +187,9 @@ export default function App() {
           onSave={save}
         />
       )}
-      <section className="battlefield">
+      <section
+        className={`battlefield${s.status === "running" && !driver.recovering ? " mouse-aim" : ""}`}
+      >
         <World driver={driver} />
         <WaveAnnouncement
           wave={s.wave}

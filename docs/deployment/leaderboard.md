@@ -4,7 +4,7 @@ The report has three direct sharing options: Twitter, LinkedIn, and Generate Ima
 
 After a completed live Jev run, the player can explicitly submit a public nickname (1–40 visible characters) with their score. The game shows that the name and score are public and recommends a nickname. Guests do not need to create a password or disclose an email. Names are not unique or verified identities.
 
-`/leaderboard` and `GET /api/leaderboard` are public and filter by map, difficulty and mission/endless mode. They show the top 20, using each player identity's best run for that category. The report shows the first five. Points match the report: rounded base score plus survival seconds. Ties sort by submission time, then entry ID. Public records exclude invite IDs, network identifiers, login data and session tokens. A five-second cache is bounded to 12 category combinations and invalidated on submission/moderation.
+`/leaderboard` and `GET /api/leaderboard` are public and filter by map, difficulty and mission/endless mode. They show the top 20, using each normalized nickname's best run for that category. The report shows the first five. Points match the report: rounded base score plus survival seconds. Ties sort by submission time, then entry ID. Public records exclude invite IDs, network identifiers, login data and session tokens. A five-second cache is bounded to 12 category combinations and invalidated on submission/moderation.
 
 ## Integrity and limitations
 
@@ -12,7 +12,7 @@ This is explicitly a **community, browser-reported leaderboard, not an anti-chea
 
 The server records map/difficulty/mode at session creation. Submissions require strict live mode, a valid guest/invite login, ownership of the game session, matching network for guests, at least one successfully recorded Jev decision, and bounded timing/statistics. The submission window is one hour after the run ends. Runs created before the feature deploy cannot submit because they lack bound category metadata. Mock/replay/visual fixtures do not rank.
 
-One immutable submission is allowed per session. Retrying returns the existing entry without changing the name or score. A submitted run ends its game session. Existing daily Jev budgets and game limits still apply; leaderboard reads and posts do not call Jev. Anonymous users can change identities, so “best per player” means the server's guest/invite identity, not a verified person.
+One immutable submission is allowed per session. Retrying returns the existing entry without changing the name or score. A submitted run ends its game session. Existing daily Jev budgets and game limits still apply; leaderboard reads and posts do not call Jev. Anonymous users can change identities, so nicknames are not ownership claims or verified identities.
 
 ## Moderation and persistence
 
@@ -35,3 +35,9 @@ Admission and score submission both enforce the name policy on the server. Names
 Wave announcements appear for the first 2.6 simulation seconds of each wave, including wave 1. They do not intercept controls or pause the mission, hide while paused/recovering, and respect reduced-motion preferences.
 
 Canonical public URL: https://coffee.yardsort.sh/. All social links and score cards use it, even from a local preview or the Render hostname. Add this custom domain in Render and add `coffee.yardsort.sh` to the Turnstile widget hostnames. The Blueprint sets `PUBLIC_ORIGIN=https://coffee.yardsort.sh` (without a trailing slash); sync and deploy it before signing in on the custom domain. Existing Render-host cookies do not carry over, so sign in again on the custom domain.
+
+## Nickname ranking and desktop aiming
+
+Each map/difficulty/mode board shows only the highest visible score per nickname, across guest and invite identities. Nicknames are grouped after Unicode NFKC normalization, trimming/collapsing whitespace and lowercasing. The winning entry retains its original spelling. Ties keep the earliest submission. Existing rows are backfilled automatically; run history is retained for moderation, so removing a winning entry can reveal the next best run. Choosing another person’s nickname does not grant access to their account; these public names remain unverified.
+
+Desktop mouse players get a high-contrast crosshair cursor over the battlefield while gameplay runs. The hotspot is centered on the pointer; menu controls retain normal cursors and touch devices do not show it. No aiming or combat rules change.

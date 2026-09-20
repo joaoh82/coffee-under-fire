@@ -49,3 +49,7 @@ export type BoardEntry = {
   deliveries: number;
   created: number;
 };
+
+export function leaderboardNameKey(name: string) {
+  return name.normalize("NFKC").trim().replace(/\s+/gu, " ").toLowerCase();
+}
