@@ -1,6 +1,6 @@
 # Open-source release preparation
 
-Prepared 2026-09-20. The repository remains private until the owner explicitly publishes it. GitHub dependency vulnerability alerts were enabled and verified with HTTP 204 on 2026-09-20. Other GitHub security settings and production credentials have not been changed.
+Prepared 2026-09-20. The repository remains private until the owner explicitly publishes it. GitHub dependency vulnerability alerts were enabled and verified with HTTP 204 on 2026-09-20. Main branch protection was subsequently applied and verified. See the [latest release security check](security-audit-2026-09-20.md) for credential scan results, live exposure checks and remaining limitations. Production credentials have not been changed.
 
 ## Licensing scope and provenance
 
@@ -30,7 +30,7 @@ The root MIT license covers project-authored source code, documentation, procedu
 4. **Usage controls:** verify durable overall budget enforcement across service restarts and per-invite usage attribution. Report costs as estimates from returned usage; cancellations may lack complete billing information. Define an operator budget before opening the hosted service to a broader audience.
 5. **GitHub settings:** enable secret scanning and push protection where available; enable private vulnerability reporting, dependency alerts and appropriate default-branch protection. Availability and effective settings must be verified in GitHub, not inferred from files in this repository.
 6. **Distribution:** confirm all shipped assets have the documented provenance, preserve third-party dependency notices, and rerun the build and offline tests on the exact release commit.
-7. **Visibility:** change repository visibility only after the gates above are complete. Public source does not require public hosted access: keep the hosted playtest invite-only and require self-hosters to supply their own keys.
+7. **Visibility:** change repository visibility only after the gates above are complete. Public source does not require unrestricted hosted access. Public guest play uses server-side authentication and spending controls; self-hosters must supply their own keys.
 
 No legal ownership or exclusivity determination is made here; the licensing statement grants the maintainer's rights and excludes third-party material.
 
