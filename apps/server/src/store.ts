@@ -169,6 +169,25 @@ export class Store {
       }
     });
   }
+  async resetPassword(id: string, password: string) {
+    if (!validId(id) || !validPassword(password))
+      throw new Error("Invalid password reset");
+    const salt = random();
+    const key = (await derive(password, salt)).toString("hex");
+    this.transaction(() => {
+      if (!this.getInvite(id)) throw new Error("Invite not found");
+      this.db
+        .prepare(
+          "UPDATE invites SET salt=?,password_hash=?,revision=revision+1 WHERE id=?",
+        )
+        .run(salt, key, id);
+      this.db
+        .prepare(
+          "UPDATE sessions SET ended=? WHERE invite_id=? AND ended IS NULL",
+        )
+        .run(this.now(), id);
+    });
+  }
   revokeInvite(id: string) {
     this.transaction(() => {
       this.db
