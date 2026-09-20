@@ -1,3 +1,4 @@
+import { AccessLimit } from "./public-policy";
 import { randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
 import {
@@ -134,7 +135,8 @@ export class Pipeline {
     if (this.store) {
       try {
         reservation = this.store.reserveUsage(sessionId, reserve);
-      } catch {
+      } catch (e) {
+        if (e instanceof AccessLimit) throw e;
         throw new DecisionError("monthly_budget_exhausted");
       }
     }

@@ -124,3 +124,7 @@ Optional support: set `VITE_SUPPORT_URL` to your actual Ko-fi or Buy Me a Coffee
 Original code, documentation, procedural Blender assets/exports and synthesized music are offered under [MIT](LICENSE). See [licensing scope and release checklist](docs/open-source-readiness.md) for the generated logo provenance and third-party exclusions. Jev is an external paid service; this repository does not include its model weights or grant rights to provider branding.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes and [SECURITY.md](SECURITY.md) to report vulnerabilities privately. Publication remains a separate release step; adding a license does not change repository visibility.
+
+## Public guest play
+
+Optional signup-free guest access is controlled from `/admin`. It defaults off and requires server-validated Turnstile and a trusted network configuration. Daily Jev accounting defaults to $2 shared across guests and invited players, with a 5% reservation margin, guest/network allowances, and concurrency limits. See [public play setup and limitations](docs/deployment/public-play.md). This is a bounded public pilot, not unlimited hosting or a provider billing guarantee.

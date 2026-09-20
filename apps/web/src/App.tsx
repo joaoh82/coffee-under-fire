@@ -1,3 +1,4 @@
+import { AccessBudgetNotice } from "./ui/AccessBudgetNotice";
 import { MAPS, type MapId } from "./game/maps";
 import { DIFFICULTIES, type Difficulty } from "./game/difficulty";
 // @refresh reset
@@ -177,6 +178,14 @@ export default function App() {
             : "Pick up coffee at C on the map";
   return (
     <main className={debug ? "command-open" : ""}>
+      {driver.accessBlock && (
+        <AccessBudgetNotice
+          block={driver.accessBlock}
+          score={Math.floor(s.score)}
+          onLeave={restart}
+          onSave={save}
+        />
+      )}
       <section className="battlefield">
         <World driver={driver} />
         <div

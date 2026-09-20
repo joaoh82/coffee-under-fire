@@ -1,3 +1,5 @@
+import { GuestAccess } from "./guests";
+import { AccessLimit, limitMessage } from "./public-policy";
 import { InviteAccess } from "./access";
 import { Store } from "./store";
 import { ManagedAccess } from "./admin";
@@ -24,6 +26,7 @@ if (dbPath) {
     dbPath,
     Date.now,
     Number(process.env.MONTHLY_INPUT_TOKEN_LIMIT || 100_000_000),
+    Number(process.env.JEV_INPUT_USD_PER_MILLION || 0.042),
   );
   await store.importInvites(process.env.PLAYTEST_INVITES || "{}");
 }
@@ -50,6 +53,17 @@ const reconcileGames = () => {
   for (const id of pipeline.sessions.keys())
     if (!store.sessionActive(id)) pipeline.close(id);
 };
+const guests = store
+  ? new GuestAccess(store, {
+      siteKey: process.env.TURNSTILE_SITE_KEY || "",
+      secretKey: process.env.TURNSTILE_SECRET_KEY || "",
+      ipSalt: process.env.PUBLIC_IP_SALT || "",
+      ipSource: process.env.PUBLIC_IP_SOURCE === "render" ? "render" : "socket",
+      render: process.env.RENDER === "true",
+      origin: publicOrigin,
+      production,
+    })
+  : undefined;
 const managed = store
   ? new ManagedAccess(
       store,
@@ -60,6 +74,7 @@ const managed = store
       Date.now,
       Number(process.env.JEV_INPUT_USD_PER_MILLION || 0.042),
       reconcileGames,
+      guests,
     )
   : null;
 const access =
@@ -123,6 +138,15 @@ const server = createServer(async (req, res) => {
       return;
     }
     const invite = managed?.user(req);
+    const guest = store && invite && store.isGuest(invite);
+    const network = guest ? guests!.network(req) : "";
+    if (guest && token && store!.sessionNetwork(token) !== network) {
+      send(403, {
+        error: "network_changed",
+        message: "Your network changed. Close this game and start a new run.",
+      });
+      return;
+    }
     if (store && token && !store.ownsSession(token, invite ?? "")) {
       send(403, { error: "session_expired_or_not_owned" });
       return;
@@ -131,9 +155,10 @@ const server = createServer(async (req, res) => {
       const id = pipeline.create();
       if (store) {
         try {
-          store.startSession(id, invite!);
-        } catch {
+          store.startSession(id, invite!, network);
+        } catch (e) {
           pipeline.close(id);
+          if (e instanceof AccessLimit) throw e;
           send(409, {
             error: "invite_session_limit",
             message:
@@ -197,6 +222,16 @@ const server = createServer(async (req, res) => {
     }
     send(404, { error: "not_found" });
   } catch (e) {
+    if (e instanceof AccessLimit) {
+      send(429, {
+        error: e.code,
+        message: limitMessage(e.code),
+        resetAt: e.code.endsWith("daily_budget_exhausted")
+          ? store?.dailyBudget().resetAt
+          : undefined,
+      });
+      return;
+    }
     const err =
       e instanceof DecisionError ? e : new DecisionError("internal_error");
     if (err.retryMs)
