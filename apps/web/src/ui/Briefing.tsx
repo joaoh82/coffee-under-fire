@@ -1,3 +1,4 @@
+import { GitHubLink } from "./GitHubLink";
 import { SupportCallout } from "./SupportCallout";
 import { MAPS, type MapId } from "../game/maps";
 import { DIFFICULTIES, type Difficulty } from "../game/difficulty";
@@ -99,7 +100,10 @@ export function Briefing({
             tactics for every NPC, from infantry and tanks to the general. The
             game handles movement, aiming and combat.
           </p>
-          <button onClick={onShowDecisions}>See the decision dashboard</button>
+          <div className="brief-project-links">
+            <button onClick={onShowDecisions}>See the decision dashboard</button>
+            <GitHubLink />
+          </div>
         </div>
       </aside>
       <div className="brief-choices">

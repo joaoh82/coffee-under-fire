@@ -1,3 +1,4 @@
+import { GitHubLink } from "./GitHubLink";
 import { ReportCommunity } from "./ReportCommunity";
 import { reportPoints } from "../../../../packages/shared/leaderboard";
 import { SupportCallout } from "./SupportCallout";
@@ -214,6 +215,7 @@ export function MissionReport({
       </div>
       <p className="report-footnote">
         A fresh run. A fresh cup. Upgrades reset each mission.
+        {" "}<GitHubLink />
       </p>
       <ReportCommunity
         data={data}
