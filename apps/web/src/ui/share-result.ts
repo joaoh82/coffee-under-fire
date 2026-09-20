@@ -1,4 +1,5 @@
 import { reportPoints } from "../../../../packages/shared/leaderboard";
+export const GAME_URL = "https://coffee.yardsort.sh/";
 export function shareMessage(data: {
   score: number;
   time: number;
@@ -15,5 +16,5 @@ export function cleanShareUrl(origin: string) {
     )
       return new URL("/", url.origin).href;
   } catch {}
-  return "https://coffee-under-fire.onrender.com/";
+  return GAME_URL;
 }

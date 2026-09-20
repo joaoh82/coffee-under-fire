@@ -1,3 +1,4 @@
+import { WaveAnnouncement } from "./ui/WaveAnnouncement";
 import { AccessBudgetNotice } from "./ui/AccessBudgetNotice";
 import { MAPS, type MapId } from "./game/maps";
 import { DIFFICULTIES, type Difficulty } from "./game/difficulty";
@@ -188,6 +189,11 @@ export default function App() {
       )}
       <section className="battlefield">
         <World driver={driver} />
+        <WaveAnnouncement
+          wave={s.wave}
+          time={s.time}
+          running={s.status === "running" && !driver.recovering}
+        />
         <div
           className="fps-counter"
           title="Rendered frames per second and average frame interval over the last half-second"
@@ -495,7 +501,11 @@ export default function App() {
               }}
               onRestart={restart}
               onSave={save}
-              onSubmitScore={s.recording.mode === "strict" ? (name) => driver.submitScore(name) : undefined}
+              onSubmitScore={
+                s.recording.mode === "strict"
+                  ? (name) => driver.submitScore(name)
+                  : undefined
+              }
             />
           </div>
         )}

@@ -16,6 +16,8 @@ services:
         value: "24"
       - key: NODE_ENV
         value: production
+      - key: PUBLIC_ORIGIN
+        value: https://coffee.yardsort.sh
       - key: DECISION_MODE
         value: strict
       - key: JEV_MODEL
