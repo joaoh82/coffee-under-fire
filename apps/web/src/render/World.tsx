@@ -37,7 +37,8 @@ function Actor({ driver, index }: { driver: Driver; index: number }) {
   const right = useRef<THREE.Group>(null!);
   const cup = useRef<THREE.Group>(null!);
   const gun = useRef<THREE.Group>(null!);
-  const previousId = useRef("");
+  const previousActor = useRef<object | null>(null);
+  const previousSim = useRef(driver.sim);
   const lastHp = useRef(100);
   const flashUntil = useRef(-1);
   const health = useRef<THREE.Group>(null!);
@@ -61,9 +62,10 @@ function Actor({ driver, index }: { driver: Driver; index: number }) {
       Math.sin(a.angle - group.current.rotation.y),
       Math.cos(a.angle - group.current.rotation.y),
     );
-    if (previousId.current !== a.id) {
+    if (previousSim.current !== s || previousActor.current !== a) {
       group.current.rotation.y = a.angle;
-      previousId.current = a.id;
+      previousSim.current = s;
+      previousActor.current = a;
       lastHp.current = a.hp;
       flashUntil.current = -1;
     } else if (s.status === "running")
