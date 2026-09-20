@@ -62,7 +62,25 @@ test("production entrypoint protects API and serves the compiled game after logi
       await new Promise((r) => setTimeout(r, 50));
     }
     assert.ok(ready, output);
-    assert.equal((await request("/")).status, 401);
+    const fieldPass = await request("/");
+    assert.equal(fieldPass.status, 401);
+    assert.equal(fieldPass.headers.get("referrer-policy"), "same-origin");
+    for (const from of ["null", "https://untrusted.example", undefined]) {
+      assert.equal(
+        (await request("/access/login", {
+          method: "POST",
+          headers: {
+            ...(from ? { Origin: from } : {}),
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            invite: "tester",
+            password: "fixture-invite-password-12345",
+          }),
+        })).status,
+        403,
+      );
+    }
     assert.equal(
       (await request("/api/session", { method: "POST" })).status,
       401,

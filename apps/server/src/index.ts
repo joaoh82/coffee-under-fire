@@ -41,7 +41,8 @@ const server = createServer(async (req, res) => {
     }
   };
   res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("Referrer-Policy", "no-referrer");
+  // Preserve Origin on same-origin form POSTs so the invite gate can validate it.
+  res.setHeader("Referrer-Policy", "same-origin");
   res.setHeader(
     "Content-Security-Policy",
     "frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
