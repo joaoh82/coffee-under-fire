@@ -1,3 +1,4 @@
+import { SITE_HEAD } from "./packages/shared/site-meta";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -17,7 +18,14 @@ if (
 }
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: "site-metadata",
+      transformIndexHtml: (html) =>
+        html.replace("<!-- SITE_METADATA -->", SITE_HEAD),
+    },
+  ],
   root: "apps/web",
   server: {
     host: "127.0.0.1",

@@ -1,3 +1,4 @@
+import { ICON_HEAD } from "../../../packages/shared/site-meta";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 const COOKIE = "coffee_access";
@@ -166,7 +167,7 @@ export class InviteAccess {
   }
 }
 function loginPage(error = false) {
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Your field pass · Coffee Under Fire</title><style>
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Your field pass · Coffee Under Fire</title>${ICON_HEAD}<style>
 *{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;background:#303c30;color:#29392d;font:17px/1.5 system-ui;padding:24px}main{width:min(100%,460px);padding:36px;background:#e9dfbd;border-radius:12px;box-shadow:10px 12px #202c25}small{letter-spacing:.14em;text-transform:uppercase}h1{font-size:36px;line-height:1.1;margin:16px 0}label{display:block;margin:18px 0 5px;font-weight:600}input,button{font:inherit;width:100%;padding:13px;border:2px solid #697454;border-radius:6px}input{background:#fff8df}button{margin-top:24px;background:#a94e27;color:#fff8df;border-color:#a94e27;cursor:pointer;font-weight:700}:focus-visible{outline:3px solid #a94e27;outline-offset:3px}.error{color:#923918}footer{font-size:13px;margin-top:22px}</style>
 <main><small>☕ Private field test</small><h1>Coffee Under Fire</h1><p>Your orders: survive the battlefield. Deliver the coffee. First, show your field pass.</p>${error ? '<p class="error" role="alert">That invite and password did not match. Please try again.</p>' : ""}<form action="/access/login" method="post"><label for="invite">Invite name</label><input id="invite" name="invite" autocomplete="username" maxlength="40" required><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required><button>Enter the outpost</button></form><footer>Invite-only playtest · NPC tactics powered by Jev</footer></main></html>`;
 }

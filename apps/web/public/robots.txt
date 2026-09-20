@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /access/
+Disallow: /api/
+Disallow: /report-preview
+Disallow: /combat-preview
+Sitemap: https://coffee.yardsort.sh/sitemap.xml

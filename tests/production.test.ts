@@ -67,20 +67,42 @@ test("production entrypoint protects API and serves the compiled game after logi
     assert.equal(fieldPass.headers.get("referrer-policy"), "same-origin");
     for (const from of ["null", "https://untrusted.example", undefined]) {
       assert.equal(
-        (await request("/access/login", {
-          method: "POST",
-          headers: {
-            ...(from ? { Origin: from } : {}),
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({
-            invite: "tester",
-            password: "fixture-invite-password-12345",
-          }),
-        })).status,
+        (
+          await request("/access/login", {
+            method: "POST",
+            headers: {
+              ...(from ? { Origin: from } : {}),
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              invite: "tester",
+              password: "fixture-invite-password-12345",
+            }),
+          })
+        ).status,
         403,
       );
     }
+    for (const [path, type] of [
+      ["/assets/brand/social-card-v1.png", "image/png"],
+      ["/favicon.svg", "image/svg+xml"],
+      ["/favicon.ico", "image/x-icon"],
+      ["/robots.txt", "text/plain"],
+      ["/sitemap.xml", "application/xml"],
+    ]) {
+      const asset = await request(path);
+      assert.equal(asset.status, 200, path);
+      assert.ok(asset.headers.get("content-type")?.startsWith(type));
+      assert.equal((await request(path, { method: "HEAD" })).status, 200);
+    }
+    assert.equal(
+      (await request("/assets/models/slice_soldier.glb")).status,
+      401,
+    );
+    assert.match(
+      (await request("/admin")).headers.get("x-robots-tag") ?? "",
+      /noindex/,
+    );
     assert.equal(
       (await request("/api/session", { method: "POST" })).status,
       401,

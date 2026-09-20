@@ -1,3 +1,4 @@
+import { PUBLIC_BRAND_PATHS } from "../../../packages/shared/site-meta";
 import { NameRejected } from "./name-policy";
 import {
   boardOptionsSchema,
@@ -122,6 +123,20 @@ const server = createServer(async (req, res) => {
     return;
   }
   if (
+    ["GET", "HEAD"].includes(req.method ?? "") &&
+    PUBLIC_BRAND_PATHS.has(requestUrl.pathname)
+  ) {
+    await serveStatic(req, res, resolve("dist/web"));
+    return;
+  }
+  if (
+    requestUrl.pathname.startsWith("/admin") ||
+    requestUrl.pathname.startsWith("/access/") ||
+    requestUrl.pathname.startsWith("/api/") ||
+    requestUrl.pathname.endsWith("-preview")
+  )
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  if (
     req.method === "GET" &&
     ["/leaderboard", "/api/leaderboard"].includes(requestUrl.pathname)
   ) {
@@ -145,7 +160,7 @@ const server = createServer(async (req, res) => {
         res.writeHead(200, {
           "Content-Type": "text/html; charset=utf-8",
           "Content-Security-Policy":
-            "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+            "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
         });
         res.end(leaderboardPage(parsed.data, entries));
       }

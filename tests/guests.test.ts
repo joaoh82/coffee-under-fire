@@ -125,6 +125,9 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     });
     const page = await (await request("/")).text();
     assert.match(page, /Play as guest/);
+    assert.match(page, /property="og:image"/);
+    assert.match(page, /coffee.yardsort.sh/);
+    assert.match(page, /rel="icon"/);
     assert.ok(!page.includes(config.secretKey));
     assert.ok(!page.includes(config.ipSalt));
     assert.equal((await post("valid", "https://evil.example")).status, 403);
