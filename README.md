@@ -1,4 +1,12 @@
+<p align="center">
+  <a href="https://coffee.yardsort.sh/">
+    <img src="apps/web/public/assets/brand/coffee-under-fire-logo-v1.png" alt="Coffee Under Fire" width="480" />
+  </a>
+</p>
+
 # Coffee Under Fire
+
+**[Play Coffee Under Fire](https://coffee.yardsort.sh/)**
 
 A React + Three.js greybox of the GDD's coffee-delivery arena shooter. Every live NPC action comes from a Jev Choice; deterministic TypeScript executes the action. Read COFFEE_UNDER_FIRE_GDD.md for the design.
 
