@@ -1,0 +1,13 @@
+{
+  "sourceReport": "docs/benchmarks/live-mission-responsiveness-tank-pass.json",
+  "recording": "docs/benchmarks/live-mission-responsiveness-tank-pass-replay.json",
+  "checkedAt": "2026-09-19T21:03:49.225Z",
+  "outcomeMatches": true,
+  "simulationSeconds": 480,
+  "health": 100,
+  "deliveries": 30,
+  "kills": 375,
+  "appliedChoicesReplayed": 2814,
+  "recordedAppliedChoices": 2814,
+  "note": "Offline execution of recorded decisions; no Jev requests. Interrupted-run UI pause state is not reconstructed."
+}

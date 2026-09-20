@@ -1,0 +1,13 @@
+{
+  "file": "apps/web/public/assets/audio/coffee-patrol-v2.wav",
+  "durationSeconds": 34.285714285714285,
+  "bpm": 112,
+  "sampleRate": 22050,
+  "channels": 1,
+  "bytes": 1512044,
+  "peak": 0.77996826171875,
+  "rms": 0.16872713435166395,
+  "loopBoundaryStep": 0.00537109375,
+  "provenance": "Original code-composed field march; no external samples",
+  "generator": "assets/scripts/generate_music.py"
+}

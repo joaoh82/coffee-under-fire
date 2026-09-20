@@ -1,0 +1,54 @@
+{
+  "kind": "synthetic village tank observations; real bounded live Jev probe",
+  "mapId": "village.v1",
+  "combatProfile": "armor.v2",
+  "requests": 3,
+  "rows": [
+    {
+      "difficulty": "easy.v1",
+      "hp": 150,
+      "maxHp": 150,
+      "source": "jev",
+      "selected": "cannon_player",
+      "applied": true,
+      "latencyMs": 692.9604160000017,
+      "roundTripMs": 702.6320839999998,
+      "usage": {
+        "input_tokens": 1037,
+        "output_tokens": 101
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "difficulty": "normal.v1",
+      "hp": 200,
+      "maxHp": 200,
+      "source": "jev",
+      "selected": "cannon_player",
+      "applied": true,
+      "latencyMs": 251.37133300000278,
+      "roundTripMs": 256.00983300000007,
+      "usage": {
+        "input_tokens": 1037,
+        "output_tokens": 101
+      },
+      "model": "jev-1.13.0"
+    },
+    {
+      "difficulty": "hard.v1",
+      "hp": 240,
+      "maxHp": 240,
+      "source": "jev",
+      "selected": "cannon_player",
+      "applied": true,
+      "latencyMs": 252.7857079999958,
+      "roundTripMs": 256.4613340000001,
+      "usage": {
+        "input_tokens": 1037,
+        "output_tokens": 101
+      },
+      "model": "jev-1.13.0"
+    }
+  ],
+  "cost": null
+}

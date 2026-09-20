@@ -1,0 +1,38 @@
+{
+  "version": "markers.v1",
+  "coordinateFrame": "Y_up_XZ_meters",
+  "markers": [
+    {
+      "id": "KITCHEN_sample",
+      "position": {
+        "x": -3,
+        "y": 0,
+        "z": -2
+      }
+    },
+    {
+      "id": "TENT_sample",
+      "position": {
+        "x": 4,
+        "y": 0,
+        "z": 5
+      }
+    },
+    {
+      "id": "SPAWN_sample",
+      "position": {
+        "x": 7,
+        "y": 0,
+        "z": -3
+      }
+    },
+    {
+      "id": "NAV_sample",
+      "position": {
+        "x": -2,
+        "y": 0,
+        "z": 6
+      }
+    }
+  ]
+}

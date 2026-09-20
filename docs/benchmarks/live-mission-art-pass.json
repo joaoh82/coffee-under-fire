@@ -1,0 +1,5974 @@
+{
+  "timestamp": "2026-09-19T10:19:06.139Z",
+  "kind": "live-jev-scripted-player",
+  "note": "Synthetic player test, not human playthrough; same health, collision, coffee and combat rules. Hard cap 700 decisions / 10 minutes wall time.",
+  "termination": "won",
+  "simulationSeconds": 480,
+  "wallSeconds": 483.86823195799997,
+  "deliveries": 25,
+  "kills": 72,
+  "health": 100,
+  "pauses": 2,
+  "pauseMs": 3670.8445420000353,
+  "retryFailures": 0,
+  "totals": {
+    "requested": 586,
+    "applied": 534,
+    "rejected": 5,
+    "errors": 1,
+    "inputTokens": 489421,
+    "outputTokens": 42643
+  },
+  "p50Ms": 270.74191700015217,
+  "p95Ms": 606.9117499999702,
+  "costUsd": null,
+  "rows": [
+    {
+      "id": 1,
+      "status": "applied",
+      "latencyMs": 664.7915830002166,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 2,
+      "status": "applied",
+      "latencyMs": 330.4377920003608,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 3,
+      "status": "applied",
+      "latencyMs": 228.57816600007936,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 853,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 4,
+      "status": "applied",
+      "latencyMs": 259.1114579997957,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1059,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 5,
+      "status": "applied",
+      "latencyMs": 287.539124999661,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 6,
+      "status": "applied",
+      "latencyMs": 216.1627500001341,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 996,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 7,
+      "status": "applied",
+      "latencyMs": 271.6693750000559,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1011,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 8,
+      "status": "applied",
+      "latencyMs": 236.9814160000533,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 9,
+      "status": "applied",
+      "latencyMs": 296.41591700026765,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 853,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 10,
+      "status": "applied",
+      "latencyMs": 656.1125420001335,
+      "source": "jev",
+      "selected": "move_7",
+      "usage": {
+        "input_tokens": 944,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 11,
+      "status": "applied",
+      "latencyMs": 290.09079200029373,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1059,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 12,
+      "status": "applied",
+      "latencyMs": 282.8079170002602,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 933,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 13,
+      "status": "applied",
+      "latencyMs": 299.7527920003049,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 14,
+      "status": "applied",
+      "latencyMs": 287.64920900017023,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 15,
+      "status": "applied",
+      "latencyMs": 270.72637499962,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1166,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 16,
+      "status": "applied",
+      "latencyMs": 317.9875830002129,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1225,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 17,
+      "status": "applied",
+      "latencyMs": 285.1030000001192,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1184,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 18,
+      "status": "applied",
+      "latencyMs": 244.8332090000622,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 19,
+      "status": "applied",
+      "latencyMs": 239.9546249997802,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 20,
+      "status": "applied",
+      "latencyMs": 696.9808330000378,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1084,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 21,
+      "status": "applied",
+      "latencyMs": 266.75945800030604,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1003,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 22,
+      "status": "applied",
+      "latencyMs": 212.13487499998882,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1116,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 23,
+      "status": "applied",
+      "latencyMs": 219.47262499993667,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 24,
+      "status": "applied",
+      "latencyMs": 251.36283299978822,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 25,
+      "status": "applied",
+      "latencyMs": 266.78954199980944,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 26,
+      "status": "applied",
+      "latencyMs": 274.56758299982175,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 939,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 27,
+      "status": "applied",
+      "latencyMs": 231.73599999956787,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1140,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 28,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 29,
+      "status": "applied",
+      "latencyMs": 266.7453329996206,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 800,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 30,
+      "status": "applied",
+      "latencyMs": 253.17449999973178,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1079,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 31,
+      "status": "applied",
+      "latencyMs": 250.97470799973235,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 33,
+      "status": "applied",
+      "latencyMs": 255.23779200017452,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1242,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 34,
+      "status": "applied",
+      "latencyMs": 344.4325410001911,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1023,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 35,
+      "status": "applied",
+      "latencyMs": 246.19649999961257,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 36,
+      "status": "applied",
+      "latencyMs": 249.9938750001602,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1017,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 37,
+      "status": "applied",
+      "latencyMs": 267.1119159995578,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 849,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 38,
+      "status": "applied",
+      "latencyMs": 279.8094999999739,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1075,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 39,
+      "status": "applied",
+      "latencyMs": 286.7422090000473,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1237,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 41,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 42,
+      "status": "applied",
+      "latencyMs": 576.1905000000261,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 43,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 44,
+      "status": "applied",
+      "latencyMs": 328.49574999976903,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 45,
+      "status": "applied",
+      "latencyMs": 209.01537499995902,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 800,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 46,
+      "status": "applied",
+      "latencyMs": 445.78437499981374,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 47,
+      "status": "applied",
+      "latencyMs": 236.7481249999255,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 48,
+      "status": "applied",
+      "latencyMs": 228.4420410003513,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1023,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 49,
+      "status": "applied",
+      "latencyMs": 253.5047919997014,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1017,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 50,
+      "status": "applied",
+      "latencyMs": 268.89229200035334,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1075,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 51,
+      "status": "applied",
+      "latencyMs": 606.9117499999702,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 52,
+      "status": "applied",
+      "latencyMs": 214.45466599985957,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1066,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 53,
+      "status": "applied",
+      "latencyMs": 258.2575829997659,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1251,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 54,
+      "status": "applied",
+      "latencyMs": 242.06783299986273,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 55,
+      "status": "applied",
+      "latencyMs": 259.9342910000123,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1246,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 56,
+      "status": "applied",
+      "latencyMs": 278.7978329998441,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 57,
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 58,
+      "status": "applied",
+      "latencyMs": 560.545167000033,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 800,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 59,
+      "status": "applied",
+      "latencyMs": 557.4023330002092,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 60,
+      "status": "applied",
+      "latencyMs": 261.9032499999739,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 61,
+      "status": "applied",
+      "latencyMs": 323.93854200001806,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 62,
+      "status": "applied",
+      "latencyMs": 332.06099999975413,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 63,
+      "status": "applied",
+      "latencyMs": 243.15508300019428,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1163,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 64,
+      "status": "applied",
+      "latencyMs": 374.5882500000298,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1051,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 65,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 66,
+      "status": "applied",
+      "latencyMs": 227.33370800036937,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1100,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 67,
+      "status": "applied",
+      "latencyMs": 254.62379099987447,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 68,
+      "status": "applied",
+      "latencyMs": 278.9875000002794,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1066,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 69,
+      "status": "applied",
+      "latencyMs": 231.66062500001863,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1238,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 70,
+      "status": "applied",
+      "latencyMs": 259.0097090001218,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 71,
+      "status": "applied",
+      "latencyMs": 243.2551249996759,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 849,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 72,
+      "status": "applied",
+      "latencyMs": 291.0074170003645,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1222,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 73,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 74,
+      "status": "applied",
+      "latencyMs": 676.0747919999994,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 75,
+      "status": "applied",
+      "latencyMs": 257.3705419995822,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 76,
+      "status": "applied",
+      "latencyMs": 265.6375829996541,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 77,
+      "status": "applied",
+      "latencyMs": 244.42483299970627,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1003,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 78,
+      "status": "applied",
+      "latencyMs": 265.2504169996828,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 79,
+      "status": "applied",
+      "latencyMs": 284.9289580001496,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 80,
+      "status": "applied",
+      "latencyMs": 286.02570899995044,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 939,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 81,
+      "status": "applied",
+      "latencyMs": 278.2884999997914,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 800,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 82,
+      "status": "applied",
+      "latencyMs": 259.4647090001963,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1000,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 83,
+      "status": "applied",
+      "latencyMs": 358.5989169999957,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 84,
+      "status": "applied",
+      "latencyMs": 266.71837500017136,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 85,
+      "status": "applied",
+      "latencyMs": 565.2174999997951,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 876,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 86,
+      "status": "applied",
+      "latencyMs": 282.8156659998931,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1023,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 87,
+      "status": "applied",
+      "latencyMs": 285.0335830003023,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 997,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 88,
+      "status": "applied",
+      "latencyMs": 219.40824999986216,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1017,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 89,
+      "status": "applied",
+      "latencyMs": 331.2255000001751,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 849,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 90,
+      "status": "applied",
+      "latencyMs": 297.57266699988395,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 91,
+      "status": "applied",
+      "latencyMs": 583.5822089998983,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 977,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 92,
+      "status": "applied",
+      "latencyMs": 250.28412500023842,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1231,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 93,
+      "status": "applied",
+      "latencyMs": 339.70904100034386,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1085,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 94,
+      "status": "applied",
+      "latencyMs": 329.89937500003725,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1247,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 95,
+      "status": "applied",
+      "latencyMs": 306.3256250000559,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1237,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 96,
+      "status": "applied",
+      "latencyMs": 274.97695800010115,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1244,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 97,
+      "status": "applied",
+      "latencyMs": 297.75379200000316,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 98,
+      "status": "applied",
+      "latencyMs": 278.2156660002656,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 99,
+      "status": "applied",
+      "latencyMs": 262.50304100010544,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1159,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 100,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 101,
+      "status": "applied",
+      "latencyMs": 239.49558300012723,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1106,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 102,
+      "status": "applied",
+      "latencyMs": 305.9455830003135,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 790,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 103,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 104,
+      "status": "applied",
+      "latencyMs": 275.73120799986646,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 105,
+      "status": "applied",
+      "latencyMs": 237.19375000009313,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 870,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 106,
+      "status": "applied",
+      "latencyMs": 223.86183300008997,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 865,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 107,
+      "status": "applied",
+      "latencyMs": 280.8740829997696,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 108,
+      "status": "applied",
+      "latencyMs": 223.84212499996647,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 109,
+      "status": "applied",
+      "latencyMs": 229.19645800022408,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 865,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 110,
+      "status": "applied",
+      "latencyMs": 246.67079199990258,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 868,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 111,
+      "status": "applied",
+      "latencyMs": 233.18579200003296,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 112,
+      "status": "applied",
+      "latencyMs": 228.53387500019744,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 870,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 113,
+      "status": "applied",
+      "latencyMs": 238.42095900001004,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 811,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 114,
+      "status": "applied",
+      "latencyMs": 257.16270900005475,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 115,
+      "status": "applied",
+      "latencyMs": 954.7543340004049,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1008,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 116,
+      "status": "applied",
+      "latencyMs": 256.5653750002384,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1119,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 117,
+      "status": "applied",
+      "latencyMs": 245.45812499988824,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1132,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 118,
+      "status": "applied",
+      "latencyMs": 246.6195000000298,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 119,
+      "status": "applied",
+      "latencyMs": 228.4014580002986,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 120,
+      "status": "applied",
+      "latencyMs": 226.7712089996785,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 121,
+      "status": "applied",
+      "latencyMs": 272.7296670000069,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1143,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 122,
+      "status": "applied",
+      "latencyMs": 257.22200000006706,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1075,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 123,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 124,
+      "status": "applied",
+      "latencyMs": 646.8729580002837,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 125,
+      "status": "applied",
+      "latencyMs": 293.0133340000175,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1046,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 126,
+      "status": "applied",
+      "latencyMs": 280.3338750000112,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1103,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 127,
+      "status": "applied",
+      "latencyMs": 241.8308329996653,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1133,
+        "output_tokens": 95
+      }
+    },
+    {
+      "id": 128,
+      "status": "applied",
+      "latencyMs": 265.42279199976474,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 129,
+      "status": "applied",
+      "latencyMs": 265.4187090001069,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 130,
+      "status": "applied",
+      "latencyMs": 316.46383300004527,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 131,
+      "status": "applied",
+      "latencyMs": 229.40433300007135,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1061,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 132,
+      "status": "applied",
+      "latencyMs": 290.00191699992865,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 998,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 133,
+      "status": "applied",
+      "latencyMs": 268.39520800020546,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 134,
+      "status": "applied",
+      "latencyMs": 279.46762500004843,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1013,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 135,
+      "status": "applied",
+      "latencyMs": 240.42304200027138,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 136,
+      "status": "applied",
+      "latencyMs": 242.9458329998888,
+      "source": "jev",
+      "selected": "move_7",
+      "usage": {
+        "input_tokens": 946,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 137,
+      "status": "applied",
+      "latencyMs": 268.8819169998169,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1061,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 138,
+      "status": "applied",
+      "latencyMs": 236.86049999995157,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 139,
+      "status": "applied",
+      "latencyMs": 289.18108300026506,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 934,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 140,
+      "status": "applied",
+      "latencyMs": 277.43020900012925,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1249,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 141,
+      "status": "applied",
+      "latencyMs": 221.957291000057,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1153,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 142,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 143,
+      "status": "applied",
+      "latencyMs": 608.6257919999771,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1187,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 144,
+      "status": "applied",
+      "latencyMs": 598.7756670000963,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 145,
+      "status": "applied",
+      "latencyMs": 235.8925000000745,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 146,
+      "status": "applied",
+      "latencyMs": 218.65275000035763,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1103,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 147,
+      "status": "applied",
+      "latencyMs": 258.80933399964124,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 991,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 148,
+      "status": "applied",
+      "latencyMs": 250.61291699996218,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1133,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 149,
+      "status": "applied",
+      "latencyMs": 249.0477499999106,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 988,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 150,
+      "status": "applied",
+      "latencyMs": 236.7540409998037,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 151,
+      "status": "applied",
+      "latencyMs": 580.4899999997579,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1175,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 152,
+      "status": "applied",
+      "latencyMs": 243.34083400014788,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 923,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 153,
+      "status": "applied",
+      "latencyMs": 240.50391699979082,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 845,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 154,
+      "status": "applied",
+      "latencyMs": 307.73700000019744,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 155,
+      "status": "applied",
+      "latencyMs": 291.21416600001976,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1038,
+        "output_tokens": 79
+      }
+    },
+    {
+      "id": 157,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 158,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 159,
+      "status": "applied",
+      "latencyMs": 592.2270419998094,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 160,
+      "status": "applied",
+      "latencyMs": 608.8652920001186,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1155,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 161,
+      "status": "applied",
+      "latencyMs": 241.30400000000373,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1104,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 162,
+      "status": "applied",
+      "latencyMs": 317.3866670001298,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 163,
+      "status": "applied",
+      "latencyMs": 250.31587500032037,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1028,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 164,
+      "status": "applied",
+      "latencyMs": 267.59487499995157,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 165,
+      "status": "applied",
+      "latencyMs": 250.210583999753,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 166,
+      "status": "applied",
+      "latencyMs": 286.5256670000963,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1187,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 167,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 168,
+      "status": "applied",
+      "latencyMs": 245.81837499979883,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 169,
+      "status": "applied",
+      "latencyMs": 266.4761250000447,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 170,
+      "status": "applied",
+      "latencyMs": 339.50641699973494,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1265,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 171,
+      "status": "applied",
+      "latencyMs": 301.0295000001788,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 172,
+      "status": "applied",
+      "latencyMs": 279.6153339999728,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 173,
+      "status": "applied",
+      "latencyMs": 298.18837500037625,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 174,
+      "status": "applied",
+      "latencyMs": 265.12637499999255,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 175,
+      "status": "applied",
+      "latencyMs": 355.8660840000957,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 176,
+      "status": "applied",
+      "latencyMs": 261.7147920001298,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 177,
+      "status": "applied",
+      "latencyMs": 245.10375000024214,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 178,
+      "status": "applied",
+      "latencyMs": 238.77554199984297,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 869,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 179,
+      "status": "applied",
+      "latencyMs": 338.79620800027624,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 180,
+      "status": "applied",
+      "latencyMs": 539.1513749998994,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 181,
+      "status": "applied",
+      "latencyMs": 255.81187500013039,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 812,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 182,
+      "status": "applied",
+      "latencyMs": 234.18320799991488,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1134,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 183,
+      "status": "applied",
+      "latencyMs": 252.60408299975097,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 184,
+      "status": "applied",
+      "latencyMs": 232.597500000149,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 845,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 185,
+      "status": "applied",
+      "latencyMs": 289.3131249998696,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 186,
+      "status": "applied",
+      "latencyMs": 263.392583000008,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1004,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 187,
+      "status": "applied",
+      "latencyMs": 234.6161250001751,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 941,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 188,
+      "status": "applied",
+      "latencyMs": 288.4889170001261,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 189,
+      "status": "applied",
+      "latencyMs": 305.9917079997249,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 190,
+      "status": "applied",
+      "latencyMs": 626.4375829999335,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 191,
+      "status": "applied",
+      "latencyMs": 249.91729100001976,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1001,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 192,
+      "status": "applied",
+      "latencyMs": 264.2749589998275,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 193,
+      "status": "applied",
+      "latencyMs": 365.7937920000404,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 194,
+      "status": "applied",
+      "latencyMs": 384.01316699991,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 877,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 195,
+      "status": "applied",
+      "latencyMs": 257.9503750000149,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 196,
+      "status": "applied",
+      "latencyMs": 297.6330420002341,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1002,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 197,
+      "status": "applied",
+      "latencyMs": 258.4580830000341,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 198,
+      "status": "applied",
+      "latencyMs": 230.20995899988338,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 199,
+      "status": "applied",
+      "latencyMs": 320.3563330001198,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 200,
+      "status": "applied",
+      "latencyMs": 247.51533400034532,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 201,
+      "status": "applied",
+      "latencyMs": 574.1931659998372,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 952,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 202,
+      "status": "applied",
+      "latencyMs": 274.2279579997994,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1156,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 203,
+      "status": "applied",
+      "latencyMs": 255.85191700002179,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1118,
+        "output_tokens": 96
+      }
+    },
+    {
+      "id": 204,
+      "status": "applied",
+      "latencyMs": 264.5386250000447,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1163,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 205,
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 241.68737499974668,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1318,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 206,
+      "status": "applied",
+      "latencyMs": 335.60966600012034,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1214,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 207,
+      "status": "applied",
+      "latencyMs": 216.4108750000596,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1057,
+        "output_tokens": 87
+      }
+    },
+    {
+      "id": 208,
+      "status": "applied",
+      "latencyMs": 234.79516700003296,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1165,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 209,
+      "status": "applied",
+      "latencyMs": 276.26425000000745,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 210,
+      "status": "applied",
+      "latencyMs": 296.65854200022295,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1055,
+        "output_tokens": 87
+      }
+    },
+    {
+      "id": 211,
+      "status": "applied",
+      "latencyMs": 261.2010000003502,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 212,
+      "status": "applied",
+      "latencyMs": 271.05824999976903,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1155,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 213,
+      "status": "applied",
+      "latencyMs": 272.40108400024474,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1155,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 214,
+      "status": "applied",
+      "latencyMs": 211.5412920000963,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1074,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 215,
+      "status": "applied",
+      "latencyMs": 242.38483299966902,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1136,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 216,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 217,
+      "status": "applied",
+      "latencyMs": 321.51858299970627,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1215,
+        "output_tokens": 104
+      }
+    },
+    {
+      "id": 218,
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 219,
+      "status": "applied",
+      "latencyMs": 282.1368339997716,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 220,
+      "status": "applied",
+      "latencyMs": 262.0294170002453,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 221,
+      "status": "applied",
+      "latencyMs": 260.03624999988824,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 222,
+      "status": "applied",
+      "latencyMs": 245.80658299988136,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 223,
+      "status": "applied",
+      "latencyMs": 246.60754100000486,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1106,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 224,
+      "status": "applied",
+      "latencyMs": 298.54362499993294,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1179,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 225,
+      "status": "applied",
+      "latencyMs": 325.78933299984783,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 226,
+      "status": "applied",
+      "latencyMs": 268.87304099975154,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1113,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 227,
+      "status": "applied",
+      "latencyMs": 264.476458999794,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 228,
+      "status": "applied",
+      "latencyMs": 347.5998330004513,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 229,
+      "status": "applied",
+      "latencyMs": 277.28637500014156,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1157,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 230,
+      "status": "applied",
+      "latencyMs": 239.24854200007394,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 231,
+      "status": "applied",
+      "latencyMs": 248.17070899996907,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1236,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 232,
+      "status": "applied",
+      "latencyMs": 268.2046249997802,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 961,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 233,
+      "status": "applied",
+      "latencyMs": 265.443166999612,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 234,
+      "status": "applied",
+      "latencyMs": 252.76974999997765,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 235,
+      "status": "applied",
+      "latencyMs": 264.75387499993667,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1285,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 236,
+      "status": "applied",
+      "latencyMs": 242.59162499988452,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1303,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 237,
+      "status": "applied",
+      "latencyMs": 259.7646670001559,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 952,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 238,
+      "status": "applied",
+      "latencyMs": 256.3216249998659,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1335,
+        "output_tokens": 122
+      }
+    },
+    {
+      "id": 239,
+      "status": "applied",
+      "latencyMs": 239.52720899973065,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1103,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 240,
+      "status": "applied",
+      "latencyMs": 333.6129169999622,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 241,
+      "status": "applied",
+      "latencyMs": 243.9723749998957,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1079,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 242,
+      "status": "applied",
+      "latencyMs": 368.0825000000186,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 243,
+      "status": "applied",
+      "latencyMs": 296.11995799979195,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1000,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 244,
+      "status": "applied",
+      "latencyMs": 264.12345900014043,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 245,
+      "status": "applied",
+      "latencyMs": 277.8661250001751,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1003,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 246,
+      "status": "applied",
+      "latencyMs": 635.4374589999206,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 247,
+      "status": "applied",
+      "latencyMs": 225.89691700041294,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 248,
+      "status": "applied",
+      "latencyMs": 245.16891700029373,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1100,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 249,
+      "status": "applied",
+      "latencyMs": 294.19658300001174,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 250,
+      "status": "applied",
+      "latencyMs": 287.1379170003347,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1116,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 252,
+      "status": "applied",
+      "latencyMs": 249.76004099985585,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1003,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 253,
+      "status": "applied",
+      "latencyMs": 301.65500000026077,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 254,
+      "status": "applied",
+      "latencyMs": 276.78504200000316,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 991,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 255,
+      "status": "applied",
+      "latencyMs": 272.2062909998931,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1005,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 256,
+      "status": "applied",
+      "latencyMs": 252.32108299992979,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1124,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 258,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 259,
+      "status": "applied",
+      "latencyMs": 240.79570800019428,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1005,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 260,
+      "status": "applied",
+      "latencyMs": 261.2814589999616,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1148,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 261,
+      "status": "applied",
+      "latencyMs": 269.310541999992,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 262,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 263,
+      "status": "applied",
+      "latencyMs": 215.66858299961314,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1100,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 264,
+      "status": "applied",
+      "latencyMs": 269.97475000005215,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1156,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 265,
+      "status": "applied",
+      "latencyMs": 276.9536669999361,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 266,
+      "status": "applied",
+      "latencyMs": 310.687084000092,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 267,
+      "status": "applied",
+      "latencyMs": 279.49808300007135,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 268,
+      "status": "applied",
+      "latencyMs": 289.16245900001377,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 269,
+      "status": "applied",
+      "latencyMs": 613.0809169998392,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 270,
+      "status": "applied",
+      "latencyMs": 256.6062090001069,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 271,
+      "status": "applied",
+      "latencyMs": 239.98083300003782,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 272,
+      "status": "applied",
+      "latencyMs": 236.59387499978766,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 273,
+      "status": "applied",
+      "latencyMs": 279.6201659999788,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 274,
+      "status": "applied",
+      "latencyMs": 252.22908300021663,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 275,
+      "status": "applied",
+      "latencyMs": 268.1976250000298,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 276,
+      "status": "applied",
+      "latencyMs": 254.70829100022092,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 277,
+      "status": "applied",
+      "latencyMs": 319.9780830000527,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 869,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 278,
+      "status": "applied",
+      "latencyMs": 270.13670899998397,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 279,
+      "status": "applied",
+      "latencyMs": 223.93433299986646,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 281,
+      "status": "applied",
+      "latencyMs": 275.57279200013727,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 282,
+      "status": "applied",
+      "latencyMs": 222.06954200007021,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 283,
+      "status": "applied",
+      "latencyMs": 605.187750000041,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 951,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 284,
+      "status": "applied",
+      "latencyMs": 637.081875000149,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1091,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 285,
+      "status": "applied",
+      "latencyMs": 674.4484999999404,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1057,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 286,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 287,
+      "status": "applied",
+      "latencyMs": 297.3111660000868,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1131,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 288,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 289,
+      "status": "applied",
+      "latencyMs": 270.58508299989626,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 998,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 290,
+      "status": "applied",
+      "latencyMs": 282.84420799976215,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 291,
+      "status": "applied",
+      "latencyMs": 340.90579200023785,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1013,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 292,
+      "status": "applied",
+      "latencyMs": 352.73220800003037,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 293,
+      "status": "applied",
+      "latencyMs": 305.6723340000026,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1238,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 294,
+      "status": "applied",
+      "latencyMs": 266.6813750001602,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1044,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 295,
+      "status": "applied",
+      "latencyMs": 232.38591700000688,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 977,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 296,
+      "status": "applied",
+      "latencyMs": 259.79174999985844,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 297,
+      "status": "applied",
+      "latencyMs": 219.67066700011492,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1151,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 298,
+      "status": "applied",
+      "latencyMs": 272.6035830001347,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 299,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 300,
+      "status": "applied",
+      "latencyMs": 618.0396670000628,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 301,
+      "status": "applied",
+      "latencyMs": 267.9002089998685,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 302,
+      "status": "applied",
+      "latencyMs": 260.82016699993983,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 303,
+      "status": "applied",
+      "latencyMs": 236.69037499977276,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 304,
+      "status": "applied",
+      "latencyMs": 297.3862920003012,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 305,
+      "status": "applied",
+      "latencyMs": 281.8665419998579,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 306,
+      "status": "applied",
+      "latencyMs": 291.7430419996381,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 307,
+      "status": "applied",
+      "latencyMs": 269.1168329999782,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 308,
+      "status": "applied",
+      "latencyMs": 310.55658299988136,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 309,
+      "status": "applied",
+      "latencyMs": 286.6479170001112,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1076,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 310,
+      "status": "applied",
+      "latencyMs": 289.20079200016335,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 311,
+      "status": "applied",
+      "latencyMs": 321.511916000396,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1067,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 312,
+      "status": "applied",
+      "latencyMs": 291.96783400001004,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 313,
+      "status": "applied",
+      "latencyMs": 375.8049590000883,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 964,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 314,
+      "status": "applied",
+      "latencyMs": 710.495749999769,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 315,
+      "status": "applied",
+      "latencyMs": 698.0528750000522,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1235,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 316,
+      "status": "applied",
+      "latencyMs": 257.7631249995902,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1108,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 317,
+      "status": "applied",
+      "latencyMs": 267.58916699979454,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1145,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 318,
+      "status": "applied",
+      "latencyMs": 334.2483330001123,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1119,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 319,
+      "status": "applied",
+      "latencyMs": 260.5485000000335,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1099,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 320,
+      "status": "applied",
+      "latencyMs": 295.4093339997344,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 321,
+      "status": "applied",
+      "latencyMs": 282.1591250002384,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 322,
+      "status": "applied",
+      "latencyMs": 592.6611250001006,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1177,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 323,
+      "status": "applied",
+      "latencyMs": 282.0609579999,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1001,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 324,
+      "status": "applied",
+      "latencyMs": 277.41566599998623,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1096,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 325,
+      "status": "applied",
+      "latencyMs": 239.64625000022352,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 326,
+      "status": "applied",
+      "latencyMs": 277.65387499984354,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1065,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 327,
+      "status": "applied",
+      "latencyMs": 257.7648330000229,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1074,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 328,
+      "status": "applied",
+      "latencyMs": 256.3133749999106,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 329,
+      "status": "applied",
+      "latencyMs": 322.0872499998659,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 330,
+      "status": "applied",
+      "latencyMs": 245.73425000021234,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 882,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 331,
+      "status": "applied",
+      "latencyMs": 253.9054589997977,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1074,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 332,
+      "status": "applied",
+      "latencyMs": 329.2640419998206,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 333,
+      "status": "applied",
+      "latencyMs": 244.224708000198,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1064,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 334,
+      "status": "applied",
+      "latencyMs": 281.90625,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1307,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 335,
+      "status": "applied",
+      "latencyMs": 226.36862499965355,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1291,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 336,
+      "status": "applied",
+      "latencyMs": 268.85841699969023,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1111,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 337,
+      "status": "applied",
+      "latencyMs": 627.3812090000138,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 338,
+      "status": "applied",
+      "latencyMs": 276.5784169998951,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1321,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 339,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 340,
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 265.3233329998329,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1332,
+        "output_tokens": 122
+      }
+    },
+    {
+      "id": 341,
+      "status": "applied",
+      "latencyMs": 360.5020829997957,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1254,
+        "output_tokens": 114
+      }
+    },
+    {
+      "id": 342,
+      "status": "applied",
+      "latencyMs": 277.72429100004956,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1258,
+        "output_tokens": 114
+      }
+    },
+    {
+      "id": 343,
+      "status": "applied",
+      "latencyMs": 257.01795799983665,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 344,
+      "status": "applied",
+      "latencyMs": 287.1081670001149,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 105
+      }
+    },
+    {
+      "id": 345,
+      "status": "applied",
+      "latencyMs": 280.87641700031236,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 346,
+      "status": "applied",
+      "latencyMs": 269.66320899967104,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 347,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 348,
+      "status": "applied",
+      "latencyMs": 263.5201670001261,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 349,
+      "status": "applied",
+      "latencyMs": 306.4620000002906,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 350,
+      "status": "applied",
+      "latencyMs": 272.44295899989083,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 351,
+      "status": "applied",
+      "latencyMs": 251.50433300016448,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 352,
+      "status": "applied",
+      "latencyMs": 253.77549999998882,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 353,
+      "status": "applied",
+      "latencyMs": 232.2945840000175,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 354,
+      "status": "applied",
+      "latencyMs": 264.4057080000639,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 355,
+      "status": "applied",
+      "latencyMs": 261.37520800018683,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1088,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 358,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 359,
+      "status": "applied",
+      "latencyMs": 252.07554099988192,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 360,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 361,
+      "status": "applied",
+      "latencyMs": 349.79441699991,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 362,
+      "status": "applied",
+      "latencyMs": 250.87587500037625,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 363,
+      "status": "applied",
+      "latencyMs": 290.7483749999665,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1107,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 364,
+      "status": "applied",
+      "latencyMs": 263.9191250000149,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 365,
+      "status": "applied",
+      "latencyMs": 301.0940829999745,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1242,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 366,
+      "status": "applied",
+      "latencyMs": 290.61733399983495,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 367,
+      "status": "applied",
+      "latencyMs": 593.8782499996014,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1123,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 368,
+      "status": "applied",
+      "latencyMs": 250.86254200013354,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1019,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 369,
+      "status": "applied",
+      "latencyMs": 261.1579999998212,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 370,
+      "status": "applied",
+      "latencyMs": 254.6732919998467,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 371,
+      "status": "applied",
+      "latencyMs": 316.82133399974555,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 372,
+      "status": "applied",
+      "latencyMs": 336.62458299985155,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 373,
+      "status": "applied",
+      "latencyMs": 333.5600409996696,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1082,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 374,
+      "status": "applied",
+      "latencyMs": 304.4960830002092,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 375,
+      "status": "applied",
+      "latencyMs": 265.53766599996015,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 376,
+      "status": "applied",
+      "latencyMs": 224.76658300030977,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 890,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 377,
+      "status": "applied",
+      "latencyMs": 276.1418750002049,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 378,
+      "status": "applied",
+      "latencyMs": 225.8957080002874,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 379,
+      "status": "applied",
+      "latencyMs": 286.29829200031236,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 380,
+      "status": "applied",
+      "latencyMs": 305.2995420000516,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 947,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 381,
+      "status": "applied",
+      "latencyMs": 295.6288330000825,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1076,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 382,
+      "status": "applied",
+      "latencyMs": 286.44891700008884,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 963,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 383,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 384,
+      "status": "applied",
+      "latencyMs": 589.689708000049,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1172,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 385,
+      "status": "applied",
+      "latencyMs": 574.9956669998355,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 784,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 386,
+      "status": "applied",
+      "latencyMs": 256.404291999992,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 387,
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 233.21449999976903,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 388,
+      "status": "applied",
+      "latencyMs": 231.87116699991748,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1167,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 389,
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 333.16012499993667,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 943,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 390,
+      "status": "applied",
+      "latencyMs": 312.15254099993035,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 391,
+      "status": "applied",
+      "latencyMs": 282.24479100015014,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 943,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 392,
+      "status": "applied",
+      "latencyMs": 578.9007910001092,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1081,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 393,
+      "status": "applied",
+      "latencyMs": 261.158292000182,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1153,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 394,
+      "status": "applied",
+      "latencyMs": 305.357332999818,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1034,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 395,
+      "status": "applied",
+      "latencyMs": 261.93462500022724,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 936,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 396,
+      "status": "applied",
+      "latencyMs": 259.7312920000404,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 942,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 397,
+      "status": "applied",
+      "latencyMs": 282.6143339998089,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 398,
+      "status": "applied",
+      "latencyMs": 242.1227080002427,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1000,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 399,
+      "status": "applied",
+      "latencyMs": 275.6829579998739,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1005,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 400,
+      "status": "applied",
+      "latencyMs": 277.8941669999622,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 882,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 401,
+      "status": "applied",
+      "latencyMs": 247.578125,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 402,
+      "status": "applied",
+      "latencyMs": 318.4172499999404,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 982,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 404,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 405,
+      "status": "applied",
+      "latencyMs": 267.7987079997547,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1236,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 406,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 407,
+      "status": "applied",
+      "latencyMs": 286.0973329995759,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1313,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 408,
+      "status": "applied",
+      "latencyMs": 273.92874999996275,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1234,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 409,
+      "status": "applied",
+      "latencyMs": 275.2470410000533,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 410,
+      "status": "applied",
+      "latencyMs": 234.6439999998547,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 411,
+      "status": "applied",
+      "latencyMs": 249.95316699985415,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 412,
+      "status": "applied",
+      "latencyMs": 277.39749999996275,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 413,
+      "status": "applied",
+      "latencyMs": 270.74191700015217,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 414,
+      "status": "applied",
+      "latencyMs": 240.13637499976903,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 415,
+      "status": "applied",
+      "latencyMs": 234.95837499992922,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1087,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 416,
+      "status": "applied",
+      "latencyMs": 349.2149590002373,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1220,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 417,
+      "status": "applied",
+      "latencyMs": 229.34479200001806,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 418,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 419,
+      "status": "applied",
+      "latencyMs": 616.6973330001347,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 420,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 421,
+      "status": "applied",
+      "latencyMs": 605.9033329999074,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 422,
+      "status": "applied",
+      "latencyMs": 270.2271250002086,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 423,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 424,
+      "status": "applied",
+      "latencyMs": 632.1122919996269,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1050,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 425,
+      "status": "applied",
+      "latencyMs": 271.420082999859,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 426,
+      "status": "applied",
+      "latencyMs": 235.8749170000665,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 427,
+      "status": "applied",
+      "latencyMs": 284.53904200019315,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 428,
+      "status": "applied",
+      "latencyMs": 284.84191600000486,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 429,
+      "status": "applied",
+      "latencyMs": 276.8925000000745,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 430,
+      "status": "applied",
+      "latencyMs": 593.9705829997547,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 431,
+      "status": "applied",
+      "latencyMs": 258.69154100026935,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 432,
+      "status": "applied",
+      "latencyMs": 306.5016250000335,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 433,
+      "status": "applied",
+      "latencyMs": 251.5289590000175,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 434,
+      "status": "applied",
+      "latencyMs": 290.9688329999335,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1324,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 435,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 436,
+      "status": "applied",
+      "latencyMs": 254.37675000028685,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 437,
+      "status": "applied",
+      "latencyMs": 595.9869170002639,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1123,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 438,
+      "status": "applied",
+      "latencyMs": 356.2960830000229,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 439,
+      "status": "applied",
+      "latencyMs": 274.0377910002135,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 440,
+      "status": "applied",
+      "latencyMs": 425.443458000198,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1175,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 441,
+      "status": "applied",
+      "latencyMs": 249.01983299991116,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1107,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 442,
+      "status": "applied",
+      "latencyMs": 311.07612500013784,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 443,
+      "status": "applied",
+      "latencyMs": 278.72020899970084,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 444,
+      "status": "applied",
+      "latencyMs": 321.33499999996275,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1106,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 445,
+      "status": "applied",
+      "latencyMs": 302.6946250000037,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 446,
+      "status": "applied",
+      "latencyMs": 378.84375,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 447,
+      "status": "applied",
+      "latencyMs": 275.1490839999169,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 448,
+      "status": "applied",
+      "latencyMs": 349.8224590001628,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 965,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 449,
+      "status": "applied",
+      "latencyMs": 391.68083399999887,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 450,
+      "status": "applied",
+      "latencyMs": 264.34191600000486,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 451,
+      "status": "applied",
+      "latencyMs": 308.1974589996971,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 452,
+      "status": "applied",
+      "latencyMs": 243.4038750003092,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1065,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 453,
+      "status": "applied",
+      "latencyMs": 294.0030000000261,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 869,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 454,
+      "status": "applied",
+      "latencyMs": 308.6635829997249,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 455,
+      "status": "applied",
+      "latencyMs": 576.5478750001639,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 946,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 456,
+      "status": "applied",
+      "latencyMs": 228.44420899963006,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1252,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 457,
+      "status": "applied",
+      "latencyMs": 224.7347500002943,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 967,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 458,
+      "status": "applied",
+      "latencyMs": 284.172290999908,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 952,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 459,
+      "status": "applied",
+      "latencyMs": 272.89379200013354,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1153,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 460,
+      "status": "applied",
+      "latencyMs": 267.4794169999659,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1147,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 461,
+      "status": "applied",
+      "latencyMs": 270.2125829998404,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 462,
+      "status": "applied",
+      "latencyMs": 255.20033300016075,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1315,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 463,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 464,
+      "status": "applied",
+      "latencyMs": 244.75550000043586,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1087,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 466,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 467,
+      "status": "applied",
+      "latencyMs": 236.8974159997888,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 967,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 468,
+      "status": "applied",
+      "latencyMs": 311.65466600004584,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1144,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 469,
+      "status": "applied",
+      "latencyMs": 287.21491599967703,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 960,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 470,
+      "status": "applied",
+      "latencyMs": 274.77020800020546,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1019,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 471,
+      "status": "applied",
+      "latencyMs": 238.97870799992234,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 472,
+      "status": "applied",
+      "latencyMs": 297.45387500012293,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 861,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 473,
+      "status": "applied",
+      "latencyMs": 219.45766699966043,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1099,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 474,
+      "status": "applied",
+      "latencyMs": 287.2433330002241,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 475,
+      "status": "applied",
+      "latencyMs": 298.8457089997828,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1106,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 476,
+      "status": "applied",
+      "latencyMs": 296.4779579997994,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 477,
+      "status": "applied",
+      "latencyMs": 287.83129200013354,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1093,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 478,
+      "status": "applied",
+      "latencyMs": 277.4681250001304,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1118,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 479,
+      "status": "applied",
+      "latencyMs": 257.82675000000745,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1157,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 480,
+      "status": "applied",
+      "latencyMs": 211.25954200001433,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1080,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 481,
+      "status": "applied",
+      "latencyMs": 230.13991700019687,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 483,
+      "status": "applied",
+      "latencyMs": 255.3717080000788,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1102,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 484,
+      "status": "applied",
+      "latencyMs": 649.3312500002794,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1016,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 485,
+      "status": "applied",
+      "latencyMs": 662.0570410001092,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1093,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 486,
+      "status": "applied",
+      "latencyMs": 250.6806669998914,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 487,
+      "status": "applied",
+      "latencyMs": 239.4355410002172,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1174,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 488,
+      "status": "applied",
+      "latencyMs": 268.60804200032726,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 934,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 489,
+      "status": "applied",
+      "latencyMs": 401.1568749998696,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1115,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 490,
+      "status": "applied",
+      "latencyMs": 288.9041670002043,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 491,
+      "status": "applied",
+      "latencyMs": 295.9328749999404,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1011,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 492,
+      "status": "applied",
+      "latencyMs": 330.18800000008196,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1141,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 493,
+      "status": "applied",
+      "latencyMs": 348.97979100001976,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 942,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 495,
+      "status": "applied",
+      "latencyMs": 258.0689170002006,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 496,
+      "status": "applied",
+      "latencyMs": 296.2539170002565,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1048,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 497,
+      "status": "applied",
+      "latencyMs": 280.33820800017565,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1186,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 498,
+      "status": "applied",
+      "latencyMs": 269.4764170004055,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1098,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 499,
+      "status": "applied",
+      "latencyMs": 301.85550000006333,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 962,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 500,
+      "status": "applied",
+      "latencyMs": 301.085583999753,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1252,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 501,
+      "status": "applied",
+      "latencyMs": 298.1262079998851,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1226,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 502,
+      "status": "applied",
+      "latencyMs": 265.58733300026506,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1140,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 503,
+      "status": "applied",
+      "latencyMs": 235.38012500014156,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1093,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 505,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 506,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 507,
+      "status": "applied",
+      "latencyMs": 269.24245799984783,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1105,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 508,
+      "status": "applied",
+      "latencyMs": 259.6572500001639,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1104,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 509,
+      "status": "applied",
+      "latencyMs": 252.19645799975842,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1193,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 510,
+      "status": "applied",
+      "latencyMs": 234.76554099982604,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 511,
+      "status": "applied",
+      "latencyMs": 237.373207999859,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1095,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 512,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 513,
+      "status": "applied",
+      "latencyMs": 622.8609580001794,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 514,
+      "status": "applied",
+      "latencyMs": 262.75499999988824,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 515,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 516,
+      "status": "applied",
+      "latencyMs": 645.4905420001596,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 517,
+      "status": "applied",
+      "latencyMs": 360.92112499987707,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 518,
+      "status": "applied",
+      "latencyMs": 247.52137499954551,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 991,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 519,
+      "status": "applied",
+      "latencyMs": 213.0441670003347,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 850,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 520,
+      "status": "applied",
+      "latencyMs": 239.1134580001235,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 988,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 521,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 522,
+      "status": "applied",
+      "latencyMs": 604.8163749999367,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1086,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 523,
+      "status": "applied",
+      "latencyMs": 614.2173750000075,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 524,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 525,
+      "status": "applied",
+      "latencyMs": 576.5073750000447,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 845,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 526,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 527,
+      "status": "applied",
+      "latencyMs": 563.1759159998037,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 528,
+      "status": "applied",
+      "latencyMs": 228.80533299967647,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 529,
+      "status": "applied",
+      "latencyMs": 234.21533300029114,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 530,
+      "status": "applied",
+      "latencyMs": 250.48012499976903,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 532,
+      "status": "applied",
+      "latencyMs": 223.57916600024328,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1107,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 533,
+      "status": "applied",
+      "latencyMs": 243.84566600015387,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1177,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 534,
+      "status": "applied",
+      "latencyMs": 331.9524999996647,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 535,
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 229.71562500018626,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1308,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 536,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 537,
+      "status": "applied",
+      "latencyMs": 227.12333300011232,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 845,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 539,
+      "status": "applied",
+      "latencyMs": 278.290666999761,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 540,
+      "status": "applied",
+      "latencyMs": 235.05924999993294,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1004,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 541,
+      "status": "applied",
+      "latencyMs": 308.9059170000255,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 542,
+      "status": "applied",
+      "latencyMs": 281.31474999990314,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 941,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 543,
+      "status": "applied",
+      "latencyMs": 256.71675000013784,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 544,
+      "status": "applied",
+      "latencyMs": 228.80162500031292,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 545,
+      "status": "applied",
+      "latencyMs": 255.7297499999404,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1238,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 546,
+      "status": "applied",
+      "latencyMs": 246.33075000019744,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 950,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 547,
+      "status": "applied",
+      "latencyMs": 274.7531250002794,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1166,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 548,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 549,
+      "status": "applied",
+      "latencyMs": 283.0882500000298,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 550,
+      "status": "applied",
+      "latencyMs": 264.6512919999659,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1045,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 551,
+      "status": "applied",
+      "latencyMs": 265.0909170000814,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 553,
+      "status": "applied",
+      "latencyMs": 214.64854100020602,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1046,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 554,
+      "status": "applied",
+      "latencyMs": 255.58662499999627,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1045,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 556,
+      "status": "applied",
+      "latencyMs": 275.09558399999514,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 557,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 558,
+      "status": "applied",
+      "latencyMs": 219.41949999984354,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 560,
+      "status": "applied",
+      "latencyMs": 268.9670830001123,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1270,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 562,
+      "status": "applied",
+      "latencyMs": 236.83916699979454,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1246,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 564,
+      "status": "applied",
+      "latencyMs": 281.9184169997461,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 991,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 565,
+      "status": "applied",
+      "latencyMs": 273.65937499981374,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 566,
+      "status": "applied",
+      "latencyMs": 242.6420840001665,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 567,
+      "status": "applied",
+      "latencyMs": 280.31091600004584,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 988,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 568,
+      "status": "applied",
+      "latencyMs": 608.4265000000596,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1099,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 569,
+      "status": "applied",
+      "latencyMs": 267.8578750002198,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 871,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 570,
+      "status": "applied",
+      "latencyMs": 221.71070799976587,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 923,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 571,
+      "status": "applied",
+      "latencyMs": 306.3333749999292,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 572,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 573,
+      "status": "applied",
+      "latencyMs": 244.17841699998826,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 574,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 576,
+      "status": "applied",
+      "latencyMs": 221.30995800020173,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 577,
+      "status": "applied",
+      "latencyMs": 229.0209580003284,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1078,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 578,
+      "status": "applied",
+      "latencyMs": 275.35000000009313,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 579,
+      "status": "applied",
+      "latencyMs": 242.87304099975154,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 580,
+      "status": "applied",
+      "latencyMs": 229.50208400003612,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 581,
+      "status": "applied",
+      "latencyMs": 313.58537500025705,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 582,
+      "status": "applied",
+      "latencyMs": 233.23604200035334,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1018,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 583,
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 584,
+      "status": "applied",
+      "latencyMs": 571.8775830003433,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 585,
+      "status": "applied",
+      "latencyMs": 594.7463750001043,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 586,
+      "status": "applied",
+      "latencyMs": 290.1471659997478,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    }
+  ],
+  "latencyPopulation": "All applied decisions recovered from complete replay; excludes rejected/cancelled/failed calls.",
+  "latencyCount": 534,
+  "traceLimitations": "Original incremental collector could omit out-of-order completions; rows are partial. Totals come from Driver counters; latency recalculated from all applied decisions in replay. Collector corrected for future runs."
+}

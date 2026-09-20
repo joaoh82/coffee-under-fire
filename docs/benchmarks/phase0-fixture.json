@@ -1,0 +1,4455 @@
+{
+  "source": "development-fixture",
+  "timestamp": "2026-09-19T08:41:58.687Z",
+  "host": "darwin",
+  "requests": 36,
+  "success": 36,
+  "failed": 0,
+  "p50Ms": 0.4061670000000106,
+  "p95Ms": 1.299790999999999,
+  "inputTokens": null,
+  "outputTokens": null,
+  "projectedRunInputTokens": null,
+  "projectedRunUsd": null,
+  "notes": [
+    "Burst probe, not a sustained 8-minute capacity test.",
+    "No assumed pricing. Unknown usage/cost remains null.",
+    "Fixture timings do not measure Jev."
+  ],
+  "rows": [
+    {
+      "npc": "probe_0",
+      "round": 0,
+      "elapsedMs": 4.849625000000003,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_0",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_0",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_1",
+      "round": 0,
+      "elapsedMs": 1.299790999999999,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_1",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_1",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_2",
+      "round": 0,
+      "elapsedMs": 0.8742920000000254,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_2",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_2",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_3",
+      "round": 0,
+      "elapsedMs": 0.32587499999999636,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_3",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_3",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_4",
+      "round": 0,
+      "elapsedMs": 0.9978749999999934,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_4",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_4",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_5",
+      "round": 0,
+      "elapsedMs": 0.6219170000000247,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_5",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_5",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_6",
+      "round": 0,
+      "elapsedMs": 0.3510829999999885,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_6",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_6",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_7",
+      "round": 0,
+      "elapsedMs": 0.13004199999997468,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_7",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_7",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_8",
+      "round": 0,
+      "elapsedMs": 0.689582999999999,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_8",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_8",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": -1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 0
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_9",
+      "round": 0,
+      "elapsedMs": 0.4738749999999925,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_9",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_9",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": -1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 0
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_10",
+      "round": 0,
+      "elapsedMs": 0.2727920000000097,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_10",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_10",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": -1
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_11",
+      "round": 0,
+      "elapsedMs": 0.09591700000001424,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 1,
+        "tick": 0,
+        "npc": "probe_11",
+        "config": "tactics.v1",
+        "selected": "hold",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_11",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 12,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "fire_player",
+          "kind": "fire",
+          "target": "player",
+          "duration": 0.8
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": -1
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_0",
+      "round": 1,
+      "elapsedMs": 1.0830409999999802,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_0",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_0",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_1",
+      "round": 1,
+      "elapsedMs": 0.6121249999999918,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_1",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_1",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_2",
+      "round": 1,
+      "elapsedMs": 0.3724579999999946,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_2",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_2",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_3",
+      "round": 1,
+      "elapsedMs": 0.07487499999999159,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_3",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_3",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 7
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 7
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 11
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 10
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 4
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 4
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_4",
+      "round": 1,
+      "elapsedMs": 0.8388340000000198,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_4",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_4",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_5",
+      "round": 1,
+      "elapsedMs": 0.6117500000000007,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_5",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_5",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_6",
+      "round": 1,
+      "elapsedMs": 0.3650829999999985,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_6",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_6",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_7",
+      "round": 1,
+      "elapsedMs": 0.1469589999999812,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_7",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_7",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 5
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 5
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 2
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": 1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 2
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_8",
+      "round": 1,
+      "elapsedMs": 0.6017920000000174,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_8",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_8",
+        "role": "rifleman",
+        "position": {
+          "x": -17,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -21,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -20,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -17,
+            "z": -1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 0
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_9",
+      "round": 1,
+      "elapsedMs": 0.4061670000000106,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_9",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_9",
+        "role": "rifleman",
+        "position": {
+          "x": -15,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": -19,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -18,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -15,
+            "z": -1
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": -12,
+            "z": 0
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_10",
+      "round": 1,
+      "elapsedMs": 0.22333299999999667,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_10",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_10",
+        "role": "rifleman",
+        "position": {
+          "x": -13,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -9,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -10,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -16,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -13,
+            "z": -1
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_11",
+      "round": 1,
+      "elapsedMs": 0.05662499999999682,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 2,
+        "tick": 0,
+        "npc": "probe_11",
+        "config": "tactics.v1",
+        "selected": "reload",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_11",
+        "role": "rifleman",
+        "position": {
+          "x": -11,
+          "z": 3
+        },
+        "hp": 30,
+        "ammo": 0,
+        "visible": [
+          {
+            "id": "player",
+            "position": {
+              "x": -17,
+              "z": 12
+            }
+          }
+        ],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": -7,
+            "z": 3
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": -8,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 6
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": -14,
+            "z": 0
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": -11,
+            "z": -1
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_0",
+      "round": 2,
+      "elapsedMs": 0.7130420000000015,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_0",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_0",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_1",
+      "round": 2,
+      "elapsedMs": 0.47820899999999256,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_1",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_1",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_2",
+      "round": 2,
+      "elapsedMs": 0.28379199999997695,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_2",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_2",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_3",
+      "round": 2,
+      "elapsedMs": 0.07633300000000531,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_3",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_3",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_4",
+      "round": 2,
+      "elapsedMs": 0.932707999999991,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_4",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_4",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_5",
+      "round": 2,
+      "elapsedMs": 0.7371659999999736,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_5",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_5",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_6",
+      "round": 2,
+      "elapsedMs": 0.4942090000000121,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_6",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_6",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_7",
+      "round": 2,
+      "elapsedMs": 0.06374999999999886,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_7",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_7",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_8",
+      "round": 2,
+      "elapsedMs": 0.5507910000000038,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_8",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_8",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_9",
+      "round": 2,
+      "elapsedMs": 0.38512500000001637,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_9",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_9",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_10",
+      "round": 2,
+      "elapsedMs": 0.23124999999998863,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_10",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_10",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    },
+    {
+      "npc": "probe_11",
+      "round": 2,
+      "elapsedMs": 0.08199999999999363,
+      "decision": {
+        "version": "coffee.v1",
+        "session": "68ba69a4-0d70-4887-a9ec-f966a3b24113",
+        "epoch": 0,
+        "generation": 0,
+        "sequence": 3,
+        "tick": 0,
+        "npc": "probe_11",
+        "config": "tactics.v1",
+        "selected": "move_0",
+        "source": "mock",
+        "confidence": 0,
+        "latencyMs": 0,
+        "model": "development-fixture",
+        "usage": null
+      },
+      "observation": {
+        "npc": "probe_11",
+        "role": "rifleman",
+        "position": {
+          "x": 16,
+          "z": -12
+        },
+        "hp": 10,
+        "ammo": 0,
+        "visible": [],
+        "lastSeen": {
+          "position": {
+            "x": -17,
+            "z": 12
+          },
+          "age": 0
+        },
+        "recentDamage": false,
+        "currentAction": null,
+        "frame": "XZ_meters_Y_up"
+      },
+      "candidates": [
+        {
+          "id": "hold",
+          "kind": "hold",
+          "duration": 1
+        },
+        {
+          "id": "reload",
+          "kind": "reload",
+          "duration": 1.2
+        },
+        {
+          "id": "move_0",
+          "kind": "move",
+          "destination": {
+            "x": 20,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_1",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_2",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -8
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_3",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -9
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_4",
+          "kind": "move",
+          "destination": {
+            "x": 12,
+            "z": -12
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_5",
+          "kind": "move",
+          "destination": {
+            "x": 13,
+            "z": -15
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_6",
+          "kind": "move",
+          "destination": {
+            "x": 16,
+            "z": -16
+          },
+          "duration": 2
+        },
+        {
+          "id": "move_7",
+          "kind": "move",
+          "destination": {
+            "x": 19,
+            "z": -15
+          },
+          "duration": 2
+        }
+      ]
+    }
+  ]
+}

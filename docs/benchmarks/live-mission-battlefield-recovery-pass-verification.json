@@ -1,0 +1,13 @@
+{
+  "sourceReport": "docs/benchmarks/live-mission-battlefield-recovery-pass.json",
+  "recording": "docs/benchmarks/live-mission-battlefield-recovery-pass-replay.json",
+  "checkedAt": "2026-09-19T15:55:55.956Z",
+  "outcomeMatches": true,
+  "simulationSeconds": 463.05,
+  "health": 100,
+  "deliveries": 28,
+  "kills": 356,
+  "appliedChoicesReplayed": 2676,
+  "recordedAppliedChoices": 2676,
+  "note": "Offline execution of recorded decisions; no Jev requests. Interrupted-run UI pause state is not reconstructed."
+}

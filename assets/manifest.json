@@ -1,0 +1,48 @@
+{
+  "source": "Blender Python generator; original project-authored sample",
+  "blender": "5.2.1 LTS",
+  "character": {
+    "source": "assets/blender/characters/soldier_sample.blend",
+    "runtime": "apps/web/public/assets/models/soldier_sample.glb",
+    "triangles": 96,
+    "materials": [
+      "MAT_enamel",
+      "MAT_warm_skin",
+      "MAT_Allied_olive",
+      "MAT_boots"
+    ],
+    "skinnedMeshes": 8,
+    "bounds": {
+      "min": [
+        -0.550000011920929,
+        0.004999995231621593,
+        -0.25999999046325684
+      ],
+      "max": [
+        0.5,
+        1.6749999523162842,
+        0.31000008855525074
+      ]
+    },
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 1.100000023841858
+      },
+      {
+        "name": "run",
+        "duration": 1.100000023841858
+      }
+    ],
+    "animationBlendVerified": true
+  },
+  "markers": {
+    "source": "assets/blender/arena/marker_sample.blend",
+    "count": 4,
+    "worldTransformsMatch": true
+  },
+  "limitations": [
+    "Technical pipeline sample only, not final character art.",
+    "Upper/lower-body action blending and full gameplay animation roster are not established."
+  ]
+}

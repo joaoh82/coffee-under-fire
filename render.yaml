@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: coffee-under-fire
+    runtime: node
+    plan: 0.5c-512mb
+    numInstances: 1
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: DECISION_MODE
+        value: strict
+      - key: JEV_MODEL
+        value: jev-latest
+      - key: TYPESAFE_API_KEY
+        sync: false
+      - key: PLAYTEST_INVITES
+        sync: false
+      - key: PLAYTEST_COOKIE_SECRET
+        generateValue: true
+      - key: VITE_SUPPORT_URL
+        value: https://ko-fi.com/thepolyglotprogrammer

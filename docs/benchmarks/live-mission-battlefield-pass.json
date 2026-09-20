@@ -1,0 +1,4877 @@
+{
+  "timestamp": "2026-09-19T15:40:04.337Z",
+  "kind": "live-jev-scripted-player",
+  "note": "Synthetic player test, not human playthrough; same health, collision, coffee and combat rules. Stops scheduling at 3000 decisions (up to four already in flight) / 10 minutes wall time.",
+  "requestBudget": 3000,
+  "combatProfile": "armor.v1",
+  "peakTanks": 0,
+  "peakEnemies": 9,
+  "tankShots": 0,
+  "termination": "five_recovery_failures",
+  "simulationSeconds": 105.91666666666667,
+  "wallSeconds": 119.225233625,
+  "waveProfile": "pressure.v1",
+  "peakInfantry": 9,
+  "deliveries": 5,
+  "kills": 42,
+  "health": 100,
+  "pauses": 7,
+  "pauseMs": 13086.577249000009,
+  "retryFailures": 5,
+  "totals": {
+    "requested": 392,
+    "applied": 351,
+    "rejected": 13,
+    "errors": 0,
+    "inputTokens": 370660,
+    "outputTokens": 32180
+  },
+  "p50Ms": 269.2188329999917,
+  "p95Ms": 463.4018749999959,
+  "costUsd": null,
+  "rows": [
+    {
+      "id": 1,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 673.9561670000039,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 2,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 243.50608400000056,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 3,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.3799579999977,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 4,
+      "npc": "enemy_2",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 326.90437499999825,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 846,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 5,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.52804100000503,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1077,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 6,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 299.04462500000227,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 7,
+      "npc": "enemy_2",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 628.6140000000014,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1098,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 8,
+      "npc": "enemy_2",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.1750830000019,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1238,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 9,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.7020000000048,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1010,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 10,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 293.1905410000036,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 11,
+      "npc": "enemy_10",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 313.6759169999932,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1039,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 12,
+      "npc": "enemy_10",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 13,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 272.02995799999917,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1007,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 14,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 239.02195899999788,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1077,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 15,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 239.5555419999946,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 16,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 333.88287500000297,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1001,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 17,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 296.24995800000033,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1010,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 18,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 230.17141700000502,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 738,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 19,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.91425000000163,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 20,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 237.97062500000175,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1060,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 21,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 328.05883399999584,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 22,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 293.6542079999999,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 964,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 24,
+      "npc": "enemy_1",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 23,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 273.9364579999965,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 25,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 274.1888749999998,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1097,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 26,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 269.2636249999996,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1186,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 28,
+      "npc": "enemy_9",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.887625000003,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1199,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 27,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 335.6543329999986,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 865,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 29,
+      "npc": "enemy_26",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 292.8127500000046,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 853,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 30,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 289.03670799999963,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1100,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 31,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 228.2479999999996,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 32,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 271.18412499999977,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 33,
+      "npc": "enemy_26",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.55845799999952,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1070,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 34,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 279.84958400000323,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1327,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 35,
+      "npc": "enemy_16",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 36,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 222.78029199999582,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1108,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 37,
+      "npc": "enemy_30",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 275.77595799999835,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1049,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 38,
+      "npc": "enemy_26",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 218.78337499999907,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1007,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 39,
+      "npc": "enemy_30",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 259.8777920000066,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1102,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 40,
+      "npc": "enemy_33",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.4130409999998,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 851,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 41,
+      "npc": "enemy_30",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 233.3336249999993,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1118,
+        "output_tokens": 95
+      }
+    },
+    {
+      "id": 42,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 254.42554199999722,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1116,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 43,
+      "npc": "enemy_26",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 233.67024999999558,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1004,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 44,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 245.74049999999988,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 45,
+      "npc": "enemy_33",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 658.661500000002,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1007,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 46,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.30304199999955,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1093,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 47,
+      "npc": "enemy_26",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 48,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 289.7525000000023,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 50,
+      "npc": "enemy_46",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 365.1054159999985,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 853,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 51,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 512.5987079999977,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1062,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 49,
+      "npc": "enemy_33",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 840.7564999999959,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1115,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 53,
+      "npc": "enemy_33",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 272.23041699999885,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1239,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 52,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 258.9642079999976,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1098,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 54,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 291.3299160000024,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 55,
+      "npc": "enemy_46",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 247.56233300000167,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1151,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 56,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 281.049583,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1044,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 57,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 238.46304200000304,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1093,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 58,
+      "npc": "enemy_23",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 212.49137500000506,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1189,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 59,
+      "npc": "enemy_56",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 312.6584160000057,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 851,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 60,
+      "npc": "enemy_46",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 248.47945900000195,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1165,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 61,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 250.73816699999588,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 790,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 62,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 282.4346249999944,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1088,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 63,
+      "npc": "enemy_56",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 285.5832919999957,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1103,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 64,
+      "npc": "enemy_46",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 277.5457500000048,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 65,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 262.0512499999895,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 67,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 312.4094170000026,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1029,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 66,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 622.2586250000022,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 949,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 68,
+      "npc": "enemy_46",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 234.06566599999496,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1288,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 69,
+      "npc": "enemy_56",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.78966700000456,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1156,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 70,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 264.17033300000185,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1180,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 71,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.45500000000175,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 856,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 72,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 224.56116700000712,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 959,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 73,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.57683399999223,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 74,
+      "npc": "enemy_56",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 75,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 216.19220900000073,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 943,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 76,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 265.68816700000025,
+      "source": "jev",
+      "selected": "move_7",
+      "usage": {
+        "input_tokens": 1035,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 77,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 238.66887500000303,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1078,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 79,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 235.53854199999478,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1056,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 78,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 282.88666699999885,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 81,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 221.4501670000027,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1168,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 80,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 321.680457999988,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 960,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 83,
+      "npc": "enemy_45",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 243.0982090000034,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1241,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 82,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 289.9276249999966,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1109,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 84,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 85,
+      "npc": "enemy_79",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 87,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 566.1940000000031,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1108,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 86,
+      "npc": "enemy_81",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 651.7242499999993,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 858,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 88,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 596.7628330000007,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1144,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 90,
+      "npc": "enemy_79",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 275.44412499999453,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 952,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 89,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 635.6734999999899,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1244,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 91,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 303.127542000002,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1108,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 92,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 244.60912500000268,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 93,
+      "npc": "enemy_81",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 264.8542080000043,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 95,
+      "npc": "enemy_79",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 215.7257499999978,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1304,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 94,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 404.5946249999979,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1100,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 97,
+      "npc": "enemy_79",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 96,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 312.9805830000114,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1154,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 98,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 230.5068339999998,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1048,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 99,
+      "npc": "enemy_93",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 228.81029199999466,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 849,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 100,
+      "npc": "enemy_81",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 258.8756250000006,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1196,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 101,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 298.4248750000115,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1053,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 102,
+      "npc": "enemy_94",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 236.76145800000813,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 844,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 103,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 308.2172079999873,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1033,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 104,
+      "npc": "enemy_65",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 231.0899999999965,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1241,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 105,
+      "npc": "enemy_93",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 286.53862500000105,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 990,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 106,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 306.6586249999964,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1143,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 107,
+      "npc": "enemy_81",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 376.981832999998,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1259,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 108,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 607.4277080000029,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 109,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 295.32712499999616,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 110,
+      "npc": "enemy_94",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 235.82374999999593,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1003,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 111,
+      "npc": "enemy_93",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.53979199999594,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 987,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 113,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 248.98799999999756,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 931,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 112,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 276.205209000007,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1113,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 114,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 240.3537500000093,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 115,
+      "npc": "enemy_94",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.94579100000556,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 116,
+      "npc": "enemy_105",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 224.3125,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 117,
+      "npc": "enemy_93",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 293.15333299999475,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 922,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 118,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 241.79483400000026,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 939,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 119,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 224.82083299999067,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1117,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 120,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 243.9311250000028,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 121,
+      "npc": "enemy_94",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.59870899999805,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1033,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 123,
+      "npc": "enemy_105",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 280.085625000007,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1152,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 124,
+      "npc": "enemy_93",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 122,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 274.86054100000183,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 125,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.8337499999907,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1165,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 126,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 282.4159590000054,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1306,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 127,
+      "npc": "enemy_94",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 246.93537500000093,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1113,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 128,
+      "npc": "enemy_105",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 275.903542,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1310,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 129,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 268.86054100000183,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1121,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 130,
+      "npc": "enemy_115",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 229.39608299999963,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 845,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 131,
+      "npc": "enemy_57",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.7297499999986,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1114,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 132,
+      "npc": "enemy_67",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 133,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 288.525999999998,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 134,
+      "npc": "enemy_105",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 316.04666700000234,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1338,
+        "output_tokens": 122
+      }
+    },
+    {
+      "id": 135,
+      "npc": "enemy_105",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 136,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 225.05758299998706,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1176,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 137,
+      "npc": "enemy_115",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.4870410000003,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1246,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 138,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 314.1589160000003,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 139,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 253.61762499999895,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1167,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 140,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.20358299999498,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1109,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 141,
+      "npc": "enemy_115",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 238.24716699999408,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1291,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 142,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 275.30975000000035,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 143,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 271.01754100000835,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1152,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 144,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 283.68783399999666,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1079,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 145,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 257.90633399999933,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1159,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 146,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 257.82045800000196,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 147,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 273.12054100001114,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1158,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 148,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 291.94487500000105,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1252,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 149,
+      "npc": "enemy_104",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 150,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 228.0841669999936,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1144,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 151,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 334.1321659999958,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1096,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 152,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 291.18820800000685,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 153,
+      "npc": "enemy_136",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 277.83987499999057,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 154,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 631.7218330000032,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1097,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 155,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 342.04649999999674,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 157,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 254.56237499999406,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1031,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 156,
+      "npc": "enemy_136",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 269.8839999999909,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1071,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 158,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 317.723834000004,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1071,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 160,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 281.0370840000105,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 993,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 159,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 230.92833300000348,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 161,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 230.59674999999697,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 162,
+      "npc": "enemy_136",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 323.15054200000304,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1008,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 163,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 300.28416700000525,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 164,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 362.6702910000022,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1067,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 165,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 419.91975000000093,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 729,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 166,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 323.18129199999385,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1000,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 167,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 698.3674170000013,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 869,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 168,
+      "npc": "enemy_136",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 379.11291700000584,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1005,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 169,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 314.1958339999983,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 943,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 170,
+      "npc": "enemy_136",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 172,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 282.56283399999666,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1040,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 171,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 299.89512499999546,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1045,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 173,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 623.780791000012,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 175,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 216.49958299999707,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 865,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 174,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 552.472207999992,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 176,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 263.3266660000081,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 177,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 298.40524999999616,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1168,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 178,
+      "npc": "enemy_137",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 247.09766699999454,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1058,
+        "output_tokens": 79
+      }
+    },
+    {
+      "id": 179,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 246.6363330000022,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1101,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 180,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 299.0276659999945,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1102,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 182,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.6883749999979,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 947,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 181,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 306.28770899999654,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 966,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 183,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.778250000003,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 184,
+      "npc": "enemy_121",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 185,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 371.06141700000444,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1097,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 186,
+      "npc": "enemy_157",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 272.5859580000106,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 187,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 287.737083,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1293,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 188,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.6195000000007,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 189,
+      "npc": "enemy_158",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 299.10391700000037,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 790,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 190,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 339.5137079999986,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1124,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 191,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 227.81912499999453,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 192,
+      "npc": "enemy_138",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 194,
+      "npc": "enemy_157",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 304.8862499999959,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1154,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 193,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 264.72691700000723,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1143,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 195,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 273.6346670000057,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1104,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 196,
+      "npc": "enemy_158",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 372.1313749999972,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1192,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 197,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 312.32491700000537,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1117,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 198,
+      "npc": "enemy_158",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 199,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.9663750000036,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1032,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 200,
+      "npc": "enemy_157",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 311.8901659999974,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1085,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 201,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 309.3554160000058,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1094,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 202,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 247.57274999999208,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 731,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 203,
+      "npc": "enemy_173",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.72295799999847,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 859,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 204,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 315.5258749999921,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1075,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 205,
+      "npc": "enemy_157",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 206,
+      "npc": "enemy_139",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 463.4018749999959,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1171,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 207,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 397.1615829999937,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 209,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 269.2188329999917,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 867,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 208,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 714.1468749999913,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1252,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 210,
+      "npc": "enemy_173",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 302.58979099999124,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1082,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 211,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart",
+      "latencyMs": 246.50529099999403,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1320,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 212,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 213,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 319.4292080000014,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 214,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 290.5966669999907,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1173,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 215,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 341.51600000000326,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1317,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 216,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 259.7718750000058,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1006,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 217,
+      "npc": "enemy_173",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 305.76224999999977,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1077,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 218,
+      "npc": "enemy_144",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.3680420000019,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1291,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 219,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 226.33012499999313,
+      "source": "jev",
+      "selected": "move_6",
+      "usage": {
+        "input_tokens": 791,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 220,
+      "npc": "enemy_191",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 252.9201669999893,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 855,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 221,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 304.0640410000051,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1232,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 222,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 271.70454200000677,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 882,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 223,
+      "npc": "enemy_173",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 224,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 272.3426669999899,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 868,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 225,
+      "npc": "enemy_191",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.2015420000098,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1092,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 226,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 227,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 294.2034999999887,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 228,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 245.78591700000106,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1171,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 229,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 245.7869170000049,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1005,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 230,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 563.8188749999972,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 868,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 231,
+      "npc": "enemy_191",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 272.1927090000099,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1135,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 232,
+      "npc": "enemy_191",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 235,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 310.4087500000023,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1012,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 236,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 323.43979099999706,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 233,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.62562500000058,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1234,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 234,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 334.9970420000027,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 825,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 237,
+      "npc": "enemy_200",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.02795800000604,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 731,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 238,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 239.58808300000965,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1071,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 240,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 230.76416700000118,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1264,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 241,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 334.1197089999914,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 946,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 239,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 283.68370799999684,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 242,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 286.66004200000316,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 243,
+      "npc": "enemy_200",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 315.7372500000056,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 823,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 244,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 236.1193329999951,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 245,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.97291700000642,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1067,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 246,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 211.15124999999534,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1062,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 248,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 223.1108749999985,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1024,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 247,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 280.8026669999963,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 763,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 249,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 323.7096670000028,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 739,
+        "output_tokens": 55
+      }
+    },
+    {
+      "id": 250,
+      "npc": "enemy_200",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 303.4102500000008,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1074,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 251,
+      "npc": "enemy_187",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 253,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 241.59625000000233,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1039,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 252,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 256.5677089999954,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 254,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 280.1610409999994,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1069,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 255,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 294.2355419999949,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 825,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 256,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 263.4619590000075,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 965,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 258,
+      "npc": "enemy_200",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 264.5922920000012,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1090,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 257,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 270.6614589999954,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 259,
+      "npc": "enemy_200",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 261.4868750000023,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1247,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 260,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.54875000000175,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 857,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 261,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 217.1130409999896,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 976,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 262,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.68754199999967,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1121,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 263,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.50337500000023,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1156,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 265,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 211.16304200000013,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1151,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 264,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 289.28458300000057,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 802,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 266,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 317.3590419999964,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 268,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 274.9896669999871,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1112,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 267,
+      "npc": "enemy_143",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 269,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.06091600000218,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1159,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 270,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 225.53591700000106,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1023,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 271,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 222.83866600001056,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1166,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 272,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 309.122292,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1316,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 273,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 282.16645800000697,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 274,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 294.34112499999173,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1218,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 275,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 268.80491600000823,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1107,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 277,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 213.9895000000106,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1091,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 276,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 248.79370899999049,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 278,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 271.86912499999744,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1022,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 279,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 272.19141699999454,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1101,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 280,
+      "npc": "enemy_222",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 288.29329200001666,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 281,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.35324999998556,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1021,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 282,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 245.30637499998556,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 801,
+        "output_tokens": 64
+      }
+    },
+    {
+      "id": 283,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 243.3689580000064,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1213,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 284,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 278.58016599999974,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1150,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 285,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 235.94804200000362,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1009,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 287,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 261.5432499999879,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1162,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 286,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 302.9006249999802,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1026,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 288,
+      "npc": "enemy_222",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 254.37049999999,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1010,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 289,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 312.7652909999888,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 1078,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 290,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 248.0499580000178,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1248,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 293,
+      "npc": "enemy_199",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 292,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.84091700002318,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1161,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 291,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.0034160000214,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1025,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 294,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 217.59466699999757,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1042,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 295,
+      "npc": "enemy_222",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.16920800000662,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1313,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 296,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 238.9377080000122,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1035,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 297,
+      "npc": "enemy_222",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 246.12629099999322,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1298,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 298,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 224.03966599999694,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1116,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 299,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 214.44054099998903,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1308,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 301,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 240.38550000000396,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 866,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 302,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 243.4917499999865,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1317,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 300,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 247.1035419999971,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 303,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 255.03958399998373,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 675,
+        "output_tokens": 46
+      }
+    },
+    {
+      "id": 304,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 258.4865829999908,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1059,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 306,
+      "npc": "enemy_201",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 305,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.5683340000105,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1096,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 307,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 305.33225000000675,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1053,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 308,
+      "npc": "enemy_202",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 236.57583300000988,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1315,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 309,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 240.13029100000858,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1321,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 311,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 296.6368749999965,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1350,
+        "output_tokens": 122
+      }
+    },
+    {
+      "id": 310,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 264.33874999999534,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1110,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 312,
+      "npc": "enemy_213",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 221.6736249999958,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1187,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 313,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 243.5431249999965,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1328,
+        "output_tokens": 115
+      }
+    },
+    {
+      "id": 314,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.1816659999895,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 983,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 315,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 257.4137499999779,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1250,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 316,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.98808300000383,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 854,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 319,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 250.80641700001433,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1110,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 318,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 292.63462500000605,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1185,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 317,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 234.2869579999824,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1249,
+        "output_tokens": 114
+      }
+    },
+    {
+      "id": 321,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 216.45262500000536,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1170,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 320,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 376.14012500000536,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 993,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 323,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 342.9507079999894,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 848,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 322,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 285.318082999991,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 324,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 263.7799590000068,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 114
+      }
+    },
+    {
+      "id": 325,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 252.01208300000872,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 990,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 326,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 284.45470899998327,
+      "source": "jev",
+      "selected": "move_5",
+      "usage": {
+        "input_tokens": 1071,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 328,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 295.2223750000121,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1107,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 327,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 221.42116599998553,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1250,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 329,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 273.92237499999464,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 896,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 330,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 228.41599999999744,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1004,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 331,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 252.08216600000742,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1075,
+        "output_tokens": 87
+      }
+    },
+    {
+      "id": 332,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 236.20475000000442,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1174,
+        "output_tokens": 107
+      }
+    },
+    {
+      "id": 333,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 279.75720900000306,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1113,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 334,
+      "npc": "enemy_248",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 291.3054589999956,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1056,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 335,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 259.0329999999958,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 1008,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 336,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 242.47516699999687,
+      "source": "jev",
+      "selected": "move_0",
+      "usage": {
+        "input_tokens": 998,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 337,
+      "npc": "enemy_248",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 241.69391599998926,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1111,
+        "output_tokens": 88
+      }
+    },
+    {
+      "id": 338,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 262.5039590000233,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 852,
+        "output_tokens": 73
+      }
+    },
+    {
+      "id": 340,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 289.4700829999929,
+      "source": "jev",
+      "selected": "move_4",
+      "usage": {
+        "input_tokens": 940,
+        "output_tokens": 82
+      }
+    },
+    {
+      "id": 339,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 247.41229200002272,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1080,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 341,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 275.64729200000875,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1111,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 343,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 276.1409589999821,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1094,
+        "output_tokens": 87
+      }
+    },
+    {
+      "id": 342,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 291.1264169999922,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 518,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 344,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 321.2707919999957,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1072,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 345,
+      "npc": "enemy_216",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "This operation was aborted"
+    },
+    {
+      "id": 347,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 295.79283299998497,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1184,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 346,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.06099999998696,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1086,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 348,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 222.7065419999999,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1008,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 349,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 225.81504099999438,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 971,
+        "output_tokens": 80
+      }
+    },
+    {
+      "id": 350,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 250.82616699999198,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1109,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 352,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 232.68074999999953,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1073,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 351,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "cancelled",
+      "reason": "pause_or_restart"
+    },
+    {
+      "id": 353,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 265.2705839999835,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 354,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 262.49454099999275,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 355,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 446.51229199999943,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1148,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 356,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 317.21866600000067,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1063,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 357,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 246.04666600000928,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 358,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 244.75654099998064,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 359,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.58091700001387,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 360,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 266.6630830000213,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1055,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 361,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 266.1584579999908,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 362,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.93225000001257,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 363,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 297.95945799999754,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1148,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 364,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 296.9244169999729,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1063,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 365,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 270.80662499999744,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 366,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 260.44537500001024,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 367,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 282.94383400000515,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 368,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 314.5969580000092,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1055,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 369,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 215.6787089999998,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 370,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 222.0906670000113,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 371,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 229.90474999998696,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1148,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 372,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 267.17654200000106,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1063,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 373,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 250.30770799997845,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 374,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 251.02216700001736,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 375,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.0654579999973,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 376,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 292.7476660000102,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1055,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 377,
+      "npc": "general",
+      "role": "general",
+      "status": "applied",
+      "latencyMs": 305.04770799999824,
+      "source": "jev",
+      "selected": "watch",
+      "usage": {
+        "input_tokens": 516,
+        "output_tokens": 48
+      }
+    },
+    {
+      "id": 378,
+      "npc": "enemy_171",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 249.69933299999684,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1203,
+        "output_tokens": 98
+      }
+    },
+    {
+      "id": 379,
+      "npc": "enemy_223",
+      "role": "rifleman",
+      "status": "rejected",
+      "reason": "illegal",
+      "latencyMs": 277.9547500000044,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1148,
+        "output_tokens": 89
+      }
+    },
+    {
+      "id": 380,
+      "npc": "enemy_231",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 358.196958000015,
+      "source": "jev",
+      "selected": "move_1",
+      "usage": {
+        "input_tokens": 1063,
+        "output_tokens": 91
+      }
+    },
+    {
+      "id": 381,
+      "npc": "enemy_232",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 302.1518750000105,
+      "source": "jev",
+      "selected": "move_2",
+      "usage": {
+        "input_tokens": 1120,
+        "output_tokens": 100
+      }
+    },
+    {
+      "id": 382,
+      "npc": "enemy_246",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 335.3688329999859,
+      "source": "jev",
+      "selected": "fire_player",
+      "usage": {
+        "input_tokens": 1245,
+        "output_tokens": 106
+      }
+    },
+    {
+      "id": 383,
+      "npc": "enemy_247",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 271.43787500000326,
+      "source": "jev",
+      "selected": "advance_contact",
+      "usage": {
+        "input_tokens": 1181,
+        "output_tokens": 97
+      }
+    },
+    {
+      "id": 384,
+      "npc": "enemy_253",
+      "role": "rifleman",
+      "status": "applied",
+      "latencyMs": 281.3789580000157,
+      "source": "jev",
+      "selected": "move_3",
+      "usage": {
+        "input_tokens": 1055,
+        "output_tokens": 91
+      }
+    }
+  ]
+}

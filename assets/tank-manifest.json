@@ -1,0 +1,26 @@
+{
+  "source": "assets/blender/npcs/tank.blend",
+  "runtime": "apps/web/public/assets/models/npc_tank.glb",
+  "bytes": 145800,
+  "triangles": 1760,
+  "meshes": 23,
+  "hullBounds": {
+    "min": [
+      -0.807500016875565,
+      0.022499995211588752,
+      -0.8500000238418579
+    ],
+    "max": [
+      0.8075000643730164,
+      0.8575000166893005,
+      0.8500000238418579
+    ]
+  },
+  "muzzle": [
+    0,
+    1.0499999523162842,
+    1.590000033378601
+  ],
+  "animation": "Runtime hull/turret transforms, distance-driven tread links and cannon recoil; no baked skeletal clips",
+  "provenance": "Original project-authored geometry; no faction insignia"
+}

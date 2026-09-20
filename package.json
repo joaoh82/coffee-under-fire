@@ -1,0 +1,54 @@
+{
+  "name": "coffee-under-fire",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k 'npm:dev:server' 'npm:dev:web'",
+    "dev:server": "node --env-file-if-exists=.env --import tsx apps/server/src/index.ts",
+    "dev:web": "vite --port 5173 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "spike": "node --env-file-if-exists=.env --import tsx scripts/spike.ts",
+    "typecheck": "tsc --noEmit",
+    "assets:verify": "node --import tsx scripts/verify-assets.ts",
+    "format": "prettier --write apps packages scripts tests vite.config.ts",
+    "assets:generate": "sh assets/scripts/generate.sh",
+    "assets:slice": "sh assets/scripts/generate_slice.sh",
+    "assets:slice:verify": "node --import tsx scripts/verify-slice.ts",
+    "measure:mission": "node --import tsx scripts/live-mission.ts",
+    "assets:map": "sh assets/scripts/generate_map.sh",
+    "assets:map:verify": "node --import tsx scripts/verify-map.ts",
+    "assets:npcs": "sh assets/scripts/generate_npcs.sh",
+    "assets:npcs:verify": "node --import tsx scripts/verify-npcs.ts",
+    "assets:tank": "sh assets/scripts/generate_tank.sh",
+    "assets:tank:verify": "node --import tsx scripts/verify-tank.ts",
+    "measure:replay:verify": "node --import tsx scripts/verify-mission.ts",
+    "assets:music": "python3 assets/scripts/generate_music.py",
+    "assets:village": "sh assets/scripts/generate_village.sh",
+    "assets:village:verify": "node --import tsx scripts/verify-map.ts --village",
+    "start": "node --import tsx apps/server/src/index.ts"
+  },
+  "dependencies": {
+    "@react-three/fiber": "9.7.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "three": "0.186.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "concurrently": "10.0.5",
+    "prettier": "3.9.8",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vite": "8.3.0"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "version": "village-markers.v1",
+  "frame": "Y_up_XZ_meters",
+  "layout": {
+    "version": "village.v1",
+    "kitchen": {
+      "x": -17,
+      "z": 12
+    },
+    "tents": [
+      {
+        "x": 17,
+        "z": -12
+      },
+      {
+        "x": 17,
+        "z": 10
+      },
+      {
+        "x": -3,
+        "z": -14
+      }
+    ],
+    "spawns": [
+      {
+        "x": -20,
+        "z": 0
+      },
+      {
+        "x": 20,
+        "z": 0
+      },
+      {
+        "x": -20,
+        "z": -14
+      },
+      {
+        "x": 20,
+        "z": -15
+      },
+      {
+        "x": 20,
+        "z": 14
+      },
+      {
+        "x": 0,
+        "z": -16
+      }
+    ],
+    "obstacles": [
+      {
+        "id": "bakery",
+        "x": -10,
+        "z": -7,
+        "w": 6,
+        "d": 5
+      },
+      {
+        "id": "chapel",
+        "x": 6,
+        "z": -8,
+        "w": 5,
+        "d": 5
+      },
+      {
+        "id": "house_west",
+        "x": -9,
+        "z": 5,
+        "w": 5,
+        "d": 4
+      },
+      {
+        "id": "house_east",
+        "x": 9,
+        "z": 5,
+        "w": 5,
+        "d": 4
+      },
+      {
+        "id": "fountain",
+        "x": 0,
+        "z": 0,
+        "w": 3,
+        "d": 3
+      },
+      {
+        "id": "barricade",
+        "x": 0,
+        "z": 10,
+        "w": 4,
+        "d": 1.5
+      }
+    ]
+  },
+  "markers": [
+    {
+      "id": "COL_bakery",
+      "position": [
+        -10,
+        0,
+        -7
+      ],
+      "width": 6,
+      "depth": 5
+    },
+    {
+      "id": "COL_chapel",
+      "position": [
+        6,
+        0,
+        -8
+      ],
+      "width": 5,
+      "depth": 5
+    },
+    {
+      "id": "COL_house_west",
+      "position": [
+        -9,
+        0,
+        5
+      ],
+      "width": 5,
+      "depth": 4
+    },
+    {
+      "id": "COL_house_east",
+      "position": [
+        9,
+        0,
+        5
+      ],
+      "width": 5,
+      "depth": 4
+    },
+    {
+      "id": "COL_fountain",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "width": 3,
+      "depth": 3
+    },
+    {
+      "id": "COL_barricade",
+      "position": [
+        0,
+        0,
+        10
+      ],
+      "width": 4,
+      "depth": 1.5
+    },
+    {
+      "id": "KITCHEN_0",
+      "position": [
+        -17,
+        0,
+        12
+      ]
+    },
+    {
+      "id": "TENT_0",
+      "position": [
+        17,
+        0,
+        -12
+      ]
+    },
+    {
+      "id": "TENT_1",
+      "position": [
+        17,
+        0,
+        10
+      ]
+    },
+    {
+      "id": "TENT_2",
+      "position": [
+        -3,
+        0,
+        -14
+      ]
+    },
+    {
+      "id": "SPAWN_0",
+      "position": [
+        -20,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "SPAWN_1",
+      "position": [
+        20,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "SPAWN_2",
+      "position": [
+        -20,
+        0,
+        -14
+      ]
+    },
+    {
+      "id": "SPAWN_3",
+      "position": [
+        20,
+        0,
+        -15
+      ]
+    },
+    {
+      "id": "SPAWN_4",
+      "position": [
+        20,
+        0,
+        14
+      ]
+    },
+    {
+      "id": "SPAWN_5",
+      "position": [
+        0,
+        0,
+        -16
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "generator": "assets/scripts/generate_slice.py",
+  "blender": "5.2.1 LTS",
+  "reports": [
+    {
+      "name": "soldier",
+      "source": "assets/blender/slice/soldier.blend",
+      "runtime": "apps/web/public/assets/models/slice_soldier.glb",
+      "provenance": "Original project-authored procedural geometry; no third-party assets or insignia",
+      "bytes": 178948,
+      "triangles": 1112,
+      "skins": 26,
+      "materials": [
+        "Canvas_gold",
+        "Warm_leather",
+        "Boots_and_rifle",
+        "Enamel_cream",
+        "Warm_skin",
+        "Olive_cloth",
+        "Olive_highlight",
+        "Steel",
+        "Wood",
+        "Coffee"
+      ],
+      "bounds": {
+        "min": [
+          -0.7350000143051185,
+          0.0050000101327825645,
+          -0.3700000047683716
+        ],
+        "max": [
+          0.5099999904632581,
+          1.8600000143051147,
+          0.8200000524521038
+        ]
+      },
+      "clips": [
+        "death",
+        "hit",
+        "idle",
+        "reload",
+        "run",
+        "shoot"
+      ]
+    },
+    {
+      "name": "kitchen",
+      "source": "assets/blender/slice/kitchen.blend",
+      "runtime": "apps/web/public/assets/models/slice_kitchen.glb",
+      "provenance": "Original project-authored procedural geometry; no third-party assets or insignia",
+      "bytes": 56432,
+      "triangles": 628,
+      "skins": 0,
+      "materials": [
+        "Wood",
+        "Enamel_cream",
+        "Canvas_gold",
+        "Coffee",
+        "Steel",
+        "Boots_and_rifle"
+      ],
+      "bounds": {
+        "min": [
+          -1.824999988079071,
+          0,
+          -1.8749999403953552
+        ],
+        "max": [
+          1.625,
+          2.7789999805390835,
+          -0.22499996423721313
+        ]
+      },
+      "clips": []
+    },
+    {
+      "name": "tent",
+      "source": "assets/blender/slice/tent.blend",
+      "runtime": "apps/web/public/assets/models/slice_tent.glb",
+      "provenance": "Original project-authored procedural geometry; no third-party assets or insignia",
+      "bytes": 23664,
+      "triangles": 252,
+      "skins": 0,
+      "materials": [
+        "Wood",
+        "Enamel_cream",
+        "Canvas_gold"
+      ],
+      "bounds": {
+        "min": [
+          -2.0100000463426113,
+          -0.019665906205773354,
+          -3.5
+        ],
+        "max": [
+          2.0100000463426113,
+          2.6500000953674316,
+          -0.340000007301569
+        ]
+      },
+      "clips": []
+    },
+    {
+      "name": "terrain",
+      "source": "assets/blender/slice/terrain.blend",
+      "runtime": "apps/web/public/assets/models/slice_terrain.glb",
+      "provenance": "Original project-authored procedural geometry; no third-party assets or insignia",
+      "bytes": 52812,
+      "triangles": 388,
+      "skins": 0,
+      "materials": [
+        "Dry_grass",
+        "Warm_earth",
+        "Stone"
+      ],
+      "bounds": {
+        "min": [
+          -2.843108043074608,
+          -0.05999999865889549,
+          -2.476358413696289
+        ],
+        "max": [
+          2.6260975003242493,
+          0.23999999463558197,
+          2.408307194709778
+        ]
+      },
+      "clips": []
+    }
+  ]
+}

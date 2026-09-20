@@ -1,0 +1,13 @@
+{
+  "sourceReport": "docs/benchmarks/live-mission-battlefield-final-pass.json",
+  "recording": "docs/benchmarks/live-mission-battlefield-final-pass-replay.json",
+  "checkedAt": "2026-09-19T17:34:01.116Z",
+  "outcomeMatches": true,
+  "simulationSeconds": 480,
+  "health": 100,
+  "deliveries": 29,
+  "kills": 371,
+  "appliedChoicesReplayed": 2770,
+  "recordedAppliedChoices": 2770,
+  "note": "Offline execution of recorded decisions; no Jev requests. Interrupted-run UI pause state is not reconstructed."
+}

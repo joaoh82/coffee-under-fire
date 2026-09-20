@@ -1,0 +1,19 @@
+{
+  "version": "slice-markers.v1",
+  "frame": "Y_up_XZ_meters",
+  "kitchen": {
+    "interaction": [
+      0,
+      0,
+      0
+    ]
+  },
+  "tent": {
+    "interaction": [
+      0,
+      0,
+      0
+    ]
+  },
+  "source": "assets/scripts/generate_slice.py"
+}

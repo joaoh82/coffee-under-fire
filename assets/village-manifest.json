@@ -1,0 +1,37 @@
+{
+  "source": "assets/blender/map/village.blend",
+  "generator": "assets/scripts/generate_village.py",
+  "layout": "packages/shared/village-layout.json",
+  "runtime": "apps/web/public/assets/models/village_map.glb",
+  "provenance": "Original project-authored geometry, deterministic generation; no external assets",
+  "bytes": 836476,
+  "triangles": 10652,
+  "meshes": 11,
+  "drawCalls": 11,
+  "materials": [
+    "Broken_brick",
+    "Charred_timber",
+    "Ground_0",
+    "Ground_1",
+    "Ground_2",
+    "Ground_3",
+    "Ground_scorch",
+    "Limestone",
+    "Packed_dirt",
+    "Slate_roof",
+    "Weathered_plaster"
+  ],
+  "markersVerified": 16,
+  "bounds": {
+    "min": [
+      -25.199999809265137,
+      -0.1982591152191162,
+      -22.199999809265137
+    ],
+    "max": [
+      25.200000762939453,
+      3.6000000536441803,
+      22.200000762939453
+    ]
+  }
+}

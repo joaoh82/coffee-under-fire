@@ -1,0 +1,45 @@
+{
+  "source": "assets/blender/map/outpost.blend",
+  "generator": "assets/scripts/generate_map.py",
+  "layout": "packages/shared/map-layout.json",
+  "runtime": "apps/web/public/assets/models/outpost_map.glb",
+  "provenance": "Original project-authored geometry, deterministic seed 7341; no external assets",
+  "bytes": 1273192,
+  "triangles": 15566,
+  "meshes": 19,
+  "drawCalls": 19,
+  "materials": [
+    "Crate_wood",
+    "Deep_foliage",
+    "Dry_grass",
+    "Exposed_splinters",
+    "Grey_stone",
+    "Ground_0",
+    "Ground_1",
+    "Ground_2",
+    "Ground_3",
+    "Ground_4",
+    "Iron_bands",
+    "Packed_dirt",
+    "Path_edge",
+    "Sandbags",
+    "Sandbags_light",
+    "Scorched_earth",
+    "Stone_light",
+    "Wet_ruts",
+    "Wood_braces"
+  ],
+  "markersVerified": 16,
+  "bounds": {
+    "min": [
+      -24.899889945983887,
+      -0.30000001192092896,
+      -21.175000190734863
+    ],
+    "max": [
+      25.1155377097122,
+      3.8399997048274273,
+      21.980509994745034
+    ]
+  }
+}
