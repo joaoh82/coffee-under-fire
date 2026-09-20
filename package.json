@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@react-three/fiber": "9.7.0",
+    "obscenity": "0.4.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "three": "0.186.0",

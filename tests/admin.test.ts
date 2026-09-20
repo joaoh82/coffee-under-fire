@@ -89,6 +89,7 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
     const html = await dashboard.text();
     assert.ok(!html.includes("test-password-long-enough"));
     assert.ok(!html.includes("password_hash"));
+    assert.match(html, /<th>Invite \/ guest ID<\/th><th>Display name<\/th>/);
     assert.ok(!html.includes(owner));
     const player = await post("/access/login", {
       invite: "alice",
