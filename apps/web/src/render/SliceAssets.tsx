@@ -10,6 +10,7 @@ import {
   type InfantryAppearance,
 } from "./infantryAppearance";
 import { motionPose } from "./motionPose";
+import { characterState, syncCharacterState } from "./characterState";
 import { animationLayers } from "./animationLayers";
 import { DT, type NPC } from "../game/simulation";
 export function SliceProp({
@@ -78,14 +79,7 @@ export function SliceSoldier({
   const muzzle = useMemo(() => model.getObjectByName("SOCKET_muzzle"), [model]);
   const muzzlePosition = useMemo(() => new THREE.Vector3(), []);
   const firstFrame = useRef(true);
-  const state = useRef({
-    clip: "",
-    base: "",
-    hp: actor?.hp ?? 100,
-    hitUntil: -1,
-    shot: -100,
-    reactionStart: -1,
-  });
+  const state = useRef(characterState(driver.sim, actor ?? driver.sim.player));
   const inverse = useMemo(() => new THREE.Quaternion(), []);
   useEffect(
     () => () => {
@@ -103,6 +97,15 @@ export function SliceSoldier({
   useFrame(({ camera }, delta) => {
     const s = driver.sim,
       p = actor ?? s.player;
+    const nextState = syncCharacterState(state.current, s, p);
+    if (nextState !== state.current) {
+      state.current = nextState;
+      mixer.stopAllAction();
+      firstFrame.current = true;
+      posture.current.rotation.set(0, 0, 0);
+      posture.current.position.y = 0;
+      posture.current.scale.y = 1;
+    }
     const alpha =
       s.status === "running" && !driver.recovering && p.hp > 0
         ? driver.accumulator / DT
