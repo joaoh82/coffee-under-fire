@@ -1,6 +1,10 @@
 # Private Render playtest
 
-Prepared 2026-09-19; GitHub setup 2026-09-20. Not deployed to Render yet. Private repository: https://github.com/joaoh82/coffee-under-fire. Connect this repository and select its main branch in Render. The blueprint describes a paid Node web service; review Render's displayed price before creating it. Blender is not needed on the host.
+Updated 2026-09-20. The original invite-gated game is deployed at https://coffee-under-fire.onrender.com/. Managed admin migration is prepared separately and has not yet been deployed. Private repository: https://github.com/joaoh82/coffee-under-fire. Connect this repository and select its main branch in Render. The blueprint describes a paid Node web service; review Render's displayed price before creating it. Blender is not needed on the host.
+
+## Managed administration (new deployment)
+
+Use [the owner-console migration guide](admin.md) for the current configuration: persistent SQLite storage, an owner-only `/admin` console, hashed invite passwords, concurrency limits and durable monthly accounting. The environment-based invite instructions below describe the legacy deployment and initial import only.
 
 ## Accounts to create
 
@@ -61,6 +65,6 @@ Copy: “The general gets the coffee. The developer gets the API bill.” Follow
 
 Run `npm run build` followed by `npm test`. The production HTTP test uses a nonfunctional fixture key and makes no provider calls. It checks unauthenticated denial, real form login, cookie flags, compiled game/JS serving, API session creation, strict production origin checking, and blocked secret paths. Gate tests also cover expiry, forgery, revocation, logout and symlink escapes.
 
-After actual hosting: check HTTPS login/logout, wrong-password handling, direct unauthenticated API denial, asset/audio loading, one complete live mission, a revoked invite, and a small concurrent playtest. Measure real Jev latency and usage there before inviting broadly. Render deployment and hosted acceptance have not yet been performed.
+After actual hosting: check HTTPS login/logout, wrong-password handling, direct unauthenticated API denial, asset/audio loading, one complete live mission, a revoked invite, and a small concurrent playtest. Measure real Jev latency and usage there before inviting broadly. The managed-admin hosted acceptance and persistence checks remain outstanding.
 
 References: https://render.com/docs/blueprint-spec and https://render.com/docs/environment-variables

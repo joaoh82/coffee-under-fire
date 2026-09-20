@@ -89,7 +89,7 @@ Current backend guards per process:
 - 20,000 requests across the server process lifetime.
 - 16,000-byte request-body limit.
 
-These are application limits, not TypeSafe’s account quotas. Unknown or failed usage retains a conservative byte-based reservation; successful reported input usage settles the reservation. The accounting is not an exact billing ledger. Counters are in memory and do not provide durable cross-instance cost enforcement.
+These are application limits, not TypeSafe’s account quotas. Unknown or failed usage retains a conservative byte-based reservation; successful reported input usage settles the reservation. The accounting is not an exact billing ledger. Per-game counters remain in memory. With the managed-admin configuration, SQLite also reserves a server-wide monthly input-token allowance that survives restarts and attributes usage to invites. This configuration supports one server process, not cross-instance enforcement. See [managed administration](deployment/admin.md).
 
 The driver tracks pending, queued, applied, rejected, error and cancelled requests, along with observations, candidates, selections, confidence, model version, latency and returned token usage. Its recent trace buffer holds 200 rows; backend logs hold 5,000 rows. The replay recording preserves accepted decisions, player inputs and relevant run configuration for the first 30 minutes. Replay reproduces a recorded run; it does not demonstrate a new live model decision.
 
