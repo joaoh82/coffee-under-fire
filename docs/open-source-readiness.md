@@ -1,6 +1,6 @@
 # Open-source release preparation
 
-Prepared 2026-09-20. The repository remains private until the owner explicitly publishes it. GitHub dependency vulnerability alerts were enabled and verified with HTTP 204 on 2026-09-20. Main branch protection was subsequently applied and verified. See the [latest release security check](security-audit-2026-09-20.md) for credential scan results, live exposure checks and remaining limitations. Production credentials have not been changed.
+Prepared 2026-09-20. The owner explicitly authorized publication, and the existing repository was made public on 2026-09-20. Main branch protection was verified after publication. The six reference screenshots are absent from the current tree but remain in Git history; their historical redistribution permission is still unresolved. GitHub dependency vulnerability alerts were enabled and verified with HTTP 204 on 2026-09-20. Main branch protection was subsequently applied and verified. See the [latest release security check](security-audit-2026-09-20.md) for credential scan results, live exposure checks and remaining limitations. Production credentials have not been changed.
 
 ## Licensing scope and provenance
 

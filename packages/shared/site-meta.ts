@@ -1,3 +1,4 @@
+export const GITHUB_URL = "https://github.com/joaoh82/coffee-under-fire";
 export const SITE_URL = "https://coffee.yardsort.sh/";
 export const SITE_TITLE = "Coffee Under Fire | Free AI-Powered Browser Shooter";
 export const SITE_DESCRIPTION =
