@@ -627,8 +627,9 @@ export class Store {
           "SELECT COUNT(*) AS n FROM guests WHERE ip_key=? AND created>=?",
         )
         .get(ipKey, Date.parse(this.day() + "T00:00:00Z")) as Row;
-      if (!ipKey || total.n >= 10000 || recent.n >= 4)
-        throw new AccessLimit("guest_creation_limit");
+      if (!ipKey) throw new AccessLimit("public_unavailable");
+      if (total.n >= 10000) throw new AccessLimit("guest_capacity_limit");
+      if (recent.n >= 4) throw new AccessLimit("guest_daily_creation_limit");
       const id = "guest_" + randomBytes(12).toString("hex");
       // Guests have no usable password. Secure random credential material is never returned.
       this.db

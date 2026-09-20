@@ -200,7 +200,7 @@ export class GuestAccess {
           !this.allow(network, 8) ||
           this.active >= 4
         )
-          throw new AccessLimit("guest_creation_limit");
+          throw new AccessLimit("guest_retry_limit");
         this.store.checkDaily(identity ?? undefined, network);
         if (!identity) {
           this.active++;
