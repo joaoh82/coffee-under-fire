@@ -75,14 +75,14 @@ export function CommandDashboard({
         </div>
         <div>
           <b>
-            {median ?? "—"}
+            {median ?? "N/A"}
             <small> ms</small>
           </b>
           <span>Jev median</span>
         </div>
         <div>
           <b>
-            {p95 ?? "—"}
+            {p95 ?? "N/A"}
             <small> ms</small>
           </b>
           <span>Jev p95</span>
@@ -185,7 +185,7 @@ export function CommandDashboard({
                       <span>{actionLabel(c)}</span>
                       <b>
                         {probability === undefined
-                          ? "—"
+                          ? "N/A"
                           : `${Math.round(probability * 100)}%`}
                       </b>
                     </div>

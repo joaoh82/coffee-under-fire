@@ -214,7 +214,7 @@ export function ReportCommunity({
           View full leaderboard ↗
         </a>
         <small className="community-disclosure">
-          Community scores are browser-reported, with basic session checks—not
+          Community scores are browser-reported, with basic session checks. They are not
           anti-cheat verified.
         </small>
       </section>

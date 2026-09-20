@@ -38,7 +38,7 @@ export function AccessBudgetNotice({
             Daily allowance resets{" "}
             {seconds
               ? `in ${countdown}`
-              : "now — return to the briefing to try again"}
+              : "now. Return to the briefing to try again"}
             .
           </p>
         )}
