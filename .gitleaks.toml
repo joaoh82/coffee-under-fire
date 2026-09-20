@@ -1,0 +1,10 @@
+[extend]
+useDefault = true
+[[rules]]
+id = "typesafe-jev-key"
+description = "TypeSafe Jev API key"
+regex = '''apikey_[A-Za-z0-9_]{25,}'''
+[[rules]]
+id = "render-deploy-hook"
+description = "Render deployment hook key"
+regex = '''https://api\.render\.com/deploy/[^\s"'<>]+\?key=[A-Za-z0-9_-]+'''

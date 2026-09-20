@@ -15,3 +15,6 @@ private-data/
 *.sqlite-*
 *.db
 *.db-*
+
+# Third-party visual references are private inspiration, not distributable assets.
+/docs/art/references/
