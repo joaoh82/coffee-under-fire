@@ -1,3 +1,4 @@
+import { ICON_HEAD } from "../../../packages/shared/site-meta";
 import type { GuestAccess } from "./guests";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
@@ -24,7 +25,7 @@ const date = (v: unknown) =>
 const page = (
   title: string,
   content: string,
-) => `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escape(title)} · Coffee Under Fire</title><style>
+) => `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escape(title)} · Coffee Under Fire</title>${ICON_HEAD}<style>
 *{box-sizing:border-box}body{margin:0;background:#252f29;color:#ede5cc;font:16px/1.5 system-ui;padding:clamp(16px,4vw,48px)}main{max-width:1100px;margin:auto}header{display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:clamp(28px,5vw,44px);margin:8px 0 24px}h2{font-size:22px}small,.muted{color:#b6c3ad}a{color:#f0c48e}section{background:#333f34;border:1px solid #63705a;padding:24px;margin:20px 0;border-radius:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}label{display:block;margin:12px 0 5px}input,select,button{font:inherit;border-radius:6px;padding:11px;border:1px solid #9da88d}input,select{width:100%;background:#f7efd7;color:#25352a}button{background:#deb879;color:#25352a;font-weight:700;cursor:pointer;margin:10px 0}button.danger{background:#d78570}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #63705a;padding:12px 8px;white-space:nowrap}.scroll{overflow:auto}.notice{padding:16px;background:#525d40;border-left:4px solid #deb879}form.inline{display:inline}.login{max-width:460px;margin:8vh auto}.stats strong{font-size:25px;display:block}:focus-visible{outline:3px solid #eab466;outline-offset:3px}</style><main>${content}</main></html>`;
 
 // Fixed-window, bounded maps; do not trust user-supplied forwarding headers for identity.
@@ -126,7 +127,7 @@ export class ManagedAccess {
     if (isAdmin)
       res.setHeader(
         "Content-Security-Policy",
-        "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
+        "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
       );
     const authRoute = path.startsWith("/access/");
     if (isAdmin || authRoute) {
