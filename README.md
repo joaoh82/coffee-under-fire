@@ -27,6 +27,8 @@ Reports under docs/benchmarks separate fixtures from live data. Pricing is unkno
 
 ## Architecture
 
+See [How Jev controls NPCs](docs/jev-npc-control.md) for decision timing, perception, execution and recovery, and [Gameplay cost estimate](docs/gameplay-cost-estimate.md) for per-player budgeting.
+
 - packages/shared: versioned validation contracts
 - apps/server: trusted questions, Jev adapter, capability sessions and budgets
 - apps/web/src/game: fixed-step simulation, perception, candidate enumeration, collision/navigation, scheduling and recorded-decision replay
