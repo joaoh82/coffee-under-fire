@@ -314,7 +314,7 @@ export default function App() {
               <b>
                 {s.player.reloadUntil > s.tick
                   ? "Reloading…"
-                  : `${s.player.ammo} / 12`}
+                  : `${s.player.ammo} / ${s.magazineSize}`}
               </b>
             </label>
             <button

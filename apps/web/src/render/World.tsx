@@ -1,3 +1,4 @@
+import { ProjectileGeometry } from "./ProjectileGeometry";
 import { useRef, useMemo, useEffect, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -390,8 +391,8 @@ function Scene({ driver }: { driver: Driver }) {
         <NpcCharacters driver={driver} />
       </Suspense>
       <instancedMesh ref={bulletRef} args={[undefined, undefined, 256]}>
-        <boxGeometry />
-        <meshBasicMaterial toneMapped={false} />
+        <ProjectileGeometry />
+        <meshBasicMaterial vertexColors toneMapped={false} />
       </instancedMesh>
       <instancedMesh ref={marks} args={[undefined, undefined, 12]}>
         <ringGeometry args={[0.7, 0.85, 24]} />

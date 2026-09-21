@@ -1,3 +1,4 @@
+import { ProjectileGeometry } from "./ProjectileGeometry";
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -19,11 +20,13 @@ class FiringRange extends Simulation {
   override waves() {}
 }
 export function CombatPreview({
+  weapons = false,
   movement = false,
   tank = false,
   audio,
   blast = 0,
 }: {
+  weapons?: boolean;
   movement?: boolean;
   tank?: boolean;
   audio?: GameAudio;
@@ -36,9 +39,13 @@ export function CombatPreview({
     d.sim.player.pos = { x: movement ? -5.5 : 0, z: 4 };
     d.sim.player.previous = { ...d.sim.player.pos };
     d.sim.progressionEnabled = false;
+    if (weapons) {
+      d.sim.ranks.rockets = 1;
+      d.sim.ranks.grenades = 1;
+    }
     d.sim.start("mock", "offline-render-fixture", "endless");
     return d;
-  }, [movement, tank]);
+  }, [movement, tank, weapons]);
   const seenBlast = useRef(blast);
   const bullets = useRef<THREE.InstancedMesh>(null!);
   const temp = useMemo(() => new THREE.Object3D(), []);
@@ -120,8 +127,8 @@ export function CombatPreview({
       <TankEffects driver={driver} />
       <DodgeFeedback driver={driver} />
       <instancedMesh ref={bullets} args={[undefined, undefined, 256]}>
-        <boxGeometry />
-        <meshBasicMaterial toneMapped={false} />
+        <ProjectileGeometry />
+        <meshBasicMaterial vertexColors toneMapped={false} />
       </instancedMesh>
     </>
   );

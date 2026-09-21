@@ -74,6 +74,8 @@ export type NPC = Actor & {
 type Bullet = {
   id: number;
   shell?: boolean;
+  kind?: "rocket" | "grenade";
+  age?: number;
   origin?: Vec;
   pos: Vec;
   velocity: Vec;
@@ -190,7 +192,20 @@ export class Simulation {
   progressionEnabled = true;
   xp = 0;
   level = 1;
-  ranks: Record<Upgrade, number> = { boots: 0, damage: 0, cadence: 0, heal: 0 };
+  ranks: Record<Upgrade, number> = {
+    boots: 0,
+    damage: 0,
+    cadence: 0,
+    heal: 0,
+    magazine: 0,
+    rockets: 0,
+    grenades: 0,
+  };
+  rocketAt = -180;
+  grenadeAt = -300;
+  get magazineSize() {
+    return 12 + this.ranks.magazine * 6;
+  }
   gems: { id: number; pos: Vec; value: number; born: number }[] = [];
   deathBursts: { pos: Vec; born: number }[] = [];
   tankBursts: { pos: Vec; born: number }[] = [];
@@ -218,9 +233,9 @@ export class Simulation {
     return 30 + (this.level - 1) * 15;
   }
   get upgradeChoices(): Upgrade[] {
-    return (Object.keys(UPGRADES) as Upgrade[])
-      .filter((key) => this.ranks[key] < UPGRADES[key].cap)
-      .slice(0, 3);
+    return (Object.keys(UPGRADES) as Upgrade[]).filter(
+      (key) => this.ranks[key] < UPGRADES[key].cap,
+    );
   }
   emit(kind: Simulation["events"][number]["kind"], pos?: Vec, enemy?: boolean) {
     this.events.push({
@@ -238,6 +253,7 @@ export class Simulation {
     this.xp -= this.xpNeeded;
     this.level++;
     this.ranks[choice]++;
+    if (choice === "magazine") this.player.ammo += 6;
     if (choice === "heal") this.player.hp = Math.min(100, this.player.hp + 25);
     if (this.tick < REPLAY_TICK_LIMIT && !this.recording.truncated)
       this.recording.upgrades?.push({ tick: this.tick, choice });
@@ -756,6 +772,48 @@ export class Simulation {
       owner: actor.id,
       life: 150,
     });
+    if (actor === this.player) {
+      for (const kind of ["rocket", "grenade"] as const) {
+        const rocket = kind === "rocket";
+        if (
+          !this.ranks[rocket ? "rockets" : "grenades"] ||
+          this.tick - (rocket ? this.rocketAt : this.grenadeAt) <
+            (rocket ? 180 : 300)
+        )
+          continue;
+        if (rocket) this.rocketAt = this.tick;
+        else this.grenadeAt = this.tick;
+        const velocity = rocket ? 18 : 8;
+        this.bullets.push({
+          id: ++this.serial,
+          kind,
+          age: 0,
+          origin: { ...actor.pos },
+          pos: { ...actor.pos },
+          velocity: {
+            x: Math.sin(actor.angle) * velocity,
+            z: Math.cos(actor.angle) * velocity,
+          },
+          owner: actor.id,
+          life: rocket ? 90 : 60,
+        });
+      }
+    }
+  }
+  explode(b: Bullet, pos: Vec, direct: Actor | null) {
+    const radius = b.kind === "grenade" ? 3 : 2.4;
+    for (const n of this.npcs) {
+      if (n.role === "general" || n.hp <= 0) continue;
+      // Cover blocks splash. A directly struck target still takes one hit.
+      if (
+        n === direct ||
+        (distance(pos, n.pos) <= radius && this.sight(pos, n.pos))
+      )
+        this.damage(n, b.kind === "grenade" ? 24 : 30);
+    }
+    this.tankBursts.push({ pos: { ...pos }, born: this.tick });
+    if (this.tankBursts.length > 8) this.tankBursts.shift();
+    this.emit("cannon", pos);
   }
   step(input: Input) {
     if (this.status !== "running") return;
@@ -803,10 +861,10 @@ export class Simulation {
     }
     const p = this.player;
     if (p.reloadUntil && this.tick >= p.reloadUntil) {
-      p.ammo = 12;
+      p.ammo = this.magazineSize;
       p.reloadUntil = 0;
     }
-    if (input.reload && p.ammo < 12 && !p.reloadUntil)
+    if (input.reload && p.ammo < this.magazineSize && !p.reloadUntil)
       p.reloadUntil = this.tick + 72;
     if (input.dodge && this.tick - this.dodgeAt >= 120) {
       this.dodgeAt = this.tick;
@@ -997,7 +1055,7 @@ export class Simulation {
         if (this.impacts.length > 64) this.impacts.shift();
         if (!actor) this.emit("impact", impact);
       }
-      if (actor)
+      if (actor && !b.kind)
         this.damage(
           actor,
           b.owner === "player"
@@ -1007,9 +1065,15 @@ export class Simulation {
                   difficultyPreset(this.difficulty).damageScale,
               ),
         );
-      b.pos = to;
+      const impact = {
+        x: b.pos.x + (to.x - b.pos.x) * hit,
+        z: b.pos.z + (to.z - b.pos.z) * hit,
+      };
+      b.pos = blocked ? impact : to;
       b.life--;
+      if (b.kind) b.age = (b.age ?? 0) + 1;
       if (blocked || !this.clear(to, 0)) b.life = 0;
+      if (b.kind && b.life <= 0) this.explode(b, b.pos, actor);
     }
     this.bullets = this.bullets.filter((b) => b.life > 0);
     this.coffeeFeedback = this.coffeeFeedback.filter(
