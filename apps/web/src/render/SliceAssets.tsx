@@ -1,3 +1,4 @@
+import { ShoulderLauncher } from "./ShoulderLauncher";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -115,7 +116,7 @@ export function SliceSoldier({
       0,
       p.previous.z + (p.pos.z - p.previous.z) * alpha,
     );
-    if (firstFrame.current) {
+    if (firstFrame.current || (!previewClip && s.tick - p.shotAt < 4)) {
       group.current.rotation.y = p.angle;
       firstFrame.current = false;
     }
@@ -285,6 +286,9 @@ export function SliceSoldier({
     >
       <group ref={posture}>
         <primitive object={model} dispose={null} />
+        {!actor && variant === "soldier" && (
+          <ShoulderLauncher driver={driver} />
+        )}
       </group>
       {variant === "soldier" && (
         <CarriedCoffee

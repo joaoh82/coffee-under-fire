@@ -20,16 +20,17 @@ export function updateBulletInstances(
       : 1;
     const length =
       b.kind === "rocket"
-        ? 0.9
+        ? Math.min(0.9, travelled)
         : b.kind === "grenade"
-          ? 0.36
+          ? Math.min(0.36, travelled)
           : Math.min(0.65, speed / 40, travelled);
     const back = speed > 0 ? length / (2 * speed) : 0;
     temp.position.set(
       b.pos.x - b.velocity.x * back,
       b.kind === "grenade"
-        ? 0.75 + 2 * Math.sin(Math.min(1, (b.age ?? 0) / 60) * Math.PI)
-        : 0.75,
+        ? (b.height ?? 0.75) +
+            2 * Math.sin(Math.min(1, (b.age ?? 0) / 60) * Math.PI)
+        : (b.height ?? 0.75),
       b.pos.z - b.velocity.z * back,
     );
     temp.scale.set(

@@ -524,6 +524,7 @@ export function replay(record: Recording) {
   const s = new Simulation(record.seed, record.mapId ?? "woodland.v1");
   s.waveProfile = record.waveProfile ?? "legacy";
   s.combatProfile = record.combatProfile ?? "infantry.v1";
+  s.projectileOriginProfile = record.projectileOriginProfile ?? "center.v1";
   s.start(
     "replay",
     record.decisions[0]?.request.session ?? "offline",
