@@ -83,10 +83,12 @@ export function AssetPreview() {
             <CombatPreview tank audio={audio} blast={blast} />
           )}
           {view === "combat" && <CombatPreview />}
+          {view === "weapons" && <CombatPreview weapons />}
           {view === "movement" && <CombatPreview movement />}
           {view !== "map" &&
             view !== "crowd" &&
             view !== "combat" &&
+            view !== "weapons" &&
             view !== "movement" &&
             view !== "tank" && (
               <SliceSoldier
@@ -205,6 +207,9 @@ export function AssetPreview() {
         <button onClick={() => setView("movement")}>
           Preview movement / dodge
         </button>
+        <button onClick={() => setView("weapons")}>
+          Preview rocket / grenade upgrades
+        </button>
         <button onClick={() => setView("combat")}>
           Preview combat effects
         </button>
@@ -230,11 +235,13 @@ export function AssetPreview() {
             ? `Scripted 12-second tank loop: movement, cannon, destruction · mock decisions · no Jev calls · sound ${sound ? "on" : "off"}`
             : view === "movement"
               ? "Scripted movement/dodge fixture · no Jev calls"
-              : view === "combat"
-                ? "Scripted firing-range fixture · stationary targets · no Jev calls · sound off"
-                : view === "crowd"
-                  ? "Animation fixture: 12 enemies + general, no tactical decisions"
-                  : "Exported skeletal animations · editable .blend sources · no Jev calls in this preview"}
+              : view === "weapons"
+                ? "Automatic rocket/grenade firing fixture · both upgrades equipped · no Jev calls"
+                : view === "combat"
+                  ? "Scripted firing-range fixture · stationary targets · no Jev calls · sound off"
+                  : view === "crowd"
+                    ? "Animation fixture: 12 enemies + general, no tactical decisions"
+                    : "Exported skeletal animations · editable .blend sources · no Jev calls in this preview"}
           {driver.renderStats && ` · ${driver.renderStats.fps} FPS`}
         </small>
       </div>

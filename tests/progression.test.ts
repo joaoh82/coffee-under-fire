@@ -61,57 +61,69 @@ test("gem and death effect storage stay bounded and expired gems disappear", () 
   assert.equal(s.gems.length, 0);
   assert.equal(s.deathBursts.length, 0);
 });
-test("actual combat, XP pickup and human upgrade choices replay deterministically", () => {
-  const s = world();
-  let route: { x: number; z: number }[] = [];
-  let goalId = "";
-  for (let i = 0; i < 7200 && s.level < 2; i++) {
-    for (const n of s.npcs)
-      if (!n.action) {
-        const r = s.request(n);
-        s.apply(r, {
-          ...envelope(r),
-          selected: n.role === "general" ? "map" : "hold",
-          source: "mock",
-          confidence: 0,
-          latencyMs: 0,
-          model: "passive-combat-fixture",
-          usage: null,
-        });
+for (const choice of ["damage", "magazine", "rockets", "grenades"] as const)
+  test(`actual combat and ${choice} upgrade replay deterministically`, () => {
+    const s = world();
+    let route: { x: number; z: number }[] = [];
+    let goalId = "";
+    for (let i = 0; i < 7200 && s.level < 2; i++) {
+      for (const n of s.npcs)
+        if (!n.action) {
+          const r = s.request(n);
+          s.apply(r, {
+            ...envelope(r),
+            selected: n.role === "general" ? "map" : "hold",
+            source: "mock",
+            confidence: 0,
+            latencyMs: 0,
+            model: "passive-combat-fixture",
+            usage: null,
+          });
+        }
+      const input = idleInput();
+      const enemy = s.npcs.find((n) => n.role === "rifleman");
+      if (enemy) {
+        input.aim = { ...enemy.pos };
+        input.fire = true;
       }
-    const input = idleInput();
-    const enemy = s.npcs.find((n) => n.role === "rifleman");
-    if (enemy) {
-      input.aim = { ...enemy.pos };
-      input.fire = true;
-    }
-    input.reload = s.player.ammo === 0;
-    const gem = s.gems[0];
-    const goal = gem ?? enemy;
-    const nextId = gem ? `gem_${gem.id}` : (enemy?.id ?? "");
-    if (goal && nextId !== goalId) {
-      route = path(s.player.pos, goal.pos);
-      goalId = nextId;
-    }
-    while (route.length && distance(s.player.pos, route[0]) < 0.15)
-      route.shift();
-    const next = route[0];
-    if (next) {
-      const d = distance(s.player.pos, next);
-      if (d > 0.01) {
-        input.x = (next.x - s.player.pos.x) / d;
-        input.z = (next.z - s.player.pos.z) / d;
+      input.reload = s.player.ammo === 0;
+      const gem = s.gems[0];
+      const goal = gem ?? enemy;
+      const nextId = gem ? `gem_${gem.id}` : (enemy?.id ?? "");
+      if (goal && nextId !== goalId) {
+        route = path(s.player.pos, goal.pos);
+        goalId = nextId;
       }
+      while (route.length && distance(s.player.pos, route[0]) < 0.15)
+        route.shift();
+      const next = route[0];
+      if (next) {
+        const d = distance(s.player.pos, next);
+        if (d > 0.01) {
+          input.x = (next.x - s.player.pos.x) / d;
+          input.z = (next.z - s.player.pos.z) / d;
+        }
+      }
+      s.step(input);
+      if (s.status === "upgrading") s.chooseUpgrade(choice);
     }
-    s.step(input);
-    if (s.status === "upgrading") s.chooseUpgrade("damage");
-  }
-  assert.equal(s.level, 2, "fixture must actually reach a level-up");
-  const clone = replay(s.recording);
-  assert.equal(clone.level, s.level);
-  assert.deepEqual(clone.ranks, s.ranks);
-  assert.equal(clone.xp, s.xp);
-  assert.equal(clone.score, s.score);
-  assert.deepEqual(clone.player, s.player);
-  assert.deepEqual(clone.gems, s.gems);
-});
+    assert.equal(s.level, 2, "fixture must actually reach a level-up");
+    // Continue firing after the choice so replay exercises auxiliary launches/reloads.
+    for (let i = 0; i < 240; i++) {
+      s.step({
+        ...idleInput(),
+        aim: { x: s.player.pos.x + 10, z: s.player.pos.z },
+        fire: true,
+        reload: s.player.ammo === 0,
+      });
+    }
+    const clone = replay(s.recording);
+    assert.equal(clone.level, s.level);
+    assert.deepEqual(clone.ranks, s.ranks);
+    assert.equal(clone.xp, s.xp);
+    assert.equal(clone.score, s.score);
+    assert.deepEqual(clone.player, s.player);
+    assert.deepEqual(clone.gems, s.gems);
+    assert.deepEqual(clone.bullets, s.bullets);
+    assert.deepEqual(clone.tankBursts, s.tankBursts);
+  });
