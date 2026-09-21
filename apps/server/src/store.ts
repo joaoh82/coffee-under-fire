@@ -57,6 +57,9 @@ export class Store {
     if (!Number.isFinite(inputRate) || inputRate <= 0 || inputRate > 1000)
       throw new Error("Invalid input token price");
     this.db = new DatabaseSync(path);
+    this.db.function("admin_lower", { deterministic: true }, (value) =>
+      String(value).toLowerCase(),
+    );
     if (path !== ":memory:") chmodSync(path, 0o600);
     this.db
       .exec(`PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;
@@ -110,6 +113,9 @@ export class Store {
     this.db
       .prepare("UPDATE sessions SET ended=? WHERE ended IS NULL")
       .run(this.now());
+    this.db.exec(
+      "CREATE INDEX IF NOT EXISTS sessions_started ON sessions(started); CREATE INDEX IF NOT EXISTS logins_created ON logins(created DESC); CREATE INDEX IF NOT EXISTS logins_invite_created ON logins(invite_id,created)",
+    );
     this.secureDatabaseFiles(path);
   }
   private secureDatabaseFiles(path: string) {
@@ -444,6 +450,163 @@ export class Store {
         "SELECT invite_id AS inviteId,created,expires,logged_out AS loggedOut FROM logins ORDER BY created DESC LIMIT 100",
       )
       .all();
+  }
+  /** Literal substring search; SQL wildcards have no special meaning. */
+  private adminSearch(search = "") {
+    return search.trim().slice(0, 100).toLowerCase();
+  }
+  private adminPage(total: number, requested = 1) {
+    const pageSize = 25 as const;
+    const pages = Math.max(1, Math.ceil(total / pageSize));
+    const page = Math.min(
+      pages,
+      Math.max(1, Number.isFinite(requested) ? Math.floor(requested) : 1),
+    );
+    return { total, page, pageSize, pages };
+  }
+  pagedInvites(
+    options: {
+      search?: string;
+      page?: number;
+      sort?: "lastLogin" | "playTime";
+      direction?: "asc" | "desc";
+    } = {},
+  ) {
+    this.expireSessions();
+    const search = this.adminSearch(options.search);
+    const where =
+      "(instr(admin_lower(i.id),?)>0 OR instr(admin_lower(i.display_name),?)>0)";
+    const total = Number(
+      this.db
+        .prepare(`SELECT COUNT(*) AS n FROM invites i WHERE ${where}`)
+        .get(search, search)!.n,
+    );
+    const pagination = this.adminPage(total, options.page);
+    // Order expressions are selected from constants, never interpolated user input.
+    const sort = options.sort === "playTime" ? "activeMs" : "lastLogin";
+    const direction = options.direction === "asc" ? "ASC" : "DESC";
+    const rows = this.db
+      .prepare(
+        `WITH login_stats AS (
+      SELECT invite_id,COUNT(*) AS loginCount,MAX(created) AS lastLogin FROM logins GROUP BY invite_id
+    ), session_stats AS (
+      SELECT invite_id,MAX(heartbeat) AS lastSeen,COUNT(*) AS runs,SUM(ended IS NULL) AS activeSessions,SUM(active_ms) AS activeMs FROM sessions GROUP BY invite_id
+    ), usage_stats AS (
+      SELECT s.invite_id,COUNT(*) AS requests,SUM(CASE WHEN u.reported=1 THEN u.tokens ELSE 0 END) AS inputTokens,SUM(u.failed) AS failures FROM usage u JOIN sessions s ON s.id=u.session_id GROUP BY s.invite_id
+    ) SELECT i.id,i.display_name AS displayName,i.enabled,i.max_sessions AS maxSessions,i.revision,
+      g.invite_id IS NOT NULL AS isGuest,COALESCE(l.loginCount,0) AS loginCount,l.lastLogin,s.lastSeen,
+      COALESCE(s.runs,0) AS runs,COALESCE(s.activeSessions,0) AS activeSessions,COALESCE(s.activeMs,0) AS activeMs,
+      COALESCE(u.requests,0) AS requests,COALESCE(u.inputTokens,0) AS inputTokens,COALESCE(u.failures,0) AS failures
+      FROM invites i LEFT JOIN login_stats l ON l.invite_id=i.id LEFT JOIN session_stats s ON s.invite_id=i.id
+      LEFT JOIN usage_stats u ON u.invite_id=i.id LEFT JOIN guests g ON g.invite_id=i.id
+      WHERE ${where} ORDER BY ${sort} ${direction} NULLS LAST,i.id ASC LIMIT ? OFFSET ?`,
+      )
+      .all(
+        search,
+        search,
+        pagination.pageSize,
+        (pagination.page - 1) * pagination.pageSize,
+      )
+      .map((row) => ({
+        ...row,
+        enabled: !!row.enabled,
+        isGuest: !!row.isGuest,
+      })) as Row[];
+    return { ...pagination, rows };
+  }
+  pagedLogins(options: { search?: string; page?: number } = {}) {
+    const search = this.adminSearch(options.search);
+    const where =
+      "(instr(admin_lower(i.id),?)>0 OR instr(admin_lower(i.display_name),?)>0)";
+    const total = Number(
+      this.db
+        .prepare(
+          `SELECT COUNT(*) AS n FROM logins l JOIN invites i ON i.id=l.invite_id WHERE ${where}`,
+        )
+        .get(search, search)!.n,
+    );
+    const pagination = this.adminPage(total, options.page);
+    const rows = this.db
+      .prepare(
+        `SELECT l.invite_id AS inviteId,i.display_name AS displayName,l.created,l.expires,l.logged_out AS loggedOut,
+      (i.enabled=0 OR i.revision<>l.revision) AS revoked FROM logins l JOIN invites i ON i.id=l.invite_id
+      WHERE ${where} ORDER BY l.created DESC,l.rowid DESC LIMIT ? OFFSET ?`,
+      )
+      .all(
+        search,
+        search,
+        pagination.pageSize,
+        (pagination.page - 1) * pagination.pageSize,
+      )
+      .map((row) => ({ ...row, revoked: !!row.revoked })) as Row[];
+    return { ...pagination, rows };
+  }
+  /** UTC days. Historical sessions have no per-day heartbeats: measured play is
+   * attributed to their start day. New users are identities' first successful login.
+   * Average minutes divides measured play by distinct active identities that day.
+   * Costs include both settled usage and outstanding reservations, in USD. */
+  analytics(requested: 7 | 30 | 90 = 30) {
+    const count = requested === 7 || requested === 90 ? requested : 30;
+    const end = Date.parse(this.day() + "T00:00:00Z") + 86400000;
+    const start = end - count * 86400000;
+    const firstDay = new Date(start).toISOString().slice(0, 10);
+    const lastDay = new Date(end).toISOString().slice(0, 10);
+    const play = this.db
+      .prepare(
+        `SELECT strftime('%Y-%m-%d',started/1000.0,'unixepoch') AS day,
+      COUNT(DISTINCT CASE WHEN active_ms>0 THEN invite_id END) AS activeUsers,COUNT(*) AS runs,SUM(active_ms) AS activeMs
+      FROM sessions WHERE started>=? AND started<? GROUP BY day`,
+      )
+      .all(start, end);
+    const fresh = this.db
+      .prepare(
+        `SELECT strftime('%Y-%m-%d',first_login/1000.0,'unixepoch') AS day,COUNT(*) AS newUsers
+      FROM (SELECT MIN(created) AS first_login FROM logins GROUP BY invite_id) WHERE first_login>=? AND first_login<? GROUP BY day`,
+      )
+      .all(start, end);
+    const spending = this.db
+      .prepare(
+        "SELECT day,SUM(cost)/1000000000.0 AS costUsd FROM usage WHERE day>=? AND day<? GROUP BY day",
+      )
+      .all(firstDay, lastDay);
+    const days = Array.from({ length: count }, (_, index) => ({
+      day: new Date(start + index * 86400000).toISOString().slice(0, 10),
+      activeUsers: 0,
+      newUsers: 0,
+      runs: 0,
+      activeMs: 0,
+      averageMinutes: 0,
+      costUsd: 0,
+    }));
+    const byDay = new Map(days.map((day) => [day.day, day]));
+    for (const row of [...play, ...fresh, ...spending]) {
+      const day = byDay.get(String(row.day));
+      if (day) Object.assign(day, row);
+    }
+    for (const day of days)
+      day.averageMinutes = day.activeUsers
+        ? day.activeMs / day.activeUsers / 60000
+        : 0;
+    const totalPlayers = Number(
+      this.db.prepare("SELECT COUNT(*) AS n FROM invites").get()!.n,
+    );
+    const uniqueActiveUsers = Number(
+      this.db
+        .prepare(
+          "SELECT COUNT(DISTINCT invite_id) AS n FROM sessions WHERE active_ms>0 AND started>=? AND started<?",
+        )
+        .get(start, end)!.n,
+    );
+    return {
+      days,
+      totalPlayers,
+      uniqueActiveUsers,
+      newUsers: days.reduce((sum, day) => sum + day.newUsers, 0),
+      activeMs: days.reduce((sum, day) => sum + day.activeMs, 0),
+      runs: days.reduce((sum, day) => sum + day.runs, 0),
+      costUsd: days.reduce((sum, day) => sum + day.costUsd, 0),
+      historicalApproximation: true,
+    };
   }
   submitScore(
     sessionId: string,

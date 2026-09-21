@@ -51,6 +51,7 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
     });
   try {
     assert.equal((await req("/admin")).status, 401);
+    assert.equal((await req("/admin/report.csv")).status, 401);
     assert.equal(
       (
         await post("/admin/invite", {
@@ -91,12 +92,39 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
     assert.ok(!html.includes("password_hash"));
     assert.match(html, /<th>Invite \/ guest ID<\/th><th>Display name<\/th>/);
     assert.ok(!html.includes(owner));
+    assert.match(html, /Daily active players/);
+    assert.match(html, /name="sort"/);
+    const filtered = await (
+      await req("/admin?q=%3Cscript%3E&loginQ=alice&days=7&playerPage=999", {
+        headers: { Cookie: adminCookie },
+      })
+    ).text();
+    assert.ok(!filtered.includes("<script>"));
+    assert.match(filtered, /value="&lt;script&gt;"/);
+    assert.match(filtered, /No players match this search/);
+    assert.match(filtered, /Page 1 of 1/);
+    assert.match(filtered, /name="loginQ" value="alice"/);
+    const exported = await req("/admin/report.csv?days=7", {
+      headers: { Cookie: adminCookie },
+    });
+    assert.equal(exported.status, 200);
+    assert.equal(exported.headers.get("cache-control"), "no-store");
+    assert.match(exported.headers.get("content-type")!, /text\/csv/);
+    const csv = await exported.text();
+    assert.equal(csv.trim().split("\r\n").length, 8);
+    assert.ok(!csv.includes("alice"));
+
     const player = await post("/access/login", {
       invite: "alice",
       password: "test-password-long-enough",
     });
     assert.equal(player.status, 303);
     const playerCookie = player.headers.get("set-cookie")!.split(";")[0];
+    assert.equal(
+      (await req("/admin/report.csv", { headers: { Cookie: playerCookie } }))
+        .status,
+      401,
+    );
     assert.equal(
       (await req("/", { headers: { Cookie: playerCookie } })).status,
       200,
@@ -193,6 +221,11 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
     await post("/admin/reset-password", { id: "missing" }, adminCookie);
     assert.equal(store.getInvite("missing"), undefined);
     await post("/admin/logout", {}, adminCookie);
+    assert.equal(
+      (await req("/admin/report.csv", { headers: { Cookie: adminCookie } }))
+        .status,
+      401,
+    );
     assert.equal(
       (await req("/admin", { headers: { Cookie: adminCookie } })).status,
       401,
