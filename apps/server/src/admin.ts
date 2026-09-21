@@ -1,3 +1,9 @@
+import {
+  renderReports,
+  reportOptions,
+  reportCsv,
+  REPORT_CSS,
+} from "./admin-reports";
 import { accessPage } from "./access-page";
 import { ICON_HEAD } from "../../../packages/shared/site-meta";
 import type { GuestAccess } from "./guests";
@@ -27,7 +33,7 @@ const page = (
   title: string,
   content: string,
 ) => `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${escape(title)} · Coffee Under Fire</title>${ICON_HEAD}<style>
-*{box-sizing:border-box}body{margin:0;background:#252f29;color:#ede5cc;font:16px/1.5 system-ui;padding:clamp(16px,4vw,48px)}main{max-width:1100px;margin:auto}header{display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:clamp(28px,5vw,44px);margin:8px 0 24px}h2{font-size:22px}small,.muted{color:#b6c3ad}a{color:#f0c48e}section{background:#333f34;border:1px solid #63705a;padding:24px;margin:20px 0;border-radius:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}label{display:block;margin:12px 0 5px}input,select,button{font:inherit;border-radius:6px;padding:11px;border:1px solid #9da88d}input,select{width:100%;background:#f7efd7;color:#25352a}button{background:#deb879;color:#25352a;font-weight:700;cursor:pointer;margin:10px 0}button.danger{background:#d78570}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #63705a;padding:12px 8px;white-space:nowrap}.scroll{overflow:auto}.notice{padding:16px;background:#525d40;border-left:4px solid #deb879}form.inline{display:inline}.login{max-width:460px;margin:8vh auto}.stats strong{font-size:25px;display:block}:focus-visible{outline:3px solid #eab466;outline-offset:3px}</style><main>${content}</main></html>`;
+*{box-sizing:border-box}body{margin:0;background:#252f29;color:#ede5cc;font:16px/1.5 system-ui;padding:clamp(16px,4vw,48px)}main{max-width:1100px;margin:auto}header{display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:clamp(28px,5vw,44px);margin:8px 0 24px}h2{font-size:22px}small,.muted{color:#b6c3ad}a{color:#f0c48e}section{background:#333f34;border:1px solid #63705a;padding:24px;margin:20px 0;border-radius:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}label{display:block;margin:12px 0 5px}input,select,button{font:inherit;border-radius:6px;padding:11px;border:1px solid #9da88d}input,select{width:100%;background:#f7efd7;color:#25352a}button{background:#deb879;color:#25352a;font-weight:700;cursor:pointer;margin:10px 0}button.danger{background:#d78570}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #63705a;padding:12px 8px;white-space:nowrap}.scroll{overflow:auto}.notice{padding:16px;background:#525d40;border-left:4px solid #deb879}form.inline{display:inline}.login{max-width:460px;margin:8vh auto}.stats strong{font-size:25px;display:block}:focus-visible{outline:3px solid #eab466;outline-offset:3px}${REPORT_CSS}</style><main>${content}</main></html>`;
 
 // Fixed-window, bounded maps; do not trust user-supplied forwarding headers for identity.
 export class LoginLimiter {
@@ -99,7 +105,10 @@ export class ManagedAccess {
     title: string,
     content: string,
   ) {
-    res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
+    res.writeHead(status, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+    });
     res.end(page(title, content));
   }
   private login(
@@ -108,7 +117,10 @@ export class ManagedAccess {
     error = false,
     status = 401,
   ) {
-    res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
+    res.writeHead(status, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+    });
     res.end(
       accessPage(
         `<span class="eyebrow">${admin ? "Owner access" : "Your field pass"}</span><h2>${admin ? "Welcome back, commander." : "Your orders are waiting."}</h2><p class="muted">${admin ? "Sign in to manage invites and gameplay budgets." : "Enter your invite to start a coffee run."}</p>${error ? '<p class="notice" role="alert">Unable to sign in. Check your credentials or try again later.</p>' : ""}<form method="post" action="${admin ? "/admin/login" : "/access/login"}">${admin ? "" : '<label for="invite">Invite name</label><input id="invite" name="invite" maxlength="40" autocomplete="username" required>'}<label for="password">${admin ? "Owner token" : "Password"}</label><input id="password" name="password" type="password" maxlength="256" autocomplete="current-password" required><button>Sign in</button></form><p class="muted">${admin ? "Owner credentials never grant player access." : "Login times, approximate play time and Jev usage are recorded."}</p><footer><a href="/">Back to the game</a></footer>`,
@@ -134,8 +146,32 @@ export class ManagedAccess {
     const authRoute = path.startsWith("/access/");
     if (isAdmin || authRoute) {
       if (req.method === "GET" && path === "/admin") {
-        if (this.admin(req)) this.dashboard(res);
+        if (this.admin(req))
+          this.dashboard(
+            res,
+            "",
+            null,
+            undefined,
+            new URL(req.url!, this.origin).searchParams,
+          );
         else this.login(res, true);
+        return true;
+      }
+      if (req.method === "GET" && path === "/admin/report.csv") {
+        if (!this.admin(req)) {
+          this.login(res, true);
+          return true;
+        }
+        const { days } = reportOptions(
+          new URL(req.url!, this.origin).searchParams,
+        );
+        res.writeHead(200, {
+          "Content-Type": "text/csv; charset=utf-8",
+          "Content-Disposition":
+            'attachment; filename="coffee-daily-activity.csv"',
+          "Cache-Control": "no-store",
+        });
+        res.end(reportCsv(this.store, days));
         return true;
       }
       if (req.method !== "POST") {
@@ -360,8 +396,14 @@ export class ManagedAccess {
     notice = "",
     password: string | null = null,
     draft = { id: "", password: "", maxSessions: "1", enabled: true },
+    query = new URLSearchParams(),
   ) {
-    const invites = this.store.listInvites();
+    const reports = renderReports(
+      this.store,
+      query,
+      this.now(),
+      this.inputRate,
+    );
     const sessions = this.store.activeSessions();
     const budget = this.store.budget();
     const settings = this.store.publicSettings();
@@ -370,10 +412,11 @@ export class ManagedAccess {
       res,
       200,
       "Field command",
-      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label for="one-time-password">One-time password</label><input id="one-time-password" readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Invites</small><strong>${invites.length}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section><section><small>Monthly token safety budget</small><strong>${Math.round((100 * budget.charged) / budget.cap)}% used</strong><small>${budget.charged.toLocaleString()} / ${budget.cap.toLocaleString()} tokens · ${escape(budget.month)} UTC. Includes conservative reservations, not an invoice.</small></section></div>
-    <section><h2>Public play and daily spending</h2><p>Today: $${daily.chargedUsd.toFixed(4)} charged or reserved / $${daily.limitUsd.toFixed(2)} configured. Requests stop at $${daily.effectiveUsd.toFixed(2)} to leave a 5% safety margin. Resets midnight UTC. Includes invited players; estimates are not an invoice.</p><p class="muted">Guest setup: ${this.guests?.ready() ? "Configured. Verify a live browser check before sharing." : "Not ready: configure Turnstile keys, PUBLIC_IP_SALT and trusted IP source."} Guests use one concurrent game. Browser IDs and networks are not verified people. Players table shows at most 200 entries.</p><form method="post" action="/admin/public-settings"><div class="grid"><div><label for="publicEnabled">Access mode</label><select id="publicEnabled" name="publicEnabled"><option value="no" ${!settings.publicEnabled ? "selected" : ""}>Invite only</option><option value="yes" ${settings.publicEnabled ? "selected" : ""}>Public guests + invites</option></select></div><div><label for="dailyUsd">Daily total (USD)</label><input id="dailyUsd" name="dailyUsd" type="number" min="0" max="100" step="0.01" value="${settings.dailyCents / 100}" required></div><div><label for="guestUsd">Daily per guest (USD)</label><input id="guestUsd" name="guestUsd" type="number" min="0" max="100" step="0.01" value="${settings.guestCents / 100}" required></div><div><label for="ipUsd">Daily per network (USD)</label><input id="ipUsd" name="ipUsd" type="number" min="0" max="100" step="0.01" value="${settings.ipCents / 100}" required></div><div><label for="ipConcurrent">Concurrent games per network</label><input id="ipConcurrent" name="ipConcurrent" type="number" min="1" max="8" value="${settings.ipConcurrent}" required></div></div><button>Save public play settings</button></form></section>
+      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label for="one-time-password">One-time password</label><input id="one-time-password" readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Player identities</small><strong>${reports.totalPlayers}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section><section><small>Monthly token safety budget</small><strong>${Math.round((100 * budget.charged) / budget.cap)}% used</strong><small>${budget.charged.toLocaleString()} / ${budget.cap.toLocaleString()} tokens · ${escape(budget.month)} UTC. Includes conservative reservations, not an invoice.</small></section></div>
+    ${reports.activity}
+    <section><h2>Public play and daily spending</h2><p>Today: $${daily.chargedUsd.toFixed(4)} charged or reserved / $${daily.limitUsd.toFixed(2)} configured. Requests stop at $${daily.effectiveUsd.toFixed(2)} to leave a 5% safety margin. Resets midnight UTC. Includes invited players; estimates are not an invoice.</p><p class="muted">Guest setup: ${this.guests?.ready() ? "Configured. Verify a live browser check before sharing." : "Not ready: configure Turnstile keys, PUBLIC_IP_SALT and trusted IP source."} Guests use one concurrent game. Browser IDs and networks are not verified people.</p><form method="post" action="/admin/public-settings"><div class="grid"><div><label for="publicEnabled">Access mode</label><select id="publicEnabled" name="publicEnabled"><option value="no" ${!settings.publicEnabled ? "selected" : ""}>Invite only</option><option value="yes" ${settings.publicEnabled ? "selected" : ""}>Public guests + invites</option></select></div><div><label for="dailyUsd">Daily total (USD)</label><input id="dailyUsd" name="dailyUsd" type="number" min="0" max="100" step="0.01" value="${settings.dailyCents / 100}" required></div><div><label for="guestUsd">Daily per guest (USD)</label><input id="guestUsd" name="guestUsd" type="number" min="0" max="100" step="0.01" value="${settings.guestCents / 100}" required></div><div><label for="ipUsd">Daily per network (USD)</label><input id="ipUsd" name="ipUsd" type="number" min="0" max="100" step="0.01" value="${settings.ipCents / 100}" required></div><div><label for="ipConcurrent">Concurrent games per network</label><input id="ipConcurrent" name="ipConcurrent" type="number" min="1" max="8" value="${settings.ipConcurrent}" required></div></div><button>Save public play settings</button></form></section>
     <section><h2>Create or update an invite</h2><p class="muted">Use an existing name to update it. Leave its password blank to keep it. A new invite gets a generated password when blank. Resetting a password or disabling access revokes its sessions.</p><form method="post" action="/admin/invite"><div class="grid"><div><label for="id">Invite name</label><input id="id" name="id" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" value="${escape(draft.id)}" required></div><div><label for="new-password">Password (16+ characters)</label><input id="new-password" name="password" type="${draft.password ? "text" : "password"}" value="${escape(draft.password)}" minlength="16" maxlength="256" autocomplete="new-password"></div><div><label for="maxSessions">Concurrent games</label><input id="maxSessions" name="maxSessions" type="number" min="1" max="8" value="${escape(draft.maxSessions)}" required></div><div><label for="enabled">Access</label><select id="enabled" name="enabled"><option value="yes" ${draft.enabled ? "selected" : ""}>Enabled</option><option value="no" ${!draft.enabled ? "selected" : ""}>Disabled</option></select></div></div><button>Save invite</button><button type="submit" formaction="/admin/generate-password" formnovalidate>Generate password</button></form></section>
-    <section><h2>Players and usage</h2><p class="muted">Play time is estimated from visible, running-game heartbeats, not login duration or verified human activity. Usage excludes unreported provider billing.</p><div class="scroll"><table><thead><tr><th>Invite / guest ID</th><th>Display name</th><th>Access / games</th><th>Logins / runs</th><th>Last login</th><th>Play time</th><th>Jev usage</th><th>Est. cost</th><th>Password</th></tr></thead><tbody>${invites.map((i: any) => `<tr><td>${escape(i.id)}</td><td>${escape(i.displayName || "Not available")}</td><td>${i.enabled ? "Enabled" : "Disabled"} · ${i.activeSessions}/${i.maxSessions}</td><td>${i.loginCount} / ${i.runs}</td><td>${date(i.lastLogin)}</td><td>${Math.round(i.activeMs / 60000)} min</td><td>${i.requests} requests<br>${Number(i.inputTokens).toLocaleString()} input tokens<br>${i.failures} failures</td><td>$${((i.inputTokens / 1e6) * this.inputRate).toFixed(4)}</td><td><form method="post" action="/admin/reset-password"><input type="hidden" name="id" value="${escape(i.id)}"><button class="danger" aria-label="Reset password for ${escape(i.id)}">Reset password</button></form><small>Signs out this player</small></td></tr>`).join("") || '<tr><td colspan="9">No invites yet. Create your first field pass above.</td></tr>'}</tbody></table></div></section>
+    ${reports.playerSection}
     <section><h2>Active games</h2><div class="scroll"><table><thead><tr><th>Invite</th><th>Session</th><th>Action</th></tr></thead><tbody>${sessions.map((s: any) => `<tr><td>${escape(s.inviteId)}</td><td>${escape(s.managementId.slice(0, 12))}<br>Started ${date(s.started)}<br>Last seen ${date(s.heartbeat)}</td><td><form method="post" action="/admin/end-session"><input type="hidden" name="session" value="${escape(s.managementId)}"><button class="danger">End game</button></form></td></tr>`).join("") || '<tr><td colspan="3">No active games.</td></tr>'}</tbody></table></div></section>
     <section><h2>Leaderboard moderation</h2><p>Latest 100 public entries. Community scores are not anti-cheat verified. Removing an entry prevents resubmitting that run.</p><div class="scroll"><table><thead><tr><th>Name</th><th>Points</th><th>Category</th><th>Action</th></tr></thead><tbody>${
       this.store
@@ -384,15 +427,7 @@ export class ManagedAccess {
         )
         .join("") || '<tr><td colspan="4">No submitted scores.</td></tr>'
     }</tbody></table></div></section>
-    <section><h2>Recent successful logins</h2><div class="scroll"><table><thead><tr><th>Invite</th><th>Signed in</th><th>Login state</th></tr></thead><tbody>${this.store
-      .recentLogins()
-      .map(
-        (l: any) =>
-          `<tr><td>${escape(l.inviteId)}</td><td>${date(l.created)}</td><td>${l.loggedOut ? "Signed out" : l.expires <= this.now() ? "Expired" : "Within login lifetime"}</td></tr>`,
-      )
-      .join(
-        "",
-      )}</tbody></table></div></section><p class="muted">Statistics persist across restarts. Running games do not. Estimated cost uses reported input tokens at $${this.inputRate}/million. Unknown provider charges are excluded. Cookie lifetime does not imply the player is online. <a href="/">Open game</a></p>`,
+    ${reports.loginSection}<p class="muted">Statistics persist across restarts. Running games do not. Estimated cost uses reported input tokens at $${this.inputRate}/million. Unknown provider charges are excluded. Cookie lifetime does not imply the player is online. <a href="/">Open game</a></p>`,
     );
   }
 }
