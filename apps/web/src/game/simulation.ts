@@ -1,3 +1,4 @@
+import { weaponOrigin } from "./weaponOrigins";
 import { mapPreset, type MapId } from "./maps";
 import { armorSettings } from "./armor";
 import { type Difficulty, difficultyPreset } from "./difficulty";
@@ -77,6 +78,8 @@ type Bullet = {
   kind?: "rocket" | "grenade";
   age?: number;
   origin?: Vec;
+  launchFrom?: Vec;
+  height?: number;
   pos: Vec;
   velocity: Vec;
   owner: string;
@@ -94,6 +97,7 @@ export type Recording = {
   mapId?: MapId;
   difficulty?: Difficulty;
   combatProfile?: CombatProfile;
+  projectileOriginProfile?: "muzzle.v1" | "center.v1";
   waveProfile?: WaveProfile;
   missionMode?: MissionMode;
   truncated?: boolean;
@@ -106,6 +110,7 @@ export type Recording = {
   epochs: { tick: number; epoch: number }[];
 };
 export class Simulation {
+  projectileOriginProfile: "muzzle.v1" | "center.v1" = "muzzle.v1";
   difficulty: Difficulty = "normal.v1";
   combatProfile: CombatProfile = "armor.v2";
   tankScheduledWave = -1;
@@ -318,6 +323,7 @@ export class Simulation {
       mapId,
       waveProfile: this.waveProfile,
       combatProfile: this.combatProfile,
+      projectileOriginProfile: this.projectileOriginProfile,
       upgrades: [],
       seed,
       mode: this.mode,
@@ -347,6 +353,7 @@ export class Simulation {
     this.recording.missionMode = missionMode;
     this.recording.waveProfile = this.waveProfile;
     this.recording.combatProfile = this.combatProfile;
+    this.recording.projectileOriginProfile = this.projectileOriginProfile;
     this.mode = mode;
     this.session = session;
     this.recording.mode = mode;
@@ -743,7 +750,19 @@ export class Simulation {
       }
     }
   }
-  shoot(actor: Actor, speed: number) {
+  launch(actor: Actor, kind: "rifle" | "rocket" | "grenade" | "tank") {
+    if (this.projectileOriginProfile === "center.v1")
+      return { origin: { ...actor.pos }, pos: { ...actor.pos } };
+    const point = weaponOrigin(actor.pos, actor.angle, kind);
+    const pos = { x: point.x, z: point.z };
+    return {
+      origin: { ...pos },
+      pos,
+      launchFrom: { ...actor.pos },
+      height: point.y,
+    };
+  }
+  shoot(actor: Actor, speed: number, aim?: Vec) {
     if (
       actor.ammo <= 0 ||
       actor.reloadUntil > this.tick ||
@@ -761,13 +780,20 @@ export class Simulation {
       actor !== this.player,
     );
     actor.shotAt = this.tick;
+    const rifleLaunch = this.launch(
+      actor,
+      "role" in actor && actor.role === "tank" ? "tank" : "rifle",
+    );
+    const fireAngle =
+      aim && this.projectileOriginProfile === "muzzle.v1"
+        ? Math.atan2(aim.x - rifleLaunch.pos.x, aim.z - rifleLaunch.pos.z)
+        : actor.angle;
     this.bullets.push({
       id: ++this.serial,
-      origin: { ...actor.pos },
-      pos: { ...actor.pos },
+      ...rifleLaunch,
       velocity: {
-        x: Math.sin(actor.angle) * speed,
-        z: Math.cos(actor.angle) * speed,
+        x: Math.sin(fireAngle) * speed,
+        z: Math.cos(fireAngle) * speed,
       },
       owner: actor.id,
       life: 150,
@@ -784,15 +810,22 @@ export class Simulation {
         if (rocket) this.rocketAt = this.tick;
         else this.grenadeAt = this.tick;
         const velocity = rocket ? 18 : 8;
+        const auxiliaryLaunch = this.launch(actor, kind);
+        const auxiliaryAngle =
+          aim && this.projectileOriginProfile === "muzzle.v1"
+            ? Math.atan2(
+                aim.x - auxiliaryLaunch.pos.x,
+                aim.z - auxiliaryLaunch.pos.z,
+              )
+            : actor.angle;
         this.bullets.push({
           id: ++this.serial,
           kind,
           age: 0,
-          origin: { ...actor.pos },
-          pos: { ...actor.pos },
+          ...auxiliaryLaunch,
           velocity: {
-            x: Math.sin(actor.angle) * velocity,
-            z: Math.cos(actor.angle) * velocity,
+            x: Math.sin(auxiliaryAngle) * velocity,
+            z: Math.cos(auxiliaryAngle) * velocity,
           },
           owner: actor.id,
           life: rocket ? 90 : 60,
@@ -814,6 +847,36 @@ export class Simulation {
     this.tankBursts.push({ pos: { ...pos }, born: this.tick });
     if (this.tankBursts.length > 8) this.tankBursts.shift();
     this.emit("cannon", pos);
+  }
+  traceBullet(b: Bullet, from: Vec, to: Vec) {
+    let hit = 1,
+      actor: Actor | null = null,
+      blocked = false;
+    for (const o of this.arena.obstacles) {
+      const t = segmentBox(from, to, o, b.shell ? 0.18 : 0.07);
+      if (t !== null && t <= hit) {
+        hit = t;
+        blocked = true;
+      }
+    }
+    const targets =
+      b.owner === "player"
+        ? this.npcs.filter((n) => n.role !== "general" && n.hp > 0)
+        : [this.player];
+    for (const a of targets) {
+      const t = segmentCircle(
+        from,
+        to,
+        a.pos,
+        this.radius(a) + (b.shell ? 0.18 : 0),
+      );
+      if (t !== null && t < hit) {
+        hit = t;
+        actor = a;
+        blocked = true;
+      }
+    }
+    return { hit, actor, blocked };
   }
   step(input: Input) {
     if (this.status !== "running") return;
@@ -890,7 +953,7 @@ export class Simulation {
       this.hear("footsteps");
     }
     p.angle = Math.atan2(input.aim.x - p.pos.x, input.aim.z - p.pos.z);
-    if (input.fire) this.shoot(p, 26);
+    if (input.fire) this.shoot(p, 26, input.aim);
     if (this.cup) this.cup.warmth = Math.max(0, this.cup.warmth - 0.5 * DT);
     const at =
       distance(p.pos, this.arena.kitchen) < 2
@@ -1013,41 +1076,27 @@ export class Simulation {
         x: b.pos.x + b.velocity.x * DT,
         z: b.pos.z + b.velocity.z * DT,
       };
-      let hit = 1,
-        actor: Actor | null = null,
-        blocked = false;
-      for (const o of this.arena.obstacles) {
-        const t = segmentBox(b.pos, to, o, b.shell ? 0.18 : 0.07);
-        if (t !== null && t <= hit) {
-          hit = t;
-          blocked = true;
+      let from = b.pos;
+      let end = to;
+      let result = this.traceBullet(b, from, end);
+      if (b.launchFrom) {
+        const launch = this.traceBullet(b, b.launchFrom, b.pos);
+        if (launch.blocked) {
+          from = b.launchFrom;
+          end = b.pos;
+          result = launch;
         }
+        delete b.launchFrom;
       }
-      const targets =
-        b.owner === "player"
-          ? this.npcs.filter((n) => n.role !== "general" && n.hp > 0)
-          : [p];
-      for (const a of targets) {
-        const t = segmentCircle(
-          b.pos,
-          to,
-          a.pos,
-          this.radius(a) + (b.shell ? 0.18 : 0),
-        );
-        if (t !== null && t < hit) {
-          hit = t;
-          actor = a;
-          blocked = true;
-        }
-      }
+      const { hit, actor, blocked } = result;
       if (blocked) {
         const impact = {
-          x: b.pos.x + (to.x - b.pos.x) * hit,
-          z: b.pos.z + (to.z - b.pos.z) * hit,
+          x: from.x + (end.x - from.x) * hit,
+          z: from.z + (end.z - from.z) * hit,
         };
         this.impacts.push({
           pos: impact,
-          from: { ...b.pos },
+          from: { ...from },
           born: this.tick,
           target: actor ? "actor" : "cover",
           owner: b.owner,
@@ -1066,8 +1115,8 @@ export class Simulation {
               ),
         );
       const impact = {
-        x: b.pos.x + (to.x - b.pos.x) * hit,
-        z: b.pos.z + (to.z - b.pos.z) * hit,
+        x: from.x + (end.x - from.x) * hit,
+        z: from.z + (end.z - from.z) * hit,
       };
       b.pos = blocked ? impact : to;
       b.life--;
