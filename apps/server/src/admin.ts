@@ -1,3 +1,4 @@
+import { accessPage } from "./access-page";
 import { ICON_HEAD } from "../../../packages/shared/site-meta";
 import type { GuestAccess } from "./guests";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
@@ -107,13 +108,14 @@ export class ManagedAccess {
     error = false,
     status = 401,
   ) {
-    this.html(
-      res,
-      status,
-      admin ? "Owner login" : "Your field pass",
-      `<section class="login"><small>${admin ? "OWNER ACCESS" : "PRIVATE FIELD TEST"}</small><h1>Coffee Under Fire</h1>${error ? '<p role="alert">Unable to sign in. Check your credentials or try again later.</p>' : ""}<form method="post" action="${admin ? "/admin/login" : "/access/login"}">${admin ? "" : '<label for="invite">Invite name</label><input id="invite" name="invite" maxlength="40" autocomplete="username" required>'}<label for="password">${admin ? "Owner token" : "Password"}</label><input id="password" name="password" type="password" maxlength="256" autocomplete="current-password" required><button>Sign in</button></form><p class="muted">${admin ? "Owner credentials never grant player access." : "Login times, approximate play time and Jev usage are recorded for this private playtest."}</p></section>`,
+    res.writeHead(status, { "Content-Type": "text/html; charset=utf-8" });
+    res.end(
+      accessPage(
+        `<span class="eyebrow">${admin ? "Owner access" : "Your field pass"}</span><h2>${admin ? "Welcome back, commander." : "Your orders are waiting."}</h2><p class="muted">${admin ? "Sign in to manage invites and gameplay budgets." : "Enter your invite to start a coffee run."}</p>${error ? '<p class="notice" role="alert">Unable to sign in. Check your credentials or try again later.</p>' : ""}<form method="post" action="${admin ? "/admin/login" : "/access/login"}">${admin ? "" : '<label for="invite">Invite name</label><input id="invite" name="invite" maxlength="40" autocomplete="username" required>'}<label for="password">${admin ? "Owner token" : "Password"}</label><input id="password" name="password" type="password" maxlength="256" autocomplete="current-password" required><button>Sign in</button></form><p class="muted">${admin ? "Owner credentials never grant player access." : "Login times, approximate play time and Jev usage are recorded."}</p><footer><a href="/">Back to the game</a></footer>`,
+      ),
     );
   }
+
   async handle(req: IncomingMessage, res: ServerResponse): Promise<boolean> {
     const path = new URL(req.url ?? "/", this.origin).pathname;
     if (path === "/healthz" && ["GET", "HEAD"].includes(req.method ?? "")) {

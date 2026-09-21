@@ -14,6 +14,7 @@ export const SITE_HEAD = `<title>${SITE_TITLE}</title>
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${SITE_TITLE}"><meta name="twitter:description" content="${SITE_DESCRIPTION}"><meta name="twitter:image" content="${SITE_URL}assets/brand/social-card-v1.png"><meta name="twitter:image:alt" content="Coffee Under Fire browser game, powered by Jev AI.">
 ${ICON_HEAD}`;
 export const PUBLIC_BRAND_PATHS = new Set([
+  "/assets/brand/coffee-under-fire-logo-v1.png",
   "/favicon.ico",
   "/favicon.svg",
   "/favicon-32.png",

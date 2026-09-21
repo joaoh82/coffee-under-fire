@@ -132,7 +132,7 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     assert.ok(!page.includes(config.ipSalt));
     assert.equal((await post("valid", "https://evil.example")).status, 403);
     assert.equal(calls, 0);
-    assert.match(page, /Display name \(optional\)/);
+    assert.match(page, /Display name <small>\(optional\)<\/small>/);
     assert.equal((await post("valid", origin, "porn star")).status, 400);
     assert.equal(
       calls,
