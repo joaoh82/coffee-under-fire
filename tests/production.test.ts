@@ -85,6 +85,7 @@ test("production entrypoint protects API and serves the compiled game after logi
     }
     for (const [path, type] of [
       ["/assets/brand/social-card-v1.png", "image/png"],
+      ["/assets/brand/coffee-under-fire-logo-v1.png", "image/png"],
       ["/favicon.svg", "image/svg+xml"],
       ["/favicon.ico", "image/x-icon"],
       ["/robots.txt", "text/plain"],
