@@ -23,6 +23,9 @@ export function AssetPreview() {
   const [character, setCharacter] = useState<
     "soldier" | "rifleman" | "general"
   >("soldier");
+  const [specialist, setSpecialist] = useState<
+    "rifleman" | "rifleman_scout" | "rifleman_gunner" | "rifleman_marksman"
+  >("rifleman");
   const [clip, setClip] = useState("idle");
   const [take, setTake] = useState(0);
   const [view, setView] = useState("soldier");
@@ -96,6 +99,7 @@ export function AssetPreview() {
                 driver={driver}
                 previewClip={clip}
                 variant={character}
+                appearance={specialist}
               />
             )}
           {view === "crowd" && (
@@ -178,6 +182,29 @@ export function AssetPreview() {
             </button>
           ))}
         </div>
+        {character === "rifleman" && (
+          <div>
+            {(
+              [
+                "rifleman",
+                "rifleman_scout",
+                "rifleman_gunner",
+                "rifleman_marksman",
+              ] as const
+            ).map((name) => (
+              <button
+                key={name}
+                aria-pressed={specialist === name}
+                onClick={() => {
+                  setSpecialist(name);
+                  setTake((n) => n + 1);
+                }}
+              >
+                {name.replace("rifleman_", "").replace("rifleman", "Rifleman")}
+              </button>
+            ))}
+          </div>
+        )}
         <div>
           {(character === "general"
             ? ["idle", "run", "map", "watch", "sip", "pleased", "hit", "death"]

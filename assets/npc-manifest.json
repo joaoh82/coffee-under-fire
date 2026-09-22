@@ -80,6 +80,58 @@
       "provenance": "Original project-authored geometry, derived from the project soldier rig; no third-party models or faction insignia"
     },
     {
+      "role": "rifleman_gunner",
+      "source": "assets/blender/npcs/rifleman_gunner.blend",
+      "runtime": "apps/web/public/assets/models/npc_rifleman_gunner.glb",
+      "bytes": 191992,
+      "triangles": 1312,
+      "meshPrimitives": 7,
+      "materials": [
+        "Charcoal",
+        "Leather",
+        "Paper_and_enamel",
+        "Slate_cloth",
+        "Slate_highlight",
+        "Terracotta_cloth",
+        "Warm_skin.001"
+      ],
+      "clips": [
+        "death",
+        "hit",
+        "idle",
+        "reload",
+        "run",
+        "shoot"
+      ],
+      "provenance": "Original project-authored geometry, derived from the project soldier rig; no third-party models or faction insignia"
+    },
+    {
+      "role": "rifleman_marksman",
+      "source": "assets/blender/npcs/rifleman_marksman.blend",
+      "runtime": "apps/web/public/assets/models/npc_rifleman_marksman.glb",
+      "bytes": 180944,
+      "triangles": 1224,
+      "meshPrimitives": 7,
+      "materials": [
+        "Charcoal",
+        "Leather",
+        "Paper_and_enamel",
+        "Slate_cloth",
+        "Slate_highlight",
+        "Terracotta_cloth",
+        "Warm_skin.001"
+      ],
+      "clips": [
+        "death",
+        "hit",
+        "idle",
+        "reload",
+        "run",
+        "shoot"
+      ],
+      "provenance": "Original project-authored geometry, derived from the project soldier rig; no third-party models or faction insignia"
+    },
+    {
       "role": "general",
       "source": "assets/blender/npcs/general.blend",
       "runtime": "apps/web/public/assets/models/npc_general.glb",

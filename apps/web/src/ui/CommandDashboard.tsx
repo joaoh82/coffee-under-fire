@@ -106,7 +106,8 @@ export function CommandDashboard({
         >
           {driver.sim.npcs.map((n) => (
             <option key={n.id} value={n.id}>
-              {n.id.replaceAll("_", " ")} · {n.role}
+              {n.id.replaceAll("_", " ")} ·{" "}
+              {n.role === "rifleman" ? n.archetype : n.role}
             </option>
           ))}
         </select>

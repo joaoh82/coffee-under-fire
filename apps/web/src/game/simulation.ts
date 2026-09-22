@@ -1,3 +1,9 @@
+import {
+  ENEMY_TYPES,
+  infantryArchetype,
+  type EnemyArchetype,
+  type RosterProfile,
+} from "./enemyRoster";
 import { weaponOrigin } from "./weaponOrigins";
 import { mapPreset, type MapId } from "./maps";
 import { armorSettings } from "./armor";
@@ -54,6 +60,7 @@ export type Actor = {
 };
 export type NPC = Actor & {
   maxHp: number;
+  archetype: EnemyArchetype;
   role: "rifleman" | "general" | "tank";
   sequence: number;
   action: Candidate | null;
@@ -94,6 +101,7 @@ export type MissionMode = "mission" | "endless";
 export const REPLAY_TICK_LIMIT = 30 * 60 * 60;
 export type CombatProfile = "infantry.v1" | "armor.v1" | "armor.v2";
 export type Recording = {
+  rosterProfile?: RosterProfile;
   mapId?: MapId;
   difficulty?: Difficulty;
   combatProfile?: CombatProfile;
@@ -110,6 +118,8 @@ export type Recording = {
   epochs: { tick: number; epoch: number }[];
 };
 export class Simulation {
+  rosterProfile: RosterProfile = "specialists.v1";
+  infantryScheduled = 0;
   projectileOriginProfile: "muzzle.v1" | "center.v1" = "muzzle.v1";
   difficulty: Difficulty = "normal.v1";
   combatProfile: CombatProfile = "armor.v2";
@@ -299,7 +309,12 @@ export class Simulation {
   wave = 0;
   spawnQueue = 0;
   scheduled = 0;
-  telegraphs: { pos: Vec; until: number; role?: "rifleman" | "tank" }[] = [];
+  telegraphs: {
+    pos: Vec;
+    until: number;
+    role?: "rifleman" | "tank";
+    archetype?: EnemyArchetype;
+  }[] = [];
   logs: {
     tick: number;
     npc: string;
@@ -320,6 +335,7 @@ export class Simulation {
     };
     this.recording = {
       version: "replay.v2",
+      rosterProfile: this.rosterProfile,
       mapId,
       waveProfile: this.waveProfile,
       combatProfile: this.combatProfile,
@@ -351,6 +367,7 @@ export class Simulation {
     this.recording.difficulty = difficulty;
     this.missionMode = missionMode;
     this.recording.missionMode = missionMode;
+    this.recording.rosterProfile = this.rosterProfile;
     this.recording.waveProfile = this.waveProfile;
     this.recording.combatProfile = this.combatProfile;
     this.recording.projectileOriginProfile = this.projectileOriginProfile;
@@ -385,7 +402,7 @@ export class Simulation {
       this.reason = "";
     }
   }
-  addNPC(role: NPC["role"], pos: Vec) {
+  addNPC(role: NPC["role"], pos: Vec, archetype: EnemyArchetype = "rifleman") {
     const maxHp =
       role === "general"
         ? 100
@@ -396,6 +413,7 @@ export class Simulation {
           : 30;
     const n: NPC = {
       maxHp,
+      archetype,
       id: role === "general" ? "general" : `enemy_${++this.serial}`,
       generation: 0,
       pos: { ...pos },
@@ -448,10 +466,23 @@ export class Simulation {
       if (free(b)) actor.pos.z = b.z;
     }
   }
+  infantrySettings(n: NPC) {
+    return ENEMY_TYPES[
+      this.rosterProfile === "legacy" ? "rifleman" : n.archetype
+    ];
+  }
+  inFireRange(n: NPC) {
+    return (
+      distance(n.pos, this.player.pos) <= this.infantrySettings(n).fireRange
+    );
+  }
   visible(n: NPC) {
     return (
       n.role !== "general" &&
-      distance(n.pos, this.player.pos) <= 14 &&
+      distance(n.pos, this.player.pos) <=
+        (n.role === "rifleman"
+          ? this.infantrySettings(n).perceptionRange
+          : 14) &&
       this.sight(n.pos, this.player.pos) &&
       this.player.hp > 0
     );
@@ -476,7 +507,12 @@ export class Simulation {
         duration: 4,
       }));
     const actions: Candidate[] = [{ id: "hold", kind: "hold", duration: 1 }];
-    if (n.role === "rifleman" && this.visible(n) && n.ammo > 0)
+    if (
+      n.role === "rifleman" &&
+      this.visible(n) &&
+      this.inFireRange(n) &&
+      n.ammo > 0
+    )
       actions.push({
         id: "fire_player",
         kind: "fire",
@@ -577,6 +613,17 @@ export class Simulation {
       observation: {
         npc: n.id,
         role: n.role,
+        ...(n.role === "rifleman" && this.rosterProfile === "specialists.v1"
+          ? {
+              archetype: n.archetype,
+              combat: {
+                movementSpeed: this.infantrySettings(n).speed,
+                fireRange: this.infantrySettings(n).fireRange,
+                fireCadenceTicks: this.infantrySettings(n).cadenceTicks,
+                fireWindupTicks: this.infantrySettings(n).windupTicks,
+              },
+            }
+          : {}),
         position: { ...n.pos },
         hp: n.hp,
         ...(this.combatProfile === "armor.v2" ? { maxHp: n.maxHp } : {}),
@@ -620,6 +667,7 @@ export class Simulation {
         n.role === "rifleman" &&
         n.ammo > 0 &&
         this.visible(n) &&
+        this.inFireRange(n) &&
         c.target === "player"
       );
     if (c.kind === "reload") return n.role !== "general" && n.ammo < 12;
@@ -767,7 +815,11 @@ export class Simulation {
       actor.ammo <= 0 ||
       actor.reloadUntil > this.tick ||
       this.tick - actor.shotAt <
-        (actor === this.player ? Math.max(4, 9 - this.ranks.cadence) : 24)
+        (actor === this.player
+          ? Math.max(4, 9 - this.ranks.cadence)
+          : "role" in actor && actor.role === "rifleman"
+            ? this.infantrySettings(actor as NPC).cadenceTicks
+            : 24)
     )
       return;
     actor.ammo--;
@@ -1006,7 +1058,7 @@ export class Simulation {
         continue;
       }
       if (a.kind === "fire") {
-        if (!this.visible(n) || n.ammo === 0) {
+        if (!this.visible(n) || !this.inFireRange(n) || n.ammo === 0) {
           n.action = null;
           n.starvedAt = this.tick;
           n.nextDecision = this.tick;
@@ -1018,8 +1070,11 @@ export class Simulation {
           Math.cos(target - n.angle),
         );
         n.angle += Math.max(-2.5 * DT, Math.min(2.5 * DT, diff));
-        if (this.tick - n.actionStart >= 18 && Math.abs(diff) < 0.15)
-          this.shoot(n, 11);
+        if (
+          this.tick - n.actionStart >= this.infantrySettings(n).windupTicks &&
+          Math.abs(diff) < 0.15
+        )
+          this.shoot(n, this.infantrySettings(n).bulletSpeed);
       }
       if (a.kind === "cannon") {
         // The selected snapshot stays fixed. No tracking, hidden retarget or tactical fallback.
@@ -1059,8 +1114,12 @@ export class Simulation {
         const old = { ...n.pos };
         this.move(
           n,
-          ((next.x - n.pos.x) / len) * (n.role === "tank" ? 1.4 : 2.7) * DT,
-          ((next.z - n.pos.z) / len) * (n.role === "tank" ? 1.4 : 2.7) * DT,
+          ((next.x - n.pos.x) / len) *
+            (n.role === "tank" ? 1.4 : this.infantrySettings(n).speed) *
+            DT,
+          ((next.z - n.pos.z) / len) *
+            (n.role === "tank" ? 1.4 : this.infantrySettings(n).speed) *
+            DT,
         );
         n.angle = Math.atan2(next.x - old.x, next.z - old.z);
         if (distance(old, n.pos) < 0.001) {
@@ -1140,6 +1199,7 @@ export class Simulation {
       this.wave = wave;
       this.spawnQueue = 0;
       this.scheduled = 0;
+      this.infantryScheduled = 0;
     }
     const settings = waveSettings(wave, this.waveProfile, this.difficulty);
     const within = this.time % 60;
@@ -1170,7 +1230,7 @@ export class Simulation {
               this.radius(n) + (mark.role === "tank" ? 1.2 : 0.45) + 0.1,
           )
         )
-          this.addNPC(mark.role ?? "rifleman", mark.pos);
+          this.addNPC(mark.role ?? "rifleman", mark.pos, mark.archetype);
         this.telegraphs.splice(this.telegraphs.indexOf(mark), 1);
       }
     if (
@@ -1244,7 +1304,17 @@ export class Simulation {
             : spots[Math.floor(this.random() * spots.length)]),
         },
         until: this.tick + (tank ? 120 : 60),
-        ...(tank ? { role: "tank" as const } : {}),
+        ...(tank
+          ? { role: "tank" as const }
+          : this.rosterProfile === "specialists.v1"
+            ? {
+                archetype: infantryArchetype(
+                  wave,
+                  this.infantryScheduled,
+                  this.rosterProfile,
+                ),
+              }
+            : {}),
       });
       if (tank) {
         this.tanksScheduled =
@@ -1252,6 +1322,7 @@ export class Simulation {
         this.tankScheduledWave = wave;
         this.lastTankAt = this.tick;
       }
+      if (!tank) this.infantryScheduled++;
       this.spawnQueue--;
       this.lastSpawn = this.tick;
     }
