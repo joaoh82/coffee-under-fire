@@ -101,7 +101,9 @@ export function Briefing({
             game handles movement, aiming and combat.
           </p>
           <div className="brief-project-links">
-            <button onClick={onShowDecisions}>See the decision dashboard</button>
+            <button onClick={onShowDecisions}>
+              See the decision dashboard
+            </button>
             <GitHubLink />
           </div>
         </div>
@@ -215,8 +217,9 @@ export function Briefing({
           ))}
         </fieldset>
         <p className="tank-wave-note">
-          Tanks can arrive at wave 4, around three minutes in. Waves advance with
-          time, independently of your XP level.
+          Scouts arrive from wave 3, tanks from wave 4, gunners from wave 5 and
+          marksmen from wave 7. Waves advance with time, independently of your
+          XP level.
         </p>
       </div>
       <div className="brief-launch">

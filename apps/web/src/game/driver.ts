@@ -522,6 +522,7 @@ export function replay(record: Recording) {
   if (record.version !== "replay.v1" && record.version !== "replay.v2")
     throw new Error("Unsupported replay version");
   const s = new Simulation(record.seed, record.mapId ?? "woodland.v1");
+  s.rosterProfile = record.rosterProfile ?? "legacy";
   s.waveProfile = record.waveProfile ?? "legacy";
   s.combatProfile = record.combatProfile ?? "infantry.v1";
   s.projectileOriginProfile = record.projectileOriginProfile ?? "center.v1";

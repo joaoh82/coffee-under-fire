@@ -61,6 +61,17 @@ export const observationSchema = z
   .object({
     npc: id,
     role: z.enum(["rifleman", "general", "tank"]),
+    // Additive coffee.v2 specialist extension; old observations remain valid.
+    archetype: z.enum(["rifleman", "scout", "gunner", "marksman"]).optional(),
+    combat: z
+      .object({
+        movementSpeed: z.number().positive().max(10),
+        fireRange: z.number().positive().max(24),
+        fireCadenceTicks: z.number().int().min(1).max(120),
+        fireWindupTicks: z.number().int().min(0).max(120),
+      })
+      .strict()
+      .optional(),
     position: vec,
     // Additive coffee.v2 armor extension; legacy observations remain valid.
     hp: z.number().min(0).max(240),
@@ -148,7 +159,13 @@ export const responseSchema = z
     probabilities: z.record(z.string(), z.number().min(0).max(1)).optional(),
     latencyMs: z.number().nonnegative(),
     model: z.string().max(100),
-    config: z.enum(["tactics.v1", "tactics.v2", "tactics.v3", "tactics.v4"]),
+    config: z.enum([
+      "tactics.v1",
+      "tactics.v2",
+      "tactics.v3",
+      "tactics.v4",
+      "tactics.v5",
+    ]),
     usage: z
       .object({
         input_tokens: z.number().int().nonnegative(),
@@ -167,6 +184,8 @@ export function envelope(r: DecisionRequest) {
     sequence: r.sequence,
     tick: r.tick,
     npc: r.observation.npc,
-    config: "tactics.v4" as const,
+    config: r.observation.archetype
+      ? ("tactics.v5" as const)
+      : ("tactics.v4" as const),
   };
 }

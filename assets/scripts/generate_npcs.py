@@ -2,7 +2,7 @@
 Run after generate_slice.py. Sources keep editable parts; exports batch by palette.
 Blender Z-up/front -Y, exported glTF Y-up/front +Z. No faction insignia.
 """
-import bpy, math
+import bpy, math, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -10,7 +10,11 @@ OUT = ROOT / 'apps/web/public/assets/models'
 SRC = ROOT / 'assets/blender/npcs'
 SRC.mkdir(parents=True, exist_ok=True)
 
-for model_name in ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'general']:
+models = ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'rifleman_gunner', 'rifleman_marksman', 'general']
+selected = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else models
+if not selected or any(name not in models for name in selected):
+    raise ValueError('Pass model names after --: ' + ', '.join(models))
+for model_name in selected:
     role = 'general' if model_name == 'general' else 'rifleman'
     bpy.ops.wm.open_mainfile(filepath=str(ROOT / 'assets/blender/slice/soldier.blend'))
     bpy.context.preferences.filepaths.save_version = 0
@@ -36,6 +40,12 @@ for model_name in ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'general']:
     elif model_name == 'rifleman_veteran':
         cloth.diffuse_color = (.25,.28,.235,1)
         cloth.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value = cloth.diffuse_color
+    if model_name == 'rifleman_gunner':
+        cloth.diffuse_color = (.29,.32,.27,1)
+        cloth.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value = cloth.diffuse_color
+    if model_name == 'rifleman_marksman':
+        cloth.diffuse_color = (.38,.34,.24,1)
+        cloth.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value = cloth.diffuse_color
     trim = material('Slate_highlight' if role == 'rifleman' else 'Brass_trim',
                     (.35, .43, .45) if role == 'rifleman' else (.80, .61, .23))
     skin = material('Warm_skin', (.69, .48, .33) if role == 'rifleman' else (.82, .61, .42))
@@ -47,7 +57,7 @@ for model_name in ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'general']:
     for o in list(s.objects):
         if o.type != 'MESH':
             continue
-        if (model_name == 'rifleman_scout' and o.name.startswith(('Backpack', 'Helmet_'))) or (role == 'rifleman' and o.name.startswith('VIS_Coffee')) or (
+        if (model_name in ['rifleman_scout', 'rifleman_marksman'] and o.name.startswith(('Backpack', 'Helmet_'))) or (role == 'rifleman' and o.name.startswith('VIS_Coffee')) or (
             role == 'general' and o.name.startswith(('Rifle_', 'Backpack', 'Front_pouch', 'Helmet_'))
         ):
             bpy.data.objects.remove(o, do_unlink=True)
@@ -92,6 +102,20 @@ for model_name in ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'general']:
             box('Soft_cap_peak', (0,-.25,1.59), (.46,.28,.045), leather, bevel=.02)
             box('Light_satchel', (.32,.22,.87), (.25,.23,.32), leather, bevel=.03)
             for x in [-.12,.12]:box('Dust_goggles', (x,-.257,1.49), (.18,.045,.09), dark, bevel=.025)
+        if model_name == 'rifleman_gunner':
+            box('Canvas_vest', (0,-.20,1.02), (.68,.18,.36), leather, bevel=.045)
+            box('Ammo_pack', (0,.39,.98), (.67,.26,.48), dark, bevel=.04)
+            for x in [-.24,0,.24]:
+                box('Ammo_box', (x,-.32,.98), (.16,.10,.23), trim, bevel=0)
+            box('Gun_box_magazine', (.4,-.31,.68), (.28,.22,.27), dark, 'arm_r', bevel=.025)
+            box('Gun_barrel_shroud', (.4,-.56,.89), (.13,.38,.13), trim, 'arm_r', bevel=.01)
+        if model_name == 'rifleman_marksman':
+            box('Hood_top', (0,.015,1.67), (.65,.54,.24), cloth, bevel=.055)
+            for x in [-.27,.27]:
+                box('Hood_side', (x,.015,1.47), (.15,.49,.25), cloth, bevel=.02)
+            box('Short_cape', (0,.22,1.09), (.78,.22,.48), cloth, bevel=.04)
+            box('Rifle_scope', (.4,-.30,1.02), (.13,.30,.13), dark, 'arm_r', bevel=.025)
+            box('Scope_lens', (.4,-.455,1.02), (.095,.025,.095), cream, 'arm_r', bevel=0)
         if model_name == 'rifleman_veteran':
             box('Helmet_canvas_patch', (.13,-.27,1.72), (.18,.055,.14), leather, bevel=.02)
             box('Shoulder_blanket', (0,.17,1.20), (.79,.38,.14), accent, bevel=.05)
@@ -161,7 +185,7 @@ for model_name in ['rifleman', 'rifleman_scout', 'rifleman_veteran', 'general']:
             pb.rotation_euler = (0, 0, 0)
             pb.location = (0, 0, 0)
         rig.pose.bones['root'].rotation_euler.x = -math.pi / 2 * fall
-        rig.pose.bones['root'].location.y = .46 * fall
+        rig.pose.bones['root'].location.y = (.525 if model_name in ['rifleman_gunner', 'rifleman_marksman'] else .46) * fall
         for pb in rig.pose.bones:
             pb.keyframe_insert(data_path='rotation_euler', frame=f)
             pb.keyframe_insert(data_path='location', frame=f)

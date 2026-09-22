@@ -10,6 +10,8 @@ for (const role of [
   "rifleman",
   "rifleman_scout",
   "rifleman_veteran",
+  "rifleman_gunner",
+  "rifleman_marksman",
   "general",
 ]) {
   const runtime = `apps/web/public/assets/models/npc_${role}.glb`;

@@ -1,3 +1,5 @@
+import { segmentBox } from "../game/arena";
+import { ENEMY_TYPES } from "../game/enemyRoster";
 import { ShoulderLauncher } from "./ShoulderLauncher";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
@@ -8,6 +10,7 @@ import type { Driver } from "../game/driver";
 import { CarriedCoffee } from "./CarriedCoffee";
 import {
   infantryAppearance,
+  specialistAppearance,
   type InfantryAppearance,
 } from "./infantryAppearance";
 import { motionPose } from "./motionPose";
@@ -51,7 +54,7 @@ export function SliceSoldier({
     GLTFLoader,
     variant === "soldier"
       ? "/assets/models/slice_soldier.glb"
-      : `/assets/models/npc_${variant === "rifleman" ? (appearance ?? infantryAppearance(actor?.id ?? "preview")) : variant}.glb`,
+      : `/assets/models/npc_${variant === "rifleman" ? (appearance ?? (actor && driver.sim.rosterProfile === "specialists.v1" ? specialistAppearance(actor.archetype, actor.id) : infantryAppearance(actor?.id ?? "preview"))) : variant}.glb`,
   );
   const model = useMemo(() => {
     const root = clone(gltf.scene);
@@ -75,6 +78,7 @@ export function SliceSoldier({
   const posture = useRef<THREE.Group>(null!);
   const bar = useRef<THREE.Group>(null!);
   const fill = useRef<THREE.Mesh>(null!);
+  const aimWarning = useRef<THREE.Mesh>(null!);
   const groundRing = useRef<THREE.Mesh>(null!);
   const muzzleFlash = useRef<THREE.Group>(null!);
   const muzzle = useMemo(() => model.getObjectByName("SOCKET_muzzle"), [model]);
@@ -121,6 +125,7 @@ export function SliceSoldier({
       firstFrame.current = false;
     }
     if (groundRing.current) groundRing.current.visible = p.hp > 0;
+
     const turn = Math.atan2(
       Math.sin(p.angle - group.current.rotation.y),
       Math.cos(p.angle - group.current.rotation.y),
@@ -129,6 +134,48 @@ export function SliceSoldier({
       group.current.rotation.y +=
         turn * (1 - Math.exp(-(actor ? 24 : 38) * delta));
     else if (previewClip) group.current.rotation.y = p.angle;
+    if (aimWarning.current) {
+      aimWarning.current.visible =
+        !!actor &&
+        actor.role === "rifleman" &&
+        actor.archetype === "marksman" &&
+        actor.hp > 0 &&
+        actor.action?.kind === "fire" &&
+        actor.shotAt < actor.actionStart &&
+        s.visible(actor);
+      if (aimWarning.current.visible && actor) {
+        const reach = ENEMY_TYPES.marksman.fireRange;
+        const origin = s.launch(actor, "rifle").pos;
+        const end = {
+          x: origin.x + Math.sin(actor.angle) * reach,
+          z: origin.z + Math.cos(actor.angle) * reach,
+        };
+        let fraction = 1;
+        for (const obstacle of s.arena.obstacles) {
+          const hit = segmentBox(origin, end, obstacle, 0.07);
+          if (hit !== null) fraction = Math.min(fraction, hit);
+        }
+        const length = reach * fraction;
+        const localAngle = actor.angle - group.current.rotation.y;
+        const dx =
+          origin.x +
+          (Math.sin(actor.angle) * length) / 2 -
+          group.current.position.x;
+        const dz =
+          origin.z +
+          (Math.cos(actor.angle) * length) / 2 -
+          group.current.position.z;
+        const angle = group.current.rotation.y;
+        aimWarning.current.position.set(
+          dx * Math.cos(angle) - dz * Math.sin(angle),
+          0.075,
+          dx * Math.sin(angle) + dz * Math.cos(angle),
+        );
+        aimWarning.current.rotation.y = localAngle;
+        aimWarning.current.scale.set(0.06, 0.015, length);
+      }
+    }
+
     if (p.hp < state.current.hp) state.current.hitUntil = s.tick + 12;
     state.current.hp = p.hp;
     const dx = p.pos.x - p.previous.x,
@@ -284,6 +331,15 @@ export function SliceSoldier({
         }
       }}
     >
+      <mesh ref={aimWarning} visible={false}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshBasicMaterial
+          color="#ef6b55"
+          transparent
+          opacity={0.8}
+          depthWrite={false}
+        />
+      </mesh>
       <group ref={posture}>
         <primitive object={model} dispose={null} />
         {!actor && variant === "soldier" && (

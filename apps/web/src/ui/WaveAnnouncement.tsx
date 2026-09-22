@@ -19,7 +19,17 @@ export function WaveAnnouncement({
     >
       <span>INCOMING</span>
       <strong>WAVE {number}</strong>
-      <small>Hold the line. Keep the coffee moving.</small>
+      <small>
+        {number === 3
+          ? "Scouts incoming · fast feet, close-range fire"
+          : number === 4
+            ? "Tanks incoming · dodge the orange aiming line"
+            : number === 5
+              ? "Gunners incoming · watch for rapid bursts"
+              : number === 7
+                ? "Marksmen incoming · watch their red aiming line"
+                : "Hold the line. Keep the coffee moving."}
+      </small>
     </div>
   );
 }
