@@ -1,0 +1,165 @@
+.tutorial-dialog {
+  box-sizing: border-box;
+  width: min(560px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  margin: auto;
+  padding: 24px 32px;
+  border: 3px solid #455837;
+  border-radius: 12px 28px 12px 12px;
+  background: #eee4bf;
+  color: #293b2b;
+  box-shadow: 0 18px 70px #14251966;
+  font: inherit;
+}
+.tutorial-dialog::backdrop {
+  background: #26372acc;
+  backdrop-filter: blur(5px);
+}
+.tutorial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.tutorial-header img {
+  width: 170px;
+  height: auto;
+}
+.tutorial-header button {
+  font-size: 22px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px;
+  background: transparent;
+  border: 0;
+  color: inherit;
+}
+.tutorial-eyebrow {
+  display: block;
+  margin-top: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 11px;
+  font-weight: 800;
+  color: #796038;
+}
+.tutorial-dialog h1 {
+  font-size: clamp(25px, 4vw, 34px);
+  line-height: 1.1;
+  margin: 10px 0 8px;
+  letter-spacing: -0.025em;
+  outline: none;
+}
+.tutorial-dialog > svg {
+  display: block;
+  width: 100%;
+  max-height: 185px;
+  margin: 4px auto;
+}
+.tutorial-dialog p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+.tutorial-control {
+  display: block;
+  padding: 10px 14px;
+  background: #354b35;
+  color: #fff0c7;
+  border-radius: 5px;
+  font-size: 15px;
+}
+.tutorial-dialog .tutorial-tip {
+  font-size: 14px;
+  color: #59604a;
+  border-left: 3px solid #bc9854;
+  padding-left: 12px;
+}
+.tutorial-progress {
+  display: flex;
+  gap: 5px;
+  margin: 14px 0;
+}
+.tutorial-progress span {
+  height: 5px;
+  background: #d2c9a5;
+  flex: 1;
+  border-radius: 2px;
+}
+.tutorial-progress .complete {
+  background: #967640;
+}
+.tutorial-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.tutorial-actions button {
+  flex: 1;
+  min-height: 48px;
+  border: 1px solid #667856;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 14px;
+  cursor: pointer;
+  background: #f7eed4;
+  color: #2d422f;
+}
+.tutorial-actions .primary {
+  margin: 0;
+  background: #a74d28;
+  color: #fff2d0;
+  border-color: #a74d28;
+  box-shadow: none;
+}
+.tutorial-dialog .tutorial-skip {
+  display: block;
+  margin: 12px auto 0;
+  border: 0;
+  background: transparent;
+  color: #59604a;
+  font: inherit;
+  font-size: 13px;
+  padding: 8px;
+  cursor: pointer;
+}
+.tutorial-dialog button:focus-visible {
+  outline: 3px solid #bd7434;
+  outline-offset: 3px;
+}
+.tutorial-dialog button:hover {
+  filter: brightness(0.93);
+}
+@media (max-width: 480px) {
+  .tutorial-dialog {
+    padding: 18px;
+  }
+  .tutorial-header img {
+    width: 135px;
+  }
+  .tutorial-dialog > svg {
+    max-height: 145px;
+  }
+  .tutorial-dialog p {
+    font-size: 15px;
+  }
+  .tutorial-actions {
+    gap: 8px;
+  }
+}
+@media (max-height: 650px) {
+  .tutorial-dialog > svg {
+    max-height: 110px;
+  }
+  .tutorial-header img {
+    width: 110px;
+  }
+  .tutorial-eyebrow {
+    margin-top: 6px;
+  }
+  .tutorial-actions {
+    margin-top: 12px;
+  }
+}
