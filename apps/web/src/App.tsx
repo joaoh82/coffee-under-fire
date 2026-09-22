@@ -1,3 +1,4 @@
+import { MobileHud } from "./ui/MobileHud";
 import { Tutorial } from "./ui/Tutorial";
 import { WaveAnnouncement } from "./ui/WaveAnnouncement";
 import { AccessBudgetNotice } from "./ui/AccessBudgetNotice";
@@ -19,8 +20,11 @@ import "./style.css";
 import { CommandDashboard } from "./ui/CommandDashboard";
 import { TouchControls } from "./ui/TouchControls";
 import { FIRST_SPAWN_SECONDS, type MissionMode } from "./game/simulation";
-export default function App() {
-  const [driver, setDriver] = useState(() => new Driver());
+export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
+  const preview = import.meta.env.DEV && !!layoutDriver;
+  const [driver, setDriver] = useState(() =>
+    preview ? layoutDriver! : new Driver(),
+  );
   const musicStarting = useRef(false);
   const [music] = useState(() => new GameMusic());
   useEffect(() => () => music.dispose(), [music]);
@@ -104,7 +108,7 @@ export default function App() {
       keys.clear();
       sync();
       driver.input.fire = false;
-      driver.pause();
+      if (!preview) driver.pause();
     };
     const hidden = () => {
       if (document.hidden) blur();
@@ -126,7 +130,7 @@ export default function App() {
       document.removeEventListener("visibilitychange", hidden);
       void driver.dispose();
     };
-  }, [driver, audio, music]);
+  }, [driver, audio, music, preview]);
   const s = driver.sim;
   const seconds =
     s.missionMode === "endless"
@@ -134,6 +138,11 @@ export default function App() {
       : Math.max(0, 480 - Math.floor(s.time));
   const time = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
   async function start() {
+    if (preview) {
+      s.status = "running";
+      setTutorial(false);
+      return;
+    }
     if (loading) return;
     setTutorial(false);
     driver.input = idleInput();
@@ -153,6 +162,10 @@ export default function App() {
   }
   const restart = () => {
     setTutorial(false);
+    if (preview) {
+      s.status = "ready";
+      return;
+    }
     const next = new Driver();
     next.autoReload = driver.autoReload;
     next.autoFire = driver.autoFire;
@@ -197,7 +210,13 @@ export default function App() {
       <section
         className={`battlefield${s.status === "running" && !driver.recovering ? " mouse-aim" : ""}`}
       >
-        <World driver={driver} />
+        {preview ? (
+          <div className="mobile-layout-stage">
+            Presentation fixture · no gameplay or Jev calls
+          </div>
+        ) : (
+          <World driver={driver} />
+        )}
         <WaveAnnouncement
           wave={s.wave}
           time={s.time}
@@ -212,6 +231,9 @@ export default function App() {
             ? `${driver.renderStats.fps} FPS · ${driver.renderStats.frameMs.toFixed(1)} ms`
             : "FPS · measuring…"}
         </div>
+        {s.status === "running" && !driver.accessBlock && (
+          <MobileHud driver={driver} time={time} />
+        )}
         <MissionMap sim={s} />
         <header className="top">
           <div className="wordmark">
@@ -468,7 +490,7 @@ export default function App() {
             !driver.automaticRecoveryPending &&
             !driver.recovering)) && (
           <div className="overlay">
-            <section className="brief compact">
+            <section className="brief compact pause-panel">
               <h1>
                 {s.status === "paused"
                   ? "A little breather."
@@ -479,6 +501,62 @@ export default function App() {
                   ? "The battlefield and your coffee are paused."
                   : "We couldn’t get fresh NPC decisions. The battlefield is safely paused. Retry the connection to continue your run."}
               </p>
+              <div className="mobile-settings">
+                <div className="mobile-settings-buttons">
+                  <button
+                    aria-pressed={driver.autoFire}
+                    onClick={() => {
+                      driver.autoFire = !driver.autoFire;
+                      refresh((n) => n + 1);
+                    }}
+                  >
+                    Auto-fire: {driver.autoFire ? "on" : "off"}
+                  </button>
+                  <button
+                    aria-pressed={driver.autoReload}
+                    onClick={() => {
+                      driver.autoReload = !driver.autoReload;
+                      refresh((n) => n + 1);
+                    }}
+                  >
+                    Auto-reload: {driver.autoReload ? "on" : "off"}
+                  </button>
+                  <button
+                    aria-pressed={music.enabled}
+                    onClick={() => {
+                      music.toggle();
+                      refresh((n) => n + 1);
+                    }}
+                  >
+                    Music: {music.enabled ? "on" : "off"}
+                  </button>
+                  <button
+                    aria-pressed={audio.enabled}
+                    onClick={() => {
+                      audio.toggle();
+                      refresh((n) => n + 1);
+                    }}
+                  >
+                    Effects: {audio.enabled ? "on" : "off"}
+                  </button>
+                </div>
+                <div className="mobile-map-summary">
+                  <MissionMap sim={s} />
+                  <div>
+                    <b>Score {Math.floor(s.score)}</b>
+                    <p>{prompt}</p>
+                    <small>
+                      XP {s.xp}/{s.xpNeeded}
+                      {s.cup
+                        ? ` · Coffee ${Math.round(s.cup.volume)}% · Warmth ${Math.round(s.cup.warmth)}%`
+                        : ""}
+                    </small>
+                  </div>
+                </div>
+                <button onClick={() => setDebug((v) => !v)}>
+                  Jev dashboard
+                </button>
+              </div>
               {driver.errors.size > 0 && (
                 <details className="field-manual">
                   <summary>Connection details</summary>
@@ -488,7 +566,9 @@ export default function App() {
               <button
                 className="primary"
                 disabled={driver.recovering || driver.retryWaitSeconds > 0}
-                onClick={() => void driver.retry()}
+                onClick={() =>
+                  preview ? (s.status = "running") : void driver.retry()
+                }
               >
                 {driver.retryWaitSeconds > 0
                   ? `Retry in ${driver.retryWaitSeconds}s`

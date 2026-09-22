@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { distance } from "../game/arena";
 import type { Driver } from "../game/driver";
 function Stick({
   label,
@@ -97,7 +98,15 @@ export function TouchControls({ driver }: { driver: Driver }) {
         }}
       />
       <div className="touch-actions">
-        <button {...hold("interact")}>Hold · Coffee</button>
+        <button
+          {...hold("interact")}
+          aria-label="Hold to fill or deliver coffee"
+        >
+          {distance(driver.sim.player.pos, driver.sim.tent) < 2 &&
+          driver.sim.cup
+            ? "Hold to deliver"
+            : "Hold to fill"}
+        </button>
         <button {...hold("dodge")}>Dodge</button>
         <button {...hold("reload")}>Reload</button>
       </div>

@@ -1782,3 +1782,275 @@ progress {
 a.github-link { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; color: #36513b; font-size: 13px; font-weight: 700; text-underline-offset: 3px; }
 a.github-link:hover { color: #9c471f; }
 a.github-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 3px; }
+
+/* Phone gameplay: two compact status rows; secondary information lives in pause. */
+.mobile-hud,
+.mobile-settings {
+  display: none;
+}
+@media (max-width: 750px),
+  (pointer: coarse) and (max-width: 1100px),
+  (max-height: 500px) and (max-width: 1100px) {
+  main {
+    min-height: 0;
+  }
+  .battlefield > .top,
+  .battlefield > .objective,
+  .battlefield > footer,
+  .battlefield > .mission-map,
+  .battlefield > .fps-counter,
+  .battlefield > .arrival-notice {
+    display: none;
+  }
+  .mobile-hud {
+    display: block;
+    position: absolute;
+    top: max(8px, env(safe-area-inset-top));
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    pointer-events: none;
+    color: #fff5d9;
+  }
+  .mobile-status {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 4px 5px 4px 12px;
+    border-radius: 10px;
+    background: #253829d9;
+    max-width: 440px;
+    margin: auto;
+    font-size: 14px;
+  }
+  .mobile-status > div {
+    flex: 1;
+  }
+  .mobile-status meter {
+    display: block;
+    width: 100%;
+    max-width: 115px;
+    height: 8px;
+    margin-top: 2px;
+  }
+  .mobile-status small {
+    display: block;
+    font-size: 10px;
+    color: #dbdec2;
+  }
+  .mobile-status button {
+    pointer-events: auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    background: #fff0ce;
+    font-size: 19px;
+  }
+  .mobile-errand {
+    display: flex;
+    justify-content: space-between;
+    max-width: 440px;
+    margin: 4px auto 0;
+    padding: 5px 10px;
+    font-size: 11px;
+    background: #253829bb;
+    border-radius: 6px;
+  }
+  .mobile-hud > progress {
+    display: block;
+    width: min(100%, 440px);
+    margin: 3px auto;
+    height: 6px;
+  }
+  .mobile-settings {
+    display: block;
+  }
+  .mobile-settings-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .mobile-settings button {
+    min-height: 44px;
+    padding: 9px;
+    font-size: 12px;
+  }
+  .mobile-map-summary {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 12px 0;
+  }
+  .mobile-map-summary .mission-map {
+    display: block;
+    position: static;
+    width: 120px;
+    flex-shrink: 0;
+    padding: 6px;
+  }
+  .mobile-map-summary .mission-map b,
+  .mobile-map-summary .mission-map small {
+    display: block;
+  }
+  .mobile-map-summary > div {
+    font-size: 12px;
+  }
+  .mobile-map-summary small {
+    text-align: left;
+  }
+  .touch-controls {
+    inset: auto max(10px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
+    gap: 8px;
+  }
+  .touch-stick {
+    width: 88px;
+    height: 88px;
+    flex: 0 0 88px;
+    background: #eee6cb66;
+    border-color: #eee6cbaa;
+  }
+  .touch-stick span {
+    left: 25px;
+    top: 25px;
+    background: #435c47bb;
+  }
+  .touch-stick b {
+    color: #fff9e7;
+    text-shadow: 0 1px 3px #17291a;
+    bottom: 5px;
+  }
+  .touch-actions {
+    margin: 0;
+    max-width: 170px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .touch-actions button {
+    padding: 7px 4px;
+    min-height: 44px;
+    background: #efe7cfc9;
+    font-size: 11px;
+  }
+  .touch-actions button:first-child {
+    grid-column: 1 / -1;
+  }
+  .mode-banner {
+    top: 96px;
+    font-size: 10px;
+  }
+  .reconnect-notice {
+    max-width: 90vw;
+  }
+}
+
+.mobile-layout-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #747b66;
+  color: #fff5d9;
+  font-size: 12px;
+}
+@media (max-width: 750px),
+  (pointer: coarse) and (max-width: 1100px),
+  (max-height: 500px) and (max-width: 1100px) {
+  .mobile-hud {
+    z-index: 4;
+  }
+  .wave-announcement strong {
+    font-size: 36px;
+  }
+  .wave-announcement small {
+    font-size: 11px;
+  }
+  .mobile-errand {
+    align-items: center;
+  }
+  .mobile-errand button {
+    pointer-events: auto;
+    color: inherit;
+    border: 0;
+    background: none;
+    padding: 0 4px;
+    min-height: 26px;
+    font-size: inherit;
+  }
+}
+@media (max-height: 500px) and (max-width: 1100px) {
+  .mobile-hud {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 8px;
+  }
+  .mobile-status {
+    width: 300px;
+    margin: 0;
+  }
+  .mobile-errand {
+    margin: 0;
+    min-height: 52px;
+    gap: 9px;
+  }
+  .mobile-hud > progress {
+    position: absolute;
+    top: 55px;
+    width: 280px;
+  }
+  .mode-banner {
+    top: 66px;
+  }
+  .wave-announcement {
+    top: 25%;
+  }
+  .touch-actions {
+    max-width: 240px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .touch-actions button:first-child {
+    grid-column: auto;
+  }
+}
+@media (max-height: 500px) and (max-width: 1100px) {
+  .pause-panel {
+    width: min(760px, 94vw);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8px 18px;
+    padding: 14px;
+    transform: none;
+  }
+  .pause-panel > * {
+    transform: none;
+    margin: 0;
+  }
+  .pause-panel > h1 {
+    font-size: 24px;
+  }
+  .pause-panel > :not(.mobile-settings) {
+    grid-column: 1;
+  }
+  .pause-panel > .mobile-settings {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+  }
+  .pause-panel .mobile-map-summary {
+    margin: 8px 0;
+    gap: 8px;
+  }
+  .pause-panel .mobile-map-summary .mission-map {
+    width: 80px;
+  }
+  .pause-panel .mobile-map-summary p {
+    font-size: 11px;
+    margin: 5px 0;
+  }
+  .pause-panel .primary {
+    margin: 0;
+    padding: 10px;
+  }
+}
