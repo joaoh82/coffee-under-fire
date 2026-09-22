@@ -1,3 +1,4 @@
+import { Tutorial } from "./ui/Tutorial";
 import { WaveAnnouncement } from "./ui/WaveAnnouncement";
 import { AccessBudgetNotice } from "./ui/AccessBudgetNotice";
 import { MAPS, type MapId } from "./game/maps";
@@ -34,6 +35,7 @@ export default function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("easy.v1");
   const [missionMode, setMissionMode] = useState<MissionMode>("mission");
   const [loading, setLoading] = useState(false);
+  const [tutorial, setTutorial] = useState(false);
   useEffect(() => {
     const timer = setInterval(() => refresh((n) => n + 1), 100);
     let audioFrame = 0;
@@ -57,6 +59,7 @@ export default function App() {
       driver.input.dodge = keys.has("Space");
     }
     const down = (e: KeyboardEvent) => {
+      if (driver.sim.status === "ready") return;
       // Native controls retain Space/arrow-key behavior, including mode radios.
       if (
         e.target instanceof HTMLElement &&
@@ -131,6 +134,9 @@ export default function App() {
       : Math.max(0, 480 - Math.floor(s.time));
   const time = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
   async function start() {
+    if (loading) return;
+    setTutorial(false);
+    driver.input = idleInput();
     musicStarting.current = true;
     void audio.unlock();
     void music.unlock();
@@ -146,6 +152,7 @@ export default function App() {
     }
   }
   const restart = () => {
+    setTutorial(false);
     const next = new Driver();
     next.autoReload = driver.autoReload;
     next.autoFire = driver.autoFire;
@@ -394,9 +401,16 @@ export default function App() {
               setMode={setMissionMode}
               loading={loading}
               error={error}
-              start={() => void start()}
+              start={() => setTutorial(true)}
             />
           </div>
+        )}
+        {s.status === "ready" && tutorial && (
+          <Tutorial
+            mode={missionMode}
+            onPlay={() => void start()}
+            onClose={() => setTutorial(false)}
+          />
         )}
         {s.status === "upgrading" && (
           <div className="overlay">
