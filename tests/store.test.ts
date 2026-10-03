@@ -78,35 +78,3 @@ test("concurrency is per invite and leases, ownership and bounded active time ar
     store.close();
   }
 });
-
-test("durable reservations fail closed across crashes and unknown usage, settle once, reset by UTC month", async () => {
-  const dir = mkdtempSync(join(tmpdir(), "coffee-budget-")),
-    path = join(dir, "state.sqlite");
-  let now = Date.UTC(2026, 8, 20);
-  let store = new Store(path, () => now, 100);
-  try {
-    await store.saveInvite("alice", password, 1, true);
-    store.startSession("one", "alice");
-    const a = store.reserveUsage("one", 60);
-    assert.throws(() => store.reserveUsage("one", 41), /budget/);
-    store.settleUsage(a, 20);
-    store.settleUsage(a, 0);
-    assert.equal(store.budget().charged, 20);
-    const b = store.reserveUsage("one", 60);
-    store.settleUsage(b, undefined, true);
-    store.reserveUsage("one", 20); // Pending when process stops.
-    store.close();
-    store = new Store(path, () => now, 100);
-    assert.equal(store.budget().charged, 100);
-    assert.equal(store.activeSessions().length, 0);
-    assert.equal(store.listInvites()[0].inputTokens, 20);
-    assert.equal(store.listInvites()[0].failures, 1);
-    store.startSession("two", "alice");
-    assert.throws(() => store.reserveUsage("two", 1), /budget/);
-    now = Date.UTC(2026, 9, 1);
-    assert.equal(store.budget().charged, 0);
-  } finally {
-    store.close();
-    rmSync(dir, { recursive: true, force: true });
-  }
-});

@@ -259,16 +259,16 @@ export function AssetPreview() {
         <a href="/">Back to mission</a>
         <small>
           {view === "tank"
-            ? `Scripted 12-second tank loop: movement, cannon, destruction · mock decisions · no Jev calls · sound ${sound ? "on" : "off"}`
+            ? `Scripted 12-second tank loop: movement, cannon, destruction · scripted decisions · sound ${sound ? "on" : "off"}`
             : view === "movement"
-              ? "Scripted movement/dodge fixture · no Jev calls"
+              ? "Scripted movement/dodge fixture"
               : view === "weapons"
-                ? "Automatic rocket/grenade firing fixture · both upgrades equipped · no Jev calls"
+                ? "Automatic rocket/grenade firing fixture · both upgrades equipped"
                 : view === "combat"
-                  ? "Scripted firing-range fixture · stationary targets · no Jev calls · sound off"
+                  ? "Scripted firing-range fixture · stationary targets · sound off"
                   : view === "crowd"
                     ? "Animation fixture: 12 enemies + general, no tactical decisions"
-                    : "Exported skeletal animations · editable .blend sources · no Jev calls in this preview"}
+                    : "Exported skeletal animations · editable .blend sources"}
           {driver.renderStats && ` · ${driver.renderStats.fps} FPS`}
         </small>
       </div>

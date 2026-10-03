@@ -10,7 +10,7 @@ The root MIT license covers project-authored source code, documentation, procedu
 - Music is synthesized by `assets/scripts/generate_music.py`, without externally licensed samples. See [music provenance](art/music-01.md).
 - `apps/web/public/assets/brand/coffee-under-fire-logo-v1.png` was generated using OpenAI's image generation tool. Its original prompt and raster limitations are recorded in [logo provenance](art/briefing-logo-01.md). The maintainer permits reuse under MIT to the extent of rights they hold; this is not a guarantee of exclusive copyright or trademark clearance for generated imagery.
 - Third-party screenshots used as visual references are **excluded** from MIT. References are inspiration, not evidence of redistribution permission. They must not be included in the public release or its reachable Git history unless permission is established.
-- Dependencies retain their own licenses. TypeSafe/Jev names describe the integration; no provider models, trademarks, affiliation or endorsement are licensed by this project.
+- Dependencies retain their own licenses. Historical documents name TypeSafe/Jev, a provider used before 2026-10-03; no provider models, trademarks, affiliation or endorsement are licensed by this project.
 
 ## Prepared in the working tree
 
@@ -20,17 +20,17 @@ The root MIT license covers project-authored source code, documentation, procedu
 - Weekly dependency and GitHub Actions update proposals.
 - Vite defaults to loopback with explicit exact-host opt-in for a trusted temporary tunnel. Development does not provide the production authentication gate.
 - Local SQLite databases and associated journal files are ignored.
-- README describes labelled mocks and bring-your-own-key live operation.
+- README describes a fully local game with no API keys required.
 
 ## Release gates still requiring verification
 
 1. **Reference screenshot history:** the six reference images have been removed from the working tree, with byte-verified private copies in the ignored `artifacts/private-reference-backup/` directory (not staged or shipped). Move those private copies out of the checkout before distributing a working-directory archive. Before publication, remove those blobs from every public branch/tag's reachable history or create a clean public release repository. A later deletion commit is insufficient. Any history rewrite must be coordinated with the owner and collaborators; no rewrite is performed by this documentation change.
-2. **Secrets:** scan the final release tree and all history intended for publication. Rotate the Jev key previously shared in conversation and any other exposed credentials. A clean Git scan cannot establish that a credential was never exposed elsewhere.
+2. **Secrets:** scan the final release tree and all history intended for publication. Revoke the retired Jev API key previously shared in conversation (it is no longer used) and rotate any other exposed credentials. Earlier history still contains Jev-era configuration and documentation. A clean Git scan cannot establish that a credential was never exposed elsewhere.
 3. **Hosted access:** verify owner-only admin authentication, salted invite-password hashes, login throttling, session ownership, concurrent-run limits, inactivity cleanup and immediate revocation. Confirm persistence and backup/restore on the deployed disk.
-4. **Usage controls:** verify durable overall budget enforcement across service restarts and per-invite usage attribution. Report costs as estimates from returned usage; cancellations may lack complete billing information. Define an operator budget before opening the hosted service to a broader audience.
+4. **Abuse controls:** verify guest admission limits, per-network concurrency and session leases across service restarts before opening the hosted service to a broader audience. Gameplay no longer incurs per-player inference cost.
 5. **GitHub settings:** enable secret scanning and push protection where available; enable private vulnerability reporting, dependency alerts and appropriate default-branch protection. Availability and effective settings must be verified in GitHub, not inferred from files in this repository.
 6. **Distribution:** confirm all shipped assets have the documented provenance, preserve third-party dependency notices, and rerun the build and offline tests on the exact release commit.
-7. **Visibility:** change repository visibility only after the gates above are complete. Public source does not require unrestricted hosted access. Public guest play uses server-side authentication and spending controls; self-hosters must supply their own keys.
+7. **Visibility:** change repository visibility only after the gates above are complete. Public source does not require unrestricted hosted access. Public guest play uses server-side authentication and admission limits; self-hosting needs no third-party API keys.
 
 No legal ownership or exclusivity determination is made here; the licensing statement grants the maintainer's rights and excludes third-party material.
 

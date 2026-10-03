@@ -112,9 +112,7 @@ export function SliceSoldier({
       posture.current.scale.y = 1;
     }
     const alpha =
-      s.status === "running" && !driver.recovering && p.hp > 0
-        ? driver.accumulator / DT
-        : 1;
+      s.status === "running" && p.hp > 0 ? driver.accumulator / DT : 1;
     group.current.position.set(
       p.previous.x + (p.pos.x - p.previous.x) * alpha,
       0,
@@ -130,7 +128,7 @@ export function SliceSoldier({
       Math.sin(p.angle - group.current.rotation.y),
       Math.cos(p.angle - group.current.rotation.y),
     );
-    if (s.status === "running" && !driver.recovering && p.hp > 0)
+    if (s.status === "running" && p.hp > 0)
       group.current.rotation.y +=
         turn * (1 - Math.exp(-(actor ? 24 : 38) * delta));
     else if (previewClip) group.current.rotation.y = p.angle;
@@ -195,12 +193,7 @@ export function SliceSoldier({
       localZ,
       !actor && moving ? s.tick - s.dodgeAt : -1,
     );
-    if (
-      !previewClip &&
-      p.hp > 0 &&
-      s.status === "running" &&
-      !driver.recovering
-    ) {
+    if (!previewClip && p.hp > 0 && s.status === "running") {
       const blend = 1 - Math.exp(-22 * delta);
       posture.current.rotation.x +=
         (pose.pitch - posture.current.rotation.x) * blend;
@@ -276,11 +269,7 @@ export function SliceSoldier({
       state.current.shot = p.shotAt;
       state.current.reactionStart = actor?.actionStart ?? -1;
     }
-    if (
-      (s.status === "running" && !driver.recovering) ||
-      (!actor && p.hp <= 0) ||
-      previewClip
-    )
+    if (s.status === "running" || (!actor && p.hp <= 0) || previewClip)
       mixer.update(Math.min(delta, 0.1));
     const flashAge =
       previewClip === "shoot"

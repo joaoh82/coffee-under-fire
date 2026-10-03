@@ -1,27 +1,23 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { Simulation } from "../apps/web/src/game/simulation";
-import { bodyFor } from "../apps/server/src/jev";
+import { chooseLocally } from "../apps/web/src/game/tactics";
 import { envelope } from "../packages/shared/contracts";
 import { specialistAppearance } from "../apps/web/src/render/infantryAppearance";
 
-test("specialist Jev requests expose combat limits and complete legal choices", () => {
+test("specialist requests expose combat limits and local tactics choose legally", () => {
   for (const archetype of ["scout", "gunner", "marksman"] as const) {
     const simulation = new Simulation();
-    simulation.start("mock", "provider-fixture");
+    simulation.start("scripted", "provider-fixture");
     const npc = simulation.addNPC("rifleman", { x: 0, z: 0 }, archetype);
     const request = simulation.request(npc);
-    const body = bodyFor(request, "fixture-model");
-    assert.equal(body.state.archetype, archetype);
-    assert.ok(body.state.combat);
-    assert.match(body.questions.tactic.instructions, new RegExp(archetype));
-    assert.match(
-      body.questions.tactic.instructions,
-      /ONE complete legal candidate/,
-    );
+    assert.equal(request.observation.archetype, archetype);
+    assert.ok(request.observation.combat);
+    const decision = chooseLocally(request);
+    assert.ok(request.candidates.some((c) => c.id === decision.selected));
     assert.deepEqual(
-      Object.values(body.questions.tactic.criteria),
-      request.candidates.map((candidate) => JSON.stringify(candidate)),
+      Object.keys(decision.probabilities!),
+      request.candidates.map((candidate) => candidate.id),
     );
     assert.equal(envelope(request).config, "tactics.v5");
     assert.equal(

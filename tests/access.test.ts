@@ -86,7 +86,7 @@ test("HTTP gate protects API and assets, validates login origin, supports logout
     );
     assert.equal(
       (
-        await request("/api/decision", {
+        await request("/api/heartbeat", {
           method: "POST",
           headers: { Authorization: "Bearer stolen-token" },
         })

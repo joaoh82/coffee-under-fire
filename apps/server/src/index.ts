@@ -15,8 +15,7 @@ import { dirname } from "node:path";
 import { serveStatic } from "./static";
 import { resolve } from "node:path";
 import { createServer } from "node:http";
-import { Pipeline, LIMITS } from "./pipeline";
-import { DecisionError, jevProvider, mockProvider } from "./jev";
+import { randomUUID } from "node:crypto";
 import { allowedOrigin } from "./origin";
 const production = process.env.NODE_ENV === "production";
 const publicOrigin =
@@ -29,36 +28,11 @@ if (dbPath) {
   if (!process.env.ADMIN_TOKEN || process.env.ADMIN_TOKEN.length < 32)
     throw Error("ADMIN_TOKEN must contain at least 32 characters");
   mkdirSync(dirname(resolve(dbPath)), { recursive: true, mode: 0o700 });
-  store = new Store(
-    dbPath,
-    Date.now,
-    Number(process.env.MONTHLY_INPUT_TOKEN_LIMIT || 100_000_000),
-    Number(process.env.JEV_INPUT_USD_PER_MILLION || 0.042),
-  );
+  store = new Store(dbPath, Date.now);
   await store.importInvites(process.env.PLAYTEST_INVITES || "{}");
 }
-if (
-  production &&
-  (!process.env.TYPESAFE_API_KEY || process.env.DECISION_MODE === "mock")
-)
-  throw new Error("Production requires a Jev key and strict mode");
-const mode = process.env.DECISION_MODE === "mock" ? "mock" : "strict";
-const pipeline = new Pipeline(
-  mode === "mock"
-    ? mockProvider
-    : jevProvider(
-        process.env.TYPESAFE_API_KEY,
-        process.env.JEV_MODEL || "jev-latest",
-      ),
-  Date.now,
-  LIMITS,
-  store,
-);
 const reconcileGames = () => {
-  if (!store) return;
-  for (const id of store.expireSessions()) pipeline.close(id);
-  for (const id of pipeline.sessions.keys())
-    if (!store.sessionActive(id)) pipeline.close(id);
+  store?.expireSessions();
 };
 const guests = store
   ? new GuestAccess(store, {
@@ -76,10 +50,8 @@ const managed = store
       store,
       process.env.ADMIN_TOKEN!,
       publicOrigin,
-      (id) => pipeline.close(id),
       production,
       Date.now,
-      Number(process.env.JEV_INPUT_USD_PER_MILLION || 0.042),
       reconcileGames,
       guests,
     )
@@ -93,7 +65,7 @@ const access =
         publicOrigin,
       )
     : null);
-// One process per disk. Expire abandoned leases and revoke in-flight work promptly.
+// One process per disk. Expire abandoned game leases promptly.
 if (store) setInterval(reconcileGames, 5000).unref();
 const port = Number(process.env.PORT || 8787);
 if (port === 3000) throw new Error("Port 3000 is reserved");
@@ -191,11 +163,7 @@ const server = createServer(async (req, res) => {
   const token = req.headers.authorization?.replace(/^Bearer /, "") || "";
   try {
     if (req.method === "GET" && req.url === "/api/status") {
-      send(200, {
-        mode,
-        keyConfigured: Boolean(process.env.TYPESAFE_API_KEY),
-        model: process.env.JEV_MODEL || "jev-latest",
-      });
+      send(200, { ok: true });
       return;
     }
     const invite = managed?.user(req);
@@ -217,9 +185,9 @@ const server = createServer(async (req, res) => {
       return;
     }
     if (req.method === "POST" && req.url === "/api/leaderboard") {
-      if (!store || !invite || mode !== "strict") {
+      if (!store || !invite) {
         send(403, {
-          error: "Only hosted live Jev runs can enter the leaderboard.",
+          error: "Only hosted runs can enter the leaderboard.",
         });
         return;
       }
@@ -242,7 +210,6 @@ const server = createServer(async (req, res) => {
           network,
           JSON.parse(data),
         );
-        pipeline.close(token);
         send(200, result);
       } catch (e) {
         if (e instanceof NameRejected) {
@@ -278,12 +245,11 @@ const server = createServer(async (req, res) => {
           return;
         }
       }
-      const id = pipeline.create();
+      const id = randomUUID();
       if (store) {
         try {
           store.startSession(id, invite!, network, options);
         } catch (e) {
-          pipeline.close(id);
           if (e instanceof AccessLimit) throw e;
           send(409, {
             error: "invite_session_limit",
@@ -293,11 +259,10 @@ const server = createServer(async (req, res) => {
           return;
         }
       }
-      send(201, { session: id, mode, heartbeat: Boolean(store) });
+      send(201, { session: id, heartbeat: Boolean(store) });
       return;
     }
     if (req.method === "DELETE" && req.url === "/api/session") {
-      pipeline.close(token);
       store?.endSession(token);
       send(200, { closed: true });
       return;
@@ -309,7 +274,7 @@ const server = createServer(async (req, res) => {
     let data = "";
     for await (const chunk of req) {
       data += chunk;
-      if (Buffer.byteLength(data) > LIMITS.maxBodyBytes) {
+      if (Buffer.byteLength(data) > 4096) {
         send(413, { error: "body_too_large" });
         return;
       }
@@ -332,42 +297,15 @@ const server = createServer(async (req, res) => {
       else send(403, { error: "session_expired" });
       return;
     }
-    if (req.url === "/api/invalidate") {
-      const epoch = (body as { epoch?: number })?.epoch;
-      if (!Number.isSafeInteger(epoch) || epoch! < 0)
-        throw new DecisionError("invalid_epoch");
-      pipeline.invalidate(token, epoch!);
-      send(200, { ok: true });
-      return;
-    }
-    if (req.url === "/api/decision") {
-      const controller = new AbortController();
-      res.on("close", () => controller.abort());
-      send(200, await pipeline.decide(token, body, controller.signal));
-      return;
-    }
     send(404, { error: "not_found" });
   } catch (e) {
     if (e instanceof AccessLimit) {
-      send(429, {
-        error: e.code,
-        message: limitMessage(e.code),
-        resetAt: e.code.endsWith("daily_budget_exhausted")
-          ? store?.dailyBudget().resetAt
-          : undefined,
-      });
+      send(429, { error: e.code, message: limitMessage(e.code) });
       return;
     }
-    const err =
-      e instanceof DecisionError ? e : new DecisionError("internal_error");
-    if (err.retryMs)
-      res.setHeader("Retry-After", Math.ceil(err.retryMs / 1000));
-    send(err.code === "invalid_request" ? 400 : 503, {
-      error: err.code,
-      retryMs: err.retryMs,
-    });
+    send(500, { error: "internal_error" });
   }
 });
 server.listen(port, production ? "0.0.0.0" : "127.0.0.1", () =>
-  console.log(`Decision server http://127.0.0.1:${port} (${mode})`),
+  console.log(`Game server http://127.0.0.1:${port}`),
 );

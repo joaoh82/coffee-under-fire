@@ -96,10 +96,8 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     store,
     "owner-fixture-token-at-least-32-characters",
     origin,
-    () => {},
     false,
     Date.now,
-    0.042,
     () => {},
     guests,
   );
@@ -158,11 +156,13 @@ test("public guest admission uses verified single-use challenge, exact origin, s
     assert.equal((await post("valid")).status, 403);
     assert.equal(store.listInvites().length, 1);
     assert.equal(store.listInvites()[0].displayName, "Coffee Captain");
-    store.savePublicSettings({ ...store.publicSettings(), dailyCents: 0 });
-    const empty = await (await request("/")).text();
-    assert.match(empty, /coffee fund is empty/);
-    assert.match(empty, /ko-fi.com/);
-    assert.ok(!empty.includes("<button>Play as guest"));
+    store.savePublicSettings({
+      ...store.publicSettings(),
+      publicEnabled: false,
+    });
+    const closed = await (await request("/")).text();
+    assert.match(closed, /ko-fi.com/);
+    assert.ok(!closed.includes("<button>Play as guest"));
     store.savePublicSettings({
       ...store.publicSettings(),
       publicEnabled: false,

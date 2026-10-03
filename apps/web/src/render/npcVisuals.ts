@@ -5,7 +5,7 @@ export const CORPSE_TICKS = 60;
 export const MAX_CORPSES = 12;
 
 // Presentation only: retain defeated actors for one second of animation without
-// putting them back into physics, perception, targeting, or Jev requests.
+// putting them back into physics, perception, targeting, or tactical decisions.
 export function syncNpcVisuals(
   previous: NpcVisual[],
   actors: NPC[],

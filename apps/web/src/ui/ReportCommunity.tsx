@@ -182,7 +182,7 @@ export function ReportCommunity({
             your next run. No profanity or sexual content.
           </small>
           {!onSubmit && (
-            <p>Leaderboard submissions are available after a live Jev run.</p>
+            <p>Leaderboard submissions are available after a hosted run.</p>
           )}
           <p role="status">{status}</p>
         </form>

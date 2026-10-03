@@ -48,7 +48,7 @@ test("muzzles rotate with actors and player rounds converge on the aimed point",
 });
 test("initial shot sweeps center to muzzle separately, so lateral cover cannot be skipped", () => {
   const s = new Simulation();
-  s.start("mock", "muzzle-cover-fixture");
+  s.start("scripted", "muzzle-cover-fixture");
   s.npcs = [];
   s.player.pos = { x: 0, z: 0 };
   s.arena = {
@@ -65,7 +65,7 @@ test("legacy recordings retain center origins while new recordings use muzzle or
   for (const legacy of [true, false]) {
     const s = new Simulation();
     if (legacy) s.projectileOriginProfile = "center.v1";
-    s.start("mock", "origin-replay");
+    s.start("scripted", "origin-replay");
     s.step({ ...idleInput(), aim: { x: 0, z: 0 }, fire: true });
     if (legacy) delete s.recording.projectileOriginProfile;
     const copy = replay(s.recording);

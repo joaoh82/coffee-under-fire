@@ -35,6 +35,6 @@ test("support stays absent when explicitly disabled and renders an optional exte
   assert.match(html, /Completely optional/);
   assert.match(html, /No gameplay perks/);
   assert.match(html, /noopener noreferrer/);
-  assert.match(html, /paid AI calls/);
+  assert.match(html, /no ads/);
   assert.ok(!html.includes("iframe"));
 });

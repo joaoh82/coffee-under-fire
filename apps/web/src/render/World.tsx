@@ -50,10 +50,7 @@ function Actor({ driver, index }: { driver: Driver; index: number }) {
       a = index < 0 ? s.player : s.npcs[index];
     group.current.visible = Boolean(a && a.hp > 0);
     if (!a) return;
-    const alpha =
-      s.status === "running" && !driver.recovering
-        ? driver.accumulator / DT
-        : 1;
+    const alpha = s.status === "running" ? driver.accumulator / DT : 1;
     group.current.position.set(
       a.previous.x + (a.pos.x - a.previous.x) * alpha,
       0,

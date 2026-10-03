@@ -154,10 +154,9 @@ export const responseSchema = z
     tick: z.number().int(),
     npc: id,
     selected: id,
-    source: z.enum(["jev", "mock", "replay"]),
+    source: z.enum(["local", "scripted", "replay"]),
     confidence: z.number().min(0).max(1),
     probabilities: z.record(z.string(), z.number().min(0).max(1)).optional(),
-    latencyMs: z.number().nonnegative(),
     model: z.string().max(100),
     config: z.enum([
       "tactics.v1",
@@ -166,12 +165,6 @@ export const responseSchema = z
       "tactics.v4",
       "tactics.v5",
     ]),
-    usage: z
-      .object({
-        input_tokens: z.number().int().nonnegative(),
-        output_tokens: z.number().int().nonnegative(),
-      })
-      .nullable(),
   })
   .strict();
 export type Decision = z.infer<typeof responseSchema>;

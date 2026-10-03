@@ -26,8 +26,6 @@ test("community leaderboard binds runs, validates submissions, prevents duplicat
   const store = new Store(":memory:", () => now);
   const run = (id: string, player: string, options = DEFAULT_BOARD) => {
     store.startSession(id, player, "", options);
-    const reserve = store.reserveUsage(id, 10);
-    store.settleUsage(reserve, 10);
     now += 20000;
     store.endSession(id);
   };
@@ -80,12 +78,13 @@ test("community leaderboard binds runs, validates submissions, prevents duplicat
       () => store.submitScore("alice1", "alice", "", input),
       /moderator/,
     );
-    store.startSession("noJev", "alice", "", DEFAULT_BOARD);
-    now += 20000;
-    store.endSession("noJev");
+    // A run cannot report more play time than its server session lasted.
+    store.startSession("tooQuick", "alice", "", DEFAULT_BOARD);
+    now += 6000;
+    store.endSession("tooQuick");
     assert.throws(
-      () => store.submitScore("noJev", "alice", "", input),
-      /live Jev/,
+      () => store.submitScore("tooQuick", "alice", "", input),
+      /timing/,
     );
     run("old", "alice");
     now += 3600001;
@@ -106,8 +105,6 @@ test("guest score network binding and persisted moderation", () => {
     });
     const guest = store.identity(store.createGuest("network"))!;
     store.startSession("guestGame", guest, "network", DEFAULT_BOARD);
-    const r = store.reserveUsage("guestGame", 10);
-    store.settleUsage(r, 10);
     now += 20000;
     store.endSession("guestGame");
     assert.throws(
@@ -128,7 +125,7 @@ test("guest score network binding and persisted moderation", () => {
 test("share text matches report points, strips private URL parts; public HTML escapes names", () => {
   assert.equal(reportPoints(report), 140);
   assert.match(shareMessage(report), /140 points/);
-  assert.match(shareMessage(report), /Jev/);
+  assert.match(shareMessage(report), /hold the line/);
   assert.equal(
     cleanShareUrl("https://game.example/access/login?token=secret#private"),
     "https://game.example/",
@@ -168,8 +165,6 @@ test("nickname ranking keeps the best score across identities with case and spac
       score: number,
     ) => {
       store.startSession(session, player, "", DEFAULT_BOARD);
-      const usage = store.reserveUsage(session, 10);
-      store.settleUsage(usage, 10);
       now += 20000;
       store.endSession(session);
       return store.submitScore(session, player, "", {
@@ -206,8 +201,6 @@ test("existing leaderboard rows are backfilled and deduplicated after migration"
     ] as const) {
       await store.saveInvite(player, "fixture-password-long", 1, true);
       store.startSession(player, player, "", DEFAULT_BOARD);
-      const usage = store.reserveUsage(player, 10);
-      store.settleUsage(usage, 10);
       now += 20000;
       store.endSession(player);
       store.submitScore(player, player, "", {

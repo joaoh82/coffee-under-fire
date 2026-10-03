@@ -117,16 +117,14 @@ test("admin search treats SQL metacharacters literally and matches IDs and curre
   }
 });
 
-test("analytics zero fills UTC days and deduplicates active identities without multiplying usage through logins", () => {
+test("analytics zero fills UTC days and deduplicates active identities across repeated logins", () => {
   const f = fixture();
   try {
     const empty = f.store.analytics(7);
     assert.equal(empty.days.length, 7);
     assert.equal(empty.days[0].day, "2026-09-15");
     assert.equal(empty.days[6].day, "2026-09-21");
-    assert.ok(
-      empty.days.every((day) => day.averageMinutes === 0 && day.costUsd === 0),
-    );
+    assert.ok(empty.days.every((day) => day.averageMinutes === 0));
     f.player("returning");
     f.player("new");
     f.player("unused");
@@ -136,23 +134,17 @@ test("analytics zero fills UTC days and deduplicates active identities without m
     f.login("new", Date.parse("2026-09-20T23:59:59Z"));
     f.login("new", f.now);
     // Midnight-crossing historical play belongs entirely to start day.
-    const a = f.run("new", Date.parse("2026-09-20T23:59:00Z"), 120000);
+    f.run("new", Date.parse("2026-09-20T23:59:00Z"), 120000);
     f.run("returning", f.now, 60000);
     f.run("returning", f.now, 60000);
-    const b = f.run("new", f.now, 120000);
+    f.run("new", f.now, 120000);
     f.run("unused", f.now, 0);
-    f.db
-      .prepare(
-        "INSERT INTO usage(id,session_id,month,tokens,day,cost,settled) VALUES('a',?,'2026-09',100,'2026-09-20',1000000,1),('b',?,'2026-09',200,'2026-09-21',2000000,0)",
-      )
-      .run(a, b);
     const result = f.store.analytics(7);
     assert.equal(result.totalPlayers, 3);
     assert.equal(result.uniqueActiveUsers, 2);
     assert.equal(result.newUsers, 1);
     assert.equal(result.runs, 5);
     assert.equal(result.activeMs, 360000);
-    assert.equal(result.costUsd, 0.003);
     assert.equal(result.historicalApproximation, true);
     assert.deepEqual(result.days[5], {
       day: "2026-09-20",
@@ -161,7 +153,6 @@ test("analytics zero fills UTC days and deduplicates active identities without m
       runs: 1,
       activeMs: 120000,
       averageMinutes: 2,
-      costUsd: 0.001,
     });
     assert.deepEqual(result.days[6], {
       day: "2026-09-21",
@@ -170,7 +161,6 @@ test("analytics zero fills UTC days and deduplicates active identities without m
       runs: 4,
       activeMs: 240000,
       averageMinutes: 2,
-      costUsd: 0.002,
     });
     assert.equal(JSON.stringify(result).includes("returning"), false);
     assert.equal(f.store.analytics(90).days.length, 90);

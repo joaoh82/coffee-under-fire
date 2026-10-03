@@ -12,7 +12,7 @@ import { replay } from "../apps/web/src/game/driver";
 
 function fixture(type: EnemyArchetype) {
   const s = new Simulation();
-  s.start("mock", "specialist-fixture");
+  s.start("scripted", "specialist-fixture");
   s.npcs = [];
   s.player.pos = { x: 0, z: 5 };
   const n = s.addNPC("rifleman", { x: 0, z: 0 }, type);
@@ -27,11 +27,9 @@ function fire(s: Simulation, n: ReturnType<Simulation["addNPC"]>) {
     s.apply(r, {
       ...envelope(r),
       selected: candidate.id,
-      source: "mock",
+      source: "scripted",
       confidence: 0,
-      latencyMs: 0,
       model: "specialist-test",
-      usage: null,
     }),
   );
 }
@@ -46,7 +44,7 @@ test("specialists enter at waves 3, 5 and 7 on every difficulty without extra RN
       const legacy = new Simulation();
       legacy.rosterProfile = "legacy";
       for (const sim of [s, legacy]) {
-        sim.start("mock", "spawn-fixture", "endless", difficulty);
+        sim.start("scripted", "spawn-fixture", "endless", difficulty);
         sim.tick = wave * 3600;
         for (let i = 0; i < 720; i++) sim.step(idleInput());
       }
@@ -129,7 +127,7 @@ test("shorter gun range never hides visible contacts and expired range cancels a
   assert.equal(r.observation.combat, undefined);
   assert.equal(envelope(r).config, "tactics.v4");
 });
-test("movement speeds differ only during an explicitly selected action; strict mode never invents one", () => {
+test("movement speeds differ only during an explicitly selected action; idle scripted NPCs never move", () => {
   for (const type of Object.keys(ENEMY_TYPES) as EnemyArchetype[]) {
     const { s, n } = fixture(type);
     n.action = {
@@ -144,11 +142,10 @@ test("movement speeds differ only during an explicitly selected action; strict m
     assert.ok(Math.abs(n.pos.z - ENEMY_TYPES[type].speed * DT) < 1e-8);
     n.action = null;
     const pos = { ...n.pos };
-    s.mode = "strict";
     for (let i = 0; i < 100; i++) s.step(idleInput());
     assert.deepEqual(n.pos, pos);
     assert.equal(n.ammo, 12);
-    assert.equal(s.status, "reconnecting");
+    assert.equal(s.status, "running");
   }
 });
 test("marksmen have bounded extended perception and a longer fire range", () => {
@@ -167,7 +164,7 @@ test("new roster and missing-profile legacy recordings replay identical spawn st
   for (const profile of ["legacy", "specialists.v1"] as const) {
     const s = new Simulation();
     s.rosterProfile = profile;
-    s.start("mock", "roster-replay", "endless");
+    s.start("scripted", "roster-replay", "endless");
     for (let i = 0; i < 124 * 60; i++) s.step(idleInput());
     if (profile === "legacy") delete s.recording.rosterProfile;
     const copy = replay(s.recording);
@@ -179,10 +176,10 @@ test("new roster and missing-profile legacy recordings replay identical spawn st
 });
 
 test("recorded specialist movement and firing replay identical combat state", () => {
-  // Explicit development fixture policy, not a Jev playtest. All state changes
+  // Explicit development fixture policy, not a tactics playtest. All state changes
   // come from recorded player inputs, normal spawning and accepted decisions.
   const s = new Simulation();
-  s.start("mock", "specialist-combat-replay", "endless", "easy.v1");
+  s.start("scripted", "specialist-combat-replay", "endless", "easy.v1");
   const moved = new Set<EnemyArchetype>();
   const fired = new Set<EnemyArchetype>();
   const squaredDistance = (
@@ -213,11 +210,9 @@ test("recorded specialist movement and firing replay identical combat state", ()
         s.apply(r, {
           ...envelope(r),
           selected: chosen.id,
-          source: "mock",
+          source: "scripted",
           confidence: 0,
-          latencyMs: 0,
           model: "specialist-replay-fixture",
-          usage: null,
         }),
       );
     }

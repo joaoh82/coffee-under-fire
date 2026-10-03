@@ -43,7 +43,7 @@ export function CombatPreview({
       d.sim.ranks.rockets = 1;
       d.sim.ranks.grenades = 1;
     }
-    d.sim.start("mock", "offline-render-fixture", "endless");
+    d.sim.start("scripted", "offline-render-fixture", "endless");
     return d;
   }, [movement, tank, weapons]);
   const seenBlast = useRef(blast);
@@ -76,11 +76,9 @@ export function CombatPreview({
             s.apply(request, {
               ...envelope(request),
               selected: selected.id,
-              source: "mock",
+              source: "scripted",
               model: "scripted-tank-art-fixture",
               confidence: 0,
-              latencyMs: 0,
-              usage: null,
             });
         }
       }

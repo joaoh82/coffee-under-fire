@@ -4,7 +4,7 @@ import { Simulation, idleInput } from "../apps/web/src/game/simulation";
 
 function world() {
   const s = new Simulation();
-  s.start("mock", "coffee-feedback-fixture");
+  s.start("scripted", "coffee-feedback-fixture");
   return s;
 }
 test("spill feedback uses the actual loss, stays at the spill, and respects the cooldown", () => {

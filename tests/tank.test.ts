@@ -1,4 +1,5 @@
 import { test } from "node:test";
+import { chooseLocally } from "../apps/web/src/game/tactics";
 import assert from "node:assert/strict";
 import { Simulation, idleInput, DT } from "../apps/web/src/game/simulation";
 import { clear, path, distance } from "../apps/web/src/game/arena";
@@ -8,13 +9,12 @@ import {
   type Candidate,
 } from "../packages/shared/contracts";
 import { replay } from "../apps/web/src/game/driver";
-import { bodyFor } from "../apps/server/src/jev";
 import { infantryAppearance } from "../apps/web/src/render/infantryAppearance";
 
 function fixture() {
   const s = new Simulation();
   s.combatProfile = "armor.v1";
-  s.start("mock", "tank-fixture");
+  s.start("scripted", "tank-fixture");
   s.npcs = [];
   s.player.pos = { x: 0, z: 5 };
   s.player.previous = { ...s.player.pos };
@@ -34,11 +34,9 @@ function choose(
     s.apply(r, {
       ...envelope(r),
       selected: c.id,
-      source: "mock",
+      source: "scripted",
       confidence: 0,
-      latencyMs: 0,
       model: "test-fixture",
-      usage: null,
     }),
   );
   return c;
@@ -52,10 +50,11 @@ test("tank cannon uses a validated fixed observation; no hidden target or rifle-
   assert.equal(c.kind, "cannon");
   if (c.kind !== "cannon") throw Error();
   assert.deepEqual(c.aimPoint, s.player.pos);
-  assert.match(
-    bodyFor(r, "jev-latest").questions.tactic.instructions,
-    /slow light tank/,
-  );
+  // Tanks take a visible cannon shot often enough to pressure the player.
+  const shots = Array.from({ length: 40 }, (_, i) =>
+    chooseLocally({ ...r, sequence: r.sequence + i }),
+  ).filter((d) => d.selected === c.id).length;
+  assert.ok(shots > 10, `cannon chosen ${shots}/40`);
   c.aimPoint.x += 1;
   assert.ok(!requestSchema.safeParse(r).success);
   s.player.pos = { x: 20, z: 15 };
@@ -117,7 +116,7 @@ test("wide hull paths and movement respect static cover and other actors", () =>
 test("tank starts at wave four, one active maximum, within total cap; old replay has no tank", () => {
   const s = new Simulation();
   s.combatProfile = "armor.v1";
-  s.start("mock", "wave-fixture");
+  s.start("scripted", "wave-fixture");
   for (let i = 0; i < 182 * 60; i++) {
     // Remove stationary test infantry to ensure the wave has an available slot.
     s.npcs = s.npcs.filter((n) => n.role !== "rifleman");
@@ -131,7 +130,7 @@ test("tank starts at wave four, one active maximum, within total cap; old replay
   assert.ok(s.npcs.filter((n) => n.role !== "general").length <= 14);
   const old = new Simulation();
   old.combatProfile = "infantry.v1";
-  old.start("mock", "old-fixture");
+  old.start("scripted", "old-fixture");
   for (let i = 0; i < 183 * 60; i++) old.step(idleInput());
   delete old.recording.combatProfile;
   const again = replay(old.recording);
@@ -149,7 +148,7 @@ test("infantry appearance is stable and varied without consuming simulation rand
   assert.equal(infantryAppearance("enemy_42"), infantryAppearance("enemy_42"));
 });
 
-test("blocked movement cancels its goal and becomes eligible for a new decision immediately", () => {
+test("blocked movement cancels its goal so the next tick picks a new action", () => {
   const { s, n } = fixture();
   n.pos = { x: 0, z: 3 };
   s.player.pos = { x: 15, z: 15 };
@@ -165,10 +164,8 @@ test("blocked movement cancels its goal and becomes eligible for a new decision 
     { x: 0, z: 8 },
   ];
   n.actionUntil = 120;
-  n.nextDecision = 60;
   for (let i = 0; i < 30 && n.action; i++) s.step(idleInput());
   assert.equal(n.action, null);
-  assert.equal(n.nextDecision, s.tick);
   assert.equal(n.route.length, 0);
   assert.ok(distance(n.pos, { x: 0, z: 5 }) >= 1.65);
 });

@@ -12,13 +12,11 @@ New runs use `specialists.v1`. Infantry keeps 30 health and the existing wave po
 
 Scouts move at 3.8 meters/second, gunners at 2.1, marksmen at 2.3. Marksmen wind up for 36 simulation ticks (0.6 seconds) before shooting and have a 60-tick firing interval. The warning uses the same muzzle origin as the projectile and clips against cover. Gunners have a 12-tick firing interval. These are deterministic execution limits, not autonomous tactical rules.
 
-## Jev and replay
+## Tactics and replay
 
-Jev still selects each complete legal movement, firing, reload or hold candidate. Observations carry the specialist archetype and combat limits; perception remains bounded (14 meters for scouts/gunners, 18 for marksmen). The server explains those limits in the Choice prompt. Failure does not enable fallback tactical AI. Existing backend request and spending budgets are unchanged.
+The local tactics scorer selects each complete legal movement, firing, reload or hold candidate. Observations carry the specialist archetype and combat limits; perception remains bounded (14 meters for scouts/gunners, 18 for marksmen). Each archetype has its own preferred and minimum engagement range: scouts close in, gunners hold mid-range, and marksmen back away when the player gets close. See [How enemy tactics work](npc-tactics.md). (When this roster shipped, Jev made these choices; that integration was retired on 2026-10-03.)
 
 Specialist observations use `tactics.v5` provenance. The recording stores the roster profile; recordings without it retain legacy infantry behavior and `tactics.v4`. The specialist schedule consumes no extra random draws.
-
-The adapter continues to use the documented [TypeSafe Choice primitive](https://docs.typesafe.ai/primitives/choice) and [request format](https://docs.typesafe.ai/introduction/quickstart). This change does not introduce another provider or model substitute.
 
 ## Reproduce assets
 

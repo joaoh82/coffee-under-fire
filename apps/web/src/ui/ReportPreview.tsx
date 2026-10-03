@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MissionReport, type ReportData } from "./MissionReport";
-// Explicit development-only presentation fixture. No simulation or Jev calls.
+// Explicit development-only presentation fixture. No simulation.
 export function ReportPreview() {
   const [won, setWon] = useState(false);
   const [endless, setEndless] = useState(false);

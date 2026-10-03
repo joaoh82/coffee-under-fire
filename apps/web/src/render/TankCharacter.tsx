@@ -70,7 +70,7 @@ export function TankCharacter({
   );
   useFrame(({ camera }, delta) => {
     const s = driver.sim;
-    const running = s.status === "running" && !driver.recovering;
+    const running = s.status === "running";
     const alpha = running && actor.hp > 0 ? driver.accumulator / DT : 1;
     group.current.position.set(
       actor.previous.x + (actor.pos.x - actor.previous.x) * alpha,
