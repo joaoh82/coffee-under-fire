@@ -40,14 +40,14 @@ test("map instances have independent collision, perception, and paths to every o
 
 test("village and new armor survive recorded-decision replay; old maps default to woodland", () => {
   const s = new Simulation(7341, "village.v1");
-  s.start("mock", "offline-map-fixture", "endless", "easy.v1");
+  s.start("scripted", "offline-map-fixture", "endless", "easy.v1");
   for (let i = 0; i < 1200; i++) s.step(idleInput());
   const again = replay(s.recording);
   assert.equal(again.mapId, "village.v1");
   assert.equal(again.combatProfile, "armor.v2");
   assert.deepEqual(again.npcs, s.npcs);
   const old = new Simulation();
-  old.start("mock", "legacy");
+  old.start("scripted", "legacy");
   old.step(idleInput());
   delete old.recording.mapId;
   assert.equal(replay(old.recording).mapId, "woodland.v1");
@@ -56,7 +56,7 @@ test("village and new armor survive recorded-decision replay; old maps default t
 test("armor v2 increases durability and schedules spaced groups within wave and active caps", () => {
   for (const difficulty of Object.keys(DIFFICULTIES) as Difficulty[]) {
     const s = new Simulation(7341, "village.v1");
-    s.start("mock", "spawn-fixture", "endless", difficulty);
+    s.start("scripted", "spawn-fixture", "endless", difficulty);
     // Isolated scheduling fixture: no autonomous decisions or provider calls.
     const born: number[] = [];
     let known = new Set<string>();
@@ -98,10 +98,9 @@ test("armor v2 increases durability and schedules spaced groups within wave and 
 });
 test("driver starts the selected map and records it", async () => {
   const d = new Driver(
-    async () =>
-      new Response(JSON.stringify({ mode: "strict", session: "fixture" })),
+    async () => new Response(JSON.stringify({ session: "fixture" })),
   );
-  await d.start("strict", "mission", "easy.v1", "village.v1");
+  await d.start("mission", "easy.v1", "village.v1");
   assert.equal(d.sim.mapId, "village.v1");
   assert.equal(d.sim.recording.mapId, "village.v1");
 });

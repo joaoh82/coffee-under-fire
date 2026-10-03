@@ -89,16 +89,16 @@ export function Briefing({
         />
         <h1 id="briefing-title">Hold the line. Keep the coffee coming.</h1>
       </header>
-      <aside className="jev-callout" aria-label="NPCs powered by Jev">
-        <span className="jev-insignia" aria-hidden="true">
-          Jev
+      <aside className="tactics-callout" aria-label="How the enemies think">
+        <span className="tactics-insignia" aria-hidden="true">
+          AI
         </span>
         <div>
-          <strong>NPCs powered by Jev</strong>
+          <strong>Every enemy thinks for itself</strong>
           <p>
-            A playable AI proof of concept. TypeSafe AI’s Jev model chooses the
-            tactics for every NPC, from infantry and tanks to the general. The
-            game handles movement, aiming and combat.
+            Infantry, tanks and the general each weigh their legal options from
+            what they can see, hear and remember. The game handles movement,
+            aiming and combat.
           </p>
           <div className="brief-project-links">
             <button onClick={onShowDecisions}>
@@ -240,7 +240,7 @@ export function Briefing({
           onClick={start}
         >
           {loading
-            ? "Connecting to Jev…"
+            ? "Deploying…"
             : mode === "mission"
               ? "Begin coffee run"
               : "Begin endless survival"}
@@ -272,9 +272,8 @@ export function Briefing({
             their orange aiming line.
           </p>
           <p>
-            Live Jev controls the NPCs. Service interruptions pause the
-            battlefield while reconnecting. Prototype session limits apply;
-            replay records the first 30 minutes.
+            Enemy tactics run in your browser, so the battlefield never waits on
+            a connection. Replay records the first 30 minutes.
           </p>
         </details>
         {import.meta.env.PROD && (

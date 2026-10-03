@@ -30,12 +30,9 @@ export function SupportCallout({
       <span aria-hidden="true">☕</span>
       <div>
         <strong>
-          The general gets the coffee. The developer gets the API bill.
+          The general gets the coffee. The developer gets the server bill.
         </strong>
-        <p>
-          Free to play. Jev powers the NPCs, and every mission uses paid AI
-          calls. Fancy helping keep the coffee flowing?
-        </p>
+        <p>Free to play, with no ads. Fancy helping keep the coffee flowing?</p>
         <a href={href} target="_blank" rel="noopener noreferrer">
           Buy the developer a coffee <span aria-hidden="true">↗</span>
         </a>

@@ -79,7 +79,7 @@ export async function generateScoreCard(
   label("GO TRY IT →", 820, 465, 28, "#fff4d3", 285);
   ctx.fillStyle = "#344b35";
   ctx.fillRect(68, 512, 1064, 2);
-  label("NPCs powered by Jev AI", 68, 558, 20, "#344b35", 410);
+  label("Free browser arena shooter", 68, 558, 20, "#344b35", 410);
   label(new URL(cleanShareUrl(url)).host, 560, 558, 22, "#344b35", 570);
   return canvas.toDataURL("image/png");
 }

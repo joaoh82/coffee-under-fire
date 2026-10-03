@@ -1,7 +1,7 @@
 import { MobileHud } from "./ui/MobileHud";
 import { Tutorial } from "./ui/Tutorial";
 import { WaveAnnouncement } from "./ui/WaveAnnouncement";
-import { AccessBudgetNotice } from "./ui/AccessBudgetNotice";
+import { AccessNotice } from "./ui/AccessNotice";
 import { MAPS, type MapId } from "./game/maps";
 import { DIFFICULTIES, type Difficulty } from "./game/difficulty";
 // @refresh reset
@@ -47,7 +47,6 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
       audio.update(driver.sim);
       music.setActive(
         !document.hidden &&
-          !driver.recovering &&
           (musicStarting.current ||
             ["running", "upgrading"].includes(driver.sim.status)),
       );
@@ -87,7 +86,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
       sync();
       if (e.code === "Escape" && !e.repeat) {
         if (driver.sim.status === "running") driver.pause();
-        else if (driver.sim.status === "paused") void driver.resume();
+        else if (driver.sim.status === "paused") driver.resume();
       }
       if (e.code === "Backquote") setDebug((v) => !v);
     };
@@ -152,7 +151,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
     setLoading(true);
     setError("");
     try {
-      await driver.start("strict", missionMode, difficulty, mapId);
+      await driver.start(missionMode, difficulty, mapId);
     } catch (e) {
       setError(String(e));
     } finally {
@@ -200,7 +199,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
   return (
     <main className={debug ? "command-open" : ""}>
       {driver.accessBlock && (
-        <AccessBudgetNotice
+        <AccessNotice
           block={driver.accessBlock}
           score={Math.floor(s.score)}
           onLeave={restart}
@@ -208,11 +207,11 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
         />
       )}
       <section
-        className={`battlefield${s.status === "running" && !driver.recovering ? " mouse-aim" : ""}`}
+        className={`battlefield${s.status === "running" ? " mouse-aim" : ""}`}
       >
         {preview ? (
           <div className="mobile-layout-stage">
-            Presentation fixture · no gameplay or Jev calls
+            Presentation fixture · no gameplay
           </div>
         ) : (
           <World driver={driver} />
@@ -220,7 +219,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
         <WaveAnnouncement
           wave={s.wave}
           time={s.time}
-          running={s.status === "running" && !driver.recovering}
+          running={s.status === "running"}
         />
         <div
           className="fps-counter"
@@ -277,24 +276,19 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
               Music: {music.enabled ? "on" : "off"}
             </button>
             <button onClick={() => setDebug((v) => !v)} aria-pressed={debug}>
-              Jev dashboard
+              Tactics dashboard
             </button>
             <button
               className="pause"
               disabled={s.status === "upgrading"}
               onClick={() =>
-                s.status === "running" ? driver.pause() : void driver.resume()
+                s.status === "running" ? driver.pause() : driver.resume()
               }
             >
               Pause / Esc
             </button>
           </div>
         </header>
-        {s.mode === "mock" && (
-          <div className="mode-banner">
-            Development mock: NPC choices are fixtures, not Jev
-          </div>
-        )}
         <div className="objective">
           <span className="cup-icon">☕</span>
           <div>
@@ -402,7 +396,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
             WASD move · Mouse aim / fire
             <br />E interact · R reload · Space dodge
             <br />
-            <button onClick={() => setDebug(!debug)}>Jev dashboard</button>
+            <button onClick={() => setDebug(!debug)}>Tactics dashboard</button>
           </div>
         </footer>
         <TouchControls driver={driver} />
@@ -469,38 +463,11 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
             </section>
           </div>
         )}
-        {(driver.automaticRecoveryPending || driver.recovering) &&
-          s.status !== "paused" && (
-            <div className="reconnect-notice" role="status" aria-live="polite">
-              <span className="radio-symbol" aria-hidden="true">
-                ⌁
-              </span>
-              <div>
-                <strong>Reconnecting to Jev…</strong>
-                <span>
-                  Battlefield paused. Resuming automatically when decisions
-                  arrive.
-                </span>
-              </div>
-              <button onClick={restart}>Quit</button>
-            </div>
-          )}
-        {(s.status === "paused" ||
-          (s.status === "reconnecting" &&
-            !driver.automaticRecoveryPending &&
-            !driver.recovering)) && (
+        {s.status === "paused" && !driver.accessBlock && (
           <div className="overlay">
             <section className="brief compact pause-panel">
-              <h1>
-                {s.status === "paused"
-                  ? "A little breather."
-                  : "Jev connection interrupted"}
-              </h1>
-              <p>
-                {s.status === "paused"
-                  ? "The battlefield and your coffee are paused."
-                  : "We couldn’t get fresh NPC decisions. The battlefield is safely paused. Retry the connection to continue your run."}
-              </p>
+              <h1>A little breather.</h1>
+              <p>The battlefield and your coffee are paused.</p>
               <div className="mobile-settings">
                 <div className="mobile-settings-buttons">
                   <button
@@ -554,27 +521,16 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
                   </div>
                 </div>
                 <button onClick={() => setDebug((v) => !v)}>
-                  Jev dashboard
+                  Tactics dashboard
                 </button>
               </div>
-              {driver.errors.size > 0 && (
-                <details className="field-manual">
-                  <summary>Connection details</summary>
-                  <p>{[...new Set(driver.errors.values())].join(", ")}</p>
-                </details>
-              )}
               <button
                 className="primary"
-                disabled={driver.recovering || driver.retryWaitSeconds > 0}
                 onClick={() =>
-                  preview ? (s.status = "running") : void driver.retry()
+                  preview ? (s.status = "running") : driver.resume()
                 }
               >
-                {driver.retryWaitSeconds > 0
-                  ? `Retry in ${driver.retryWaitSeconds}s`
-                  : s.status === "paused"
-                    ? "Resume mission"
-                    : "Retry Jev connection"}
+                Resume mission
               </button>
               <button onClick={restart}>Quit to briefing</button>
             </section>
@@ -598,7 +554,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
               onRestart={restart}
               onSave={save}
               onSubmitScore={
-                s.recording.mode === "strict" || s.recording.mode === "local"
+                s.recording.mode === "local"
                   ? (name) => driver.submitScore(name)
                   : undefined
               }

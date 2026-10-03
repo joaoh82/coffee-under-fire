@@ -4,7 +4,7 @@ import { Simulation, idleInput } from "../apps/web/src/game/simulation";
 import { arena, path, clear, segmentBox } from "../apps/web/src/game/arena";
 const world = () => {
   const s = new Simulation();
-  s.start("mock", "fixture");
+  s.start("scripted", "fixture");
   return s;
 };
 test("ordinary movement costs no coffee volume; warmth decays by simulation time", () => {

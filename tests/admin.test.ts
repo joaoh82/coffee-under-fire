@@ -20,18 +20,9 @@ test("owner console: role separation, CSRF, invite creation, cookie secrecy, log
   const origin = `http://127.0.0.1:${a.port}`;
   const owner = "test-owner-token-with-at-least-32-characters";
   let reconciled = 0;
-  access = new ManagedAccess(
-    store,
-    owner,
-    origin,
-    () => {},
-    false,
-    Date.now,
-    0.042,
-    () => {
-      reconciled++;
-    },
-  );
+  access = new ManagedAccess(store, owner, origin, false, Date.now, () => {
+    reconciled++;
+  });
   const req = (path: string, init: RequestInit = {}) =>
     fetch(origin + path, { redirect: "manual", ...init });
   const post = (

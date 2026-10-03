@@ -4,7 +4,7 @@ import { Simulation, idleInput } from "../apps/web/src/game/simulation";
 
 const world = () => {
   const sim = new Simulation();
-  sim.start("mock", "combat-feedback-fixture");
+  sim.start("scripted", "combat-feedback-fixture");
   return sim;
 };
 

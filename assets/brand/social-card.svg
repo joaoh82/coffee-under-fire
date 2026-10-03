@@ -4,5 +4,5 @@
 <image x="70" y="75" width="660" height="290" preserveAspectRatio="xMidYMid meet" xlink:href="{{LOGO}}"/>
 <g font-family="Arial, sans-serif"><text x="83" y="413" font-size="42" font-weight="bold" fill="#fff0c9">Hold the line.</text><text x="83" y="465" font-size="42" font-weight="bold" fill="#fff0c9">Don’t spill the coffee.</text>
 <rect x="82" y="507" width="430" height="48" rx="6" fill="#e6b85d"/><text x="105" y="539" font-size="23" font-weight="bold" fill="#23382b">PLAY FREE · IN YOUR BROWSER</text>
-<text x="810" y="371" font-size="20" fill="#eadbb0" letter-spacing="2">ENEMY DECISIONS</text><text x="810" y="410" font-size="32" font-weight="bold" fill="#fff0c9">Powered by Jev AI</text><text x="810" y="542" font-size="26" font-weight="bold" fill="#eadbb0">coffee.yardsort.sh</text></g>
+<text x="810" y="371" font-size="20" fill="#eadbb0" letter-spacing="2">EVERY ENEMY</text><text x="810" y="410" font-size="32" font-weight="bold" fill="#fff0c9">Thinks for itself</text><text x="810" y="542" font-size="26" font-weight="bold" fill="#eadbb0">coffee.yardsort.sh</text></g>
 <g transform="translate(855 105) scale(3.2)">{{ICON}}</g></svg>

@@ -5,7 +5,7 @@ export function shareMessage(data: {
   time: number;
   deliveries: number;
 }) {
-  return `I scored ${reportPoints(data).toLocaleString("en-US")} points and delivered ${data.deliveries} coffees in Coffee Under Fire! Can you survive NPCs powered by Jev AI?`;
+  return `I scored ${reportPoints(data).toLocaleString("en-US")} points and delivered ${data.deliveries} coffees in Coffee Under Fire! Can you hold the line?`;
 }
 export function cleanShareUrl(origin: string) {
   try {

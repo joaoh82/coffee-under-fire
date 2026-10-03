@@ -17,7 +17,7 @@ test("managed production binds games to invites and enforces admin revocation", 
   const origin = "https://game.example";
   const password = "production-fixture-password-12345";
   const owner = "fixture-owner-token-at-least-32-characters";
-  // Seed an explicitly synthetic completed Jev run; no provider requests occur.
+  // Seed an explicitly synthetic completed run.
   let fixtureNow = Date.now() - 20000;
   const fixtureStore = new Store(join(dir, "access.sqlite"), () => fixtureNow);
   await fixtureStore.saveInvite("alice", password, 1, true);
@@ -27,8 +27,6 @@ test("managed production binds games to invites and enforces admin revocation", 
     "",
     DEFAULT_BOARD,
   );
-  const reservationId = fixtureStore.reserveUsage("score-fixture-session", 10);
-  fixtureStore.settleUsage(reservationId, 10);
   fixtureNow += 20000;
   fixtureStore.endSession("score-fixture-session");
   const fixtureLogin = fixtureStore.createLogin("alice");
@@ -45,8 +43,6 @@ test("managed production binds games to invites and enforces admin revocation", 
         ACCESS_DB_PATH: join(dir, "access.sqlite"),
         ADMIN_TOKEN: owner,
         PLAYTEST_INVITES: JSON.stringify({ alice: password, bob: password }),
-        DECISION_MODE: "strict",
-        TYPESAFE_API_KEY: "fixture-no-provider-calls",
       },
       stdio: "ignore",
     },
@@ -172,11 +168,7 @@ test("managed production binds games to invites and enforces admin revocation", 
       headers: { Cookie: bob, Origin: origin },
     });
     assert.equal(other.status, 201);
-    for (const endpoint of [
-      "/api/heartbeat",
-      "/api/decision",
-      "/api/invalidate",
-    ])
+    for (const endpoint of ["/api/heartbeat"])
       assert.equal(
         (
           await request(endpoint, {

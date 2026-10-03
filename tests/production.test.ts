@@ -29,8 +29,6 @@ test("production entrypoint protects API and serves the compiled game after logi
         NODE_ENV: "production",
         PORT: String(port),
         PUBLIC_ORIGIN: origin,
-        DECISION_MODE: "strict",
-        TYPESAFE_API_KEY: "nonfunctional-fixture-key-no-provider-calls",
         PLAYTEST_COOKIE_SECRET:
           "production-fixture-cookie-secret-32-characters",
         PLAYTEST_INVITES: JSON.stringify({
@@ -136,8 +134,18 @@ test("production entrypoint protects API and serves the compiled game after logi
     });
     assert.equal(session.status, 201);
     const data = await session.json();
-    assert.equal(data.mode, "strict");
     assert.ok(data.session);
+    // The retired decision endpoint no longer exists.
+    assert.equal(
+      (
+        await request("/api/decision", {
+          method: "POST",
+          headers: { Cookie: cookie, Origin: origin },
+          body: "{}",
+        })
+      ).status,
+      404,
+    );
     assert.equal(
       (
         await request("/api/session", {

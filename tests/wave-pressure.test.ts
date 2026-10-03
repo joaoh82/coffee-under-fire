@@ -7,7 +7,7 @@ import { motionPose } from "../apps/web/src/render/motionPose";
 
 test("pressure profile brings a pair in early and fills the first-wave cap sooner without stronger infantry", () => {
   const s = new Simulation();
-  s.start("mock", "pressure-fixture");
+  s.start("scripted", "pressure-fixture");
   for (let i = 0; i < 390; i++) s.step(idleInput());
   assert.equal(s.npcs.filter((n) => n.role === "rifleman").length, 2);
   for (let i = 390; i < 1800; i++) s.step(idleInput());
@@ -30,7 +30,7 @@ test("pressure cap ramps to fourteen and old recordings without a profile retain
   assert.equal(waveSettings(3).batch, 3);
   const s = new Simulation();
   s.waveProfile = "legacy";
-  s.start("mock", "legacy-fixture");
+  s.start("scripted", "legacy-fixture");
   for (let i = 0; i < 1800; i++) s.step(idleInput());
   assert.equal(s.npcs.filter((n) => n.role === "rifleman").length, 4);
   delete s.recording.waveProfile;

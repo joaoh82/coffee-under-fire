@@ -136,7 +136,7 @@ export function chooseLocally(
     `${r.session}:${r.observation.npc}:${r.epoch}:${r.sequence}:${r.tick}`,
   );
   // Difficulty sets how often an available shot is taken; otherwise the NPC
-  // maneuvers. Jev historically fired on roughly 45% of such choices.
+  // maneuvers. The retired Jev model took roughly 45% of such shots.
   const holdFire = random() >= fireDiscipline;
   // A move that stalled immediately is wedged against cover or a squadmate:
   // pause briefly rather than re-plan every tick.
@@ -166,8 +166,6 @@ export function chooseLocally(
     source: "local",
     confidence: weights[best] / total,
     probabilities,
-    latencyMs: 0,
     model: LOCAL_TACTICS_MODEL,
-    usage: null,
   };
 }

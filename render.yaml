@@ -18,12 +18,6 @@ services:
         value: production
       - key: PUBLIC_ORIGIN
         value: https://coffee.yardsort.sh
-      - key: DECISION_MODE
-        value: strict
-      - key: JEV_MODEL
-        value: jev-latest
-      - key: TYPESAFE_API_KEY
-        sync: false
       - key: PLAYTEST_INVITES
         sync: false
       - key: ACCESS_DB_PATH
@@ -38,8 +32,6 @@ services:
         generateValue: true
       - key: PUBLIC_IP_SOURCE
         value: render
-      - key: MONTHLY_INPUT_TOKEN_LIMIT
-        value: "100000000"
       - key: PLAYTEST_COOKIE_SECRET
         generateValue: true
       - key: VITE_SUPPORT_URL

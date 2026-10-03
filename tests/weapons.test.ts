@@ -4,7 +4,7 @@ import { Simulation, idleInput } from "../apps/web/src/game/simulation";
 
 function world() {
   const s = new Simulation();
-  s.start("mock", "weapon-fixture");
+  s.start("scripted", "weapon-fixture");
   s.arena = { ...s.arena, obstacles: [] };
   s.npcs = [];
   s.player.pos = { x: 0, z: 0 };

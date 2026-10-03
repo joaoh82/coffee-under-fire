@@ -49,13 +49,7 @@ export class Store {
   constructor(
     path: string,
     private now = Date.now,
-    private monthlyCap = 100_000_000,
-    private inputRate = 0.042,
   ) {
-    if (!Number.isSafeInteger(monthlyCap) || monthlyCap < 1)
-      throw new Error("Monthly input token cap must be a positive integer");
-    if (!Number.isFinite(inputRate) || inputRate <= 0 || inputRate > 1000)
-      throw new Error("Invalid input token price");
     this.db = new DatabaseSync(path);
     this.db.function("admin_lower", { deterministic: true }, (value) =>
       String(value).toLowerCase(),
@@ -67,13 +61,10 @@ export class Store {
       CREATE TABLE IF NOT EXISTS invites (id TEXT PRIMARY KEY, salt TEXT NOT NULL, password_hash TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 1, enabled INTEGER NOT NULL, max_sessions INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS logins (token_hash TEXT PRIMARY KEY, invite_id TEXT NOT NULL REFERENCES invites(id), revision INTEGER NOT NULL, created INTEGER NOT NULL, expires INTEGER NOT NULL, logged_out INTEGER NOT NULL DEFAULT 0);
       CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, management_id TEXT UNIQUE NOT NULL, invite_id TEXT NOT NULL REFERENCES invites(id), started INTEGER NOT NULL, heartbeat INTEGER NOT NULL, playing INTEGER NOT NULL DEFAULT 0, active_ms INTEGER NOT NULL DEFAULT 0, ended INTEGER);
-      CREATE TABLE IF NOT EXISTS usage (id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id), month TEXT NOT NULL, tokens INTEGER NOT NULL, settled INTEGER NOT NULL DEFAULT 0, failed INTEGER NOT NULL DEFAULT 0, reported INTEGER NOT NULL DEFAULT 0);
       CREATE INDEX IF NOT EXISTS sessions_invite ON sessions(invite_id, ended);
-      CREATE INDEX IF NOT EXISTS usage_month ON usage(month);
-      CREATE INDEX IF NOT EXISTS usage_session ON usage(session_id);
       CREATE INDEX IF NOT EXISTS logins_invite ON logins(invite_id);`);
-    // Additive migration, preserving existing invites and usage. Legacy current-month
-    // usage is charged conservatively to migration day because its timestamps are unknown.
+    // Additive migration, preserving existing invites. A legacy `usage` table from
+    // the retired Jev integration is left untouched and no longer read.
     const add = (table: string, name: string, definition: string) => {
       const cols = this.db.prepare(`PRAGMA table_info(${table})`).all();
       if (!cols.some((c) => c.name === name))
@@ -82,16 +73,8 @@ export class Store {
     add("invites", "display_name", "TEXT NOT NULL DEFAULT ''");
     add("sessions", "ip_key", "TEXT NOT NULL DEFAULT ''");
     add("sessions", "board_options", "TEXT");
-    add("usage", "day", "TEXT");
-    add("usage", "cost", "INTEGER NOT NULL DEFAULT 0");
-    add("usage", "unit_cost", "INTEGER NOT NULL DEFAULT 0");
-    this.db
-      .prepare(
-        "UPDATE usage SET day=CASE WHEN month=? THEN ? ELSE month || '-01' END,cost=tokens*?,unit_cost=? WHERE day IS NULL",
-      )
-      .run(this.month(), this.day(), this.unitCost(), this.unitCost());
     this.db.exec(
-      "CREATE TABLE IF NOT EXISTS guests (invite_id TEXT PRIMARY KEY REFERENCES invites(id),created INTEGER NOT NULL,ip_key TEXT NOT NULL); CREATE INDEX IF NOT EXISTS usage_day ON usage(day); CREATE INDEX IF NOT EXISTS sessions_ip ON sessions(ip_key,ended); CREATE INDEX IF NOT EXISTS guests_ip ON guests(ip_key,created)",
+      "CREATE TABLE IF NOT EXISTS guests (invite_id TEXT PRIMARY KEY REFERENCES invites(id),created INTEGER NOT NULL,ip_key TEXT NOT NULL); CREATE INDEX IF NOT EXISTS sessions_ip ON sessions(ip_key,ended); CREATE INDEX IF NOT EXISTS guests_ip ON guests(ip_key,created)",
     );
     this.db.exec(
       "CREATE TABLE IF NOT EXISTS leaderboard (id TEXT PRIMARY KEY, session_id TEXT NOT NULL UNIQUE REFERENCES sessions(id), invite_id TEXT NOT NULL REFERENCES invites(id), name TEXT NOT NULL, score INTEGER NOT NULL, time REAL NOT NULL, kills INTEGER NOT NULL, deliveries INTEGER NOT NULL, map_id TEXT NOT NULL, difficulty TEXT NOT NULL, mission_mode TEXT NOT NULL, created INTEGER NOT NULL, hidden INTEGER NOT NULL DEFAULT 0); CREATE INDEX IF NOT EXISTS leaderboard_category ON leaderboard(map_id,difficulty,mission_mode,hidden,score DESC)",
@@ -333,7 +316,8 @@ export class Store {
     if (!id || id.length > 256) throw new Error("Invalid session ID");
     this.expireSessions();
     this.transaction(() => {
-      this.checkDaily(inviteId, ipKey);
+      if (this.isGuest(inviteId) && !this.publicSettings().publicEnabled)
+        throw new AccessLimit("public_closed");
       const invite = this.getInvite(inviteId);
       if (!invite?.enabled) throw new Error("Invite unavailable");
       const row = this.db
@@ -435,10 +419,7 @@ export class Store {
       (SELECT MAX(heartbeat) FROM sessions s WHERE s.invite_id=i.id) AS lastSeen,
       (SELECT COUNT(*) FROM sessions s WHERE s.invite_id=i.id) AS runs,
       (SELECT COUNT(*) FROM sessions s WHERE s.invite_id=i.id AND ended IS NULL) AS activeSessions,
-      COALESCE((SELECT SUM(active_ms) FROM sessions s WHERE s.invite_id=i.id),0) AS activeMs,
-      (SELECT COUNT(*) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id) AS requests,
-      COALESCE((SELECT SUM(tokens) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id AND reported=1),0) AS inputTokens,
-      COALESCE((SELECT SUM(failed) FROM usage u JOIN sessions s ON s.id=u.session_id WHERE s.invite_id=i.id),0) AS failures
+      COALESCE((SELECT SUM(active_ms) FROM sessions s WHERE s.invite_id=i.id),0) AS activeMs
       FROM invites i ORDER BY i.id LIMIT 200`,
         )
         .all() as Row[]
@@ -491,14 +472,11 @@ export class Store {
       SELECT invite_id,COUNT(*) AS loginCount,MAX(created) AS lastLogin FROM logins GROUP BY invite_id
     ), session_stats AS (
       SELECT invite_id,MAX(heartbeat) AS lastSeen,COUNT(*) AS runs,SUM(ended IS NULL) AS activeSessions,SUM(active_ms) AS activeMs FROM sessions GROUP BY invite_id
-    ), usage_stats AS (
-      SELECT s.invite_id,COUNT(*) AS requests,SUM(CASE WHEN u.reported=1 THEN u.tokens ELSE 0 END) AS inputTokens,SUM(u.failed) AS failures FROM usage u JOIN sessions s ON s.id=u.session_id GROUP BY s.invite_id
     ) SELECT i.id,i.display_name AS displayName,i.enabled,i.max_sessions AS maxSessions,i.revision,
       g.invite_id IS NOT NULL AS isGuest,COALESCE(l.loginCount,0) AS loginCount,l.lastLogin,s.lastSeen,
-      COALESCE(s.runs,0) AS runs,COALESCE(s.activeSessions,0) AS activeSessions,COALESCE(s.activeMs,0) AS activeMs,
-      COALESCE(u.requests,0) AS requests,COALESCE(u.inputTokens,0) AS inputTokens,COALESCE(u.failures,0) AS failures
+      COALESCE(s.runs,0) AS runs,COALESCE(s.activeSessions,0) AS activeSessions,COALESCE(s.activeMs,0) AS activeMs
       FROM invites i LEFT JOIN login_stats l ON l.invite_id=i.id LEFT JOIN session_stats s ON s.invite_id=i.id
-      LEFT JOIN usage_stats u ON u.invite_id=i.id LEFT JOIN guests g ON g.invite_id=i.id
+      LEFT JOIN guests g ON g.invite_id=i.id
       WHERE ${where} ORDER BY ${sort} ${direction} NULLS LAST,i.id ASC LIMIT ? OFFSET ?`,
       )
       .all(
@@ -543,14 +521,11 @@ export class Store {
   }
   /** UTC days. Historical sessions have no per-day heartbeats: measured play is
    * attributed to their start day. New users are identities' first successful login.
-   * Average minutes divides measured play by distinct active identities that day.
-   * Costs include both settled usage and outstanding reservations, in USD. */
+   * Average minutes divides measured play by distinct active identities that day. */
   analytics(requested: 7 | 30 | 90 = 30) {
     const count = requested === 7 || requested === 90 ? requested : 30;
     const end = Date.parse(this.day() + "T00:00:00Z") + 86400000;
     const start = end - count * 86400000;
-    const firstDay = new Date(start).toISOString().slice(0, 10);
-    const lastDay = new Date(end).toISOString().slice(0, 10);
     const play = this.db
       .prepare(
         `SELECT strftime('%Y-%m-%d',started/1000.0,'unixepoch') AS day,
@@ -564,11 +539,6 @@ export class Store {
       FROM (SELECT MIN(created) AS first_login FROM logins GROUP BY invite_id) WHERE first_login>=? AND first_login<? GROUP BY day`,
       )
       .all(start, end);
-    const spending = this.db
-      .prepare(
-        "SELECT day,SUM(cost)/1000000000.0 AS costUsd FROM usage WHERE day>=? AND day<? GROUP BY day",
-      )
-      .all(firstDay, lastDay);
     const days = Array.from({ length: count }, (_, index) => ({
       day: new Date(start + index * 86400000).toISOString().slice(0, 10),
       activeUsers: 0,
@@ -576,10 +546,9 @@ export class Store {
       runs: 0,
       activeMs: 0,
       averageMinutes: 0,
-      costUsd: 0,
     }));
     const byDay = new Map(days.map((day) => [day.day, day]));
-    for (const row of [...play, ...fresh, ...spending]) {
+    for (const row of [...play, ...fresh]) {
       const day = byDay.get(String(row.day));
       if (day) Object.assign(day, row);
     }
@@ -604,7 +573,6 @@ export class Store {
       newUsers: days.reduce((sum, day) => sum + day.newUsers, 0),
       activeMs: days.reduce((sum, day) => sum + day.activeMs, 0),
       runs: days.reduce((sum, day) => sum + day.runs, 0),
-      costUsd: days.reduce((sum, day) => sum + day.costUsd, 0),
       historicalApproximation: true,
     };
   }
@@ -651,13 +619,6 @@ export class Store {
         input.report.time > (finish - session.started) / 1000 + 5
       )
         throw new Error("Run timing is not eligible");
-      const usage = this.db
-        .prepare(
-          "SELECT COUNT(*) AS n FROM usage WHERE session_id=? AND reported=1 AND failed=0",
-        )
-        .get(sessionId) as Row;
-      if (!usage.n)
-        throw new Error("Only runs with live Jev decisions can enter");
       const r = input.report;
       if (
         (options.missionMode === "mission" && r.time > 481) ||
@@ -739,14 +700,14 @@ export class Store {
     const row = this.db
       .prepare("SELECT value FROM metadata WHERE key='public_settings'")
       .get() as Row | undefined;
-    return row ? JSON.parse(row.value) : { ...DEFAULT_PUBLIC_SETTINGS };
+    if (!row) return { ...DEFAULT_PUBLIC_SETTINGS };
+    // Older rows also carry retired spending caps; keep only current fields.
+    const { publicEnabled, ipConcurrent } = JSON.parse(row.value);
+    return { publicEnabled, ipConcurrent };
   }
   savePublicSettings(settings: PublicSettings) {
     if (
       typeof settings.publicEnabled !== "boolean" ||
-      ![settings.dailyCents, settings.guestCents, settings.ipCents].every(
-        (v) => Number.isSafeInteger(v) && v >= 0 && v <= 10000,
-      ) ||
       !Number.isInteger(settings.ipConcurrent) ||
       settings.ipConcurrent < 1 ||
       settings.ipConcurrent > 8
@@ -756,7 +717,12 @@ export class Store {
       .prepare(
         "INSERT INTO metadata(key,value) VALUES('public_settings',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
       )
-      .run(JSON.stringify(settings));
+      .run(
+        JSON.stringify({
+          publicEnabled: settings.publicEnabled,
+          ipConcurrent: settings.ipConcurrent,
+        }),
+      );
     if (!settings.publicEnabled)
       this.db
         .prepare(
@@ -779,7 +745,6 @@ export class Store {
   createGuest(ipKey: string, displayName = ""): string {
     const name = displayName.trim() ? publicName(displayName) : "";
     return this.transaction(() => {
-      this.checkDaily(undefined, ipKey);
       if (!this.publicSettings().publicEnabled)
         throw new AccessLimit("public_closed");
       const total = this.db
@@ -819,111 +784,5 @@ export class Store {
   }
   private day() {
     return new Date(this.now()).toISOString().slice(0, 10);
-  }
-  private unitCost() {
-    return Math.ceil(this.inputRate * 1000);
-  } // nanodollars per input token
-  dailyBudget() {
-    const settings = this.publicSettings();
-    const row = this.db
-      .prepare("SELECT COALESCE(SUM(cost),0) AS cost FROM usage WHERE day=?")
-      .get(this.day()) as Row;
-    return {
-      day: this.day(),
-      chargedUsd: row.cost / 1e9,
-      limitUsd: settings.dailyCents / 100,
-      effectiveUsd: (settings.dailyCents / 100) * 0.95,
-      resetAt: Date.parse(this.day() + "T00:00:00Z") + 86400000,
-    };
-  }
-  checkDaily(inviteId?: string, ipKey = "", reserveTokens = 1) {
-    const p = this.publicSettings();
-    const budget = this.dailyBudget();
-    const cost = reserveTokens * this.unitCost();
-    if (
-      Math.round(budget.chargedUsd * 1e9) + cost >
-      p.dailyCents * 10000000 * 0.95
-    )
-      throw new AccessLimit("daily_budget_exhausted");
-    if (inviteId && this.isGuest(inviteId)) {
-      if (!p.publicEnabled) throw new AccessLimit("public_closed");
-      const usage = this.db
-        .prepare(
-          "SELECT COALESCE(SUM(u.cost),0) AS cost FROM usage u JOIN sessions s ON s.id=u.session_id WHERE u.day=? AND s.invite_id=?",
-        )
-        .get(this.day(), inviteId) as Row;
-      if (usage.cost + cost > p.guestCents * 10000000 * 0.95)
-        throw new AccessLimit("guest_daily_budget_exhausted");
-    }
-    if (ipKey) {
-      const usage = this.db
-        .prepare(
-          "SELECT COALESCE(SUM(u.cost),0) AS cost FROM usage u JOIN sessions s ON s.id=u.session_id WHERE u.day=? AND s.ip_key=?",
-        )
-        .get(this.day(), ipKey) as Row;
-      if (usage.cost + cost > p.ipCents * 10000000 * 0.95)
-        throw new AccessLimit("ip_daily_budget_exhausted");
-    }
-  }
-  private month() {
-    return new Date(this.now()).toISOString().slice(0, 7);
-  }
-  budget() {
-    const month = this.month();
-    const row = this.db
-      .prepare(
-        "SELECT COALESCE(SUM(tokens),0) AS charged FROM usage WHERE month=?",
-      )
-      .get(month) as Row;
-    return { month, cap: this.monthlyCap, charged: row.charged as number };
-  }
-  reserveUsage(sessionId: string, reserveTokens: number) {
-    if (!Number.isSafeInteger(reserveTokens) || reserveTokens < 1)
-      throw new Error("Invalid token reservation");
-    return this.transaction(() => {
-      const session = this.db
-        .prepare("SELECT invite_id,ip_key FROM sessions WHERE id=?")
-        .get(sessionId) as Row | undefined;
-      if (!session || !this.ownsSession(sessionId, session.invite_id))
-        throw new Error("Session unavailable");
-      this.checkDaily(session.invite_id, session.ip_key, reserveTokens);
-      const budget = this.budget();
-      if (budget.charged + reserveTokens > budget.cap)
-        throw new Error("Monthly token budget exhausted");
-      const id = random();
-      this.db
-        .prepare(
-          "INSERT INTO usage(id,session_id,month,tokens,day,cost,unit_cost) VALUES(?,?,?,?,?,?,?)",
-        )
-        .run(
-          id,
-          sessionId,
-          budget.month,
-          reserveTokens,
-          this.day(),
-          reserveTokens * this.unitCost(),
-          this.unitCost(),
-        );
-      return id;
-    });
-  }
-  settleUsage(id: string, actualInputTokens?: number, failed = false) {
-    if (
-      actualInputTokens !== undefined &&
-      (!Number.isSafeInteger(actualInputTokens) || actualInputTokens < 0)
-    )
-      throw new Error("Invalid reported usage");
-    this.db
-      .prepare(
-        "UPDATE usage SET tokens=COALESCE(?,tokens),cost=CASE WHEN ? IS NULL THEN cost ELSE ?*unit_cost END,settled=1,reported=?,failed=? WHERE id=? AND settled=0",
-      )
-      .run(
-        actualInputTokens ?? null,
-        actualInputTokens ?? null,
-        actualInputTokens ?? null,
-        Number(actualInputTokens !== undefined),
-        Number(failed),
-        id,
-      );
   }
 }

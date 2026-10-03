@@ -11,7 +11,7 @@ import { chooseLocally, searchWaypoint } from "../apps/web/src/game/tactics";
 import { responseSchema } from "../packages/shared/contracts";
 function fixture(archetype: NPC["archetype"] = "rifleman") {
   const s = new Simulation();
-  s.start("mock", "tactics-fixture");
+  s.start("scripted", "tactics-fixture");
   // An open woodland spot with every surrounding move available.
   const n = s.addNPC("rifleman", { x: -17, z: 7 }, archetype);
   s.player.pos = { x: -11, z: 7 };
@@ -88,7 +88,6 @@ test("local mode never starves or pauses and replays identically", () => {
     }
     input.reload = s.player.ammo === 0;
     s.step(input);
-    assert.notEqual(s.status, "reconnecting");
     if (s.status === "lost") break;
     // An action can end mid-tick or stall; a replacement must follow within ticks.
     for (const n of s.npcs) {

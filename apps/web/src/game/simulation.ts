@@ -75,10 +75,8 @@ export type NPC = Actor & {
     kind: "footsteps" | "gunfire";
   } | null;
   damagedAt: number;
-  starvedAt: number;
   decision: Decision | null;
   request: DecisionRequest | null;
-  nextDecision: number;
 };
 type Bullet = {
   id: number;
@@ -143,25 +141,12 @@ export class Simulation {
   tick = 0;
   epoch = 0;
   session = "offline";
-  status:
-    | "ready"
-    | "running"
-    | "paused"
-    | "reconnecting"
-    | "upgrading"
-    | "won"
-    | "lost" = "ready";
+  status: "ready" | "running" | "paused" | "upgrading" | "won" | "lost" =
+    "ready";
   reason = "";
-  lastStarvation: {
-    tick: number;
-    waiting: {
-      id: string;
-      waitTicks: number;
-      nextDecision: number;
-      lastChoice: string | null;
-    }[];
-  } | null = null;
-  mode: "strict" | "mock" | "replay" | "local" = "strict";
+  // "local" NPCs decide in-process; "scripted" harnesses (tests, previews)
+  // and "replay" apply decisions from outside.
+  mode: "local" | "scripted" | "replay" = "local";
   player: Actor = {
     id: "player",
     generation: 0,
@@ -358,7 +343,7 @@ export class Simulation {
     return this.rng / 4294967296;
   }
   start(
-    mode: "strict" | "mock" | "replay" | "local",
+    mode: "local" | "scripted" | "replay",
     session: string,
     missionMode: MissionMode = "mission",
     difficulty: Difficulty = "normal.v1",
@@ -386,18 +371,16 @@ export class Simulation {
       n.action = null;
       n.route = [];
       n.request = null;
-      n.starvedAt = this.tick;
-      n.nextDecision = this.tick;
     }
   }
   pause() {
-    if (this.status === "running" || this.status === "reconnecting") {
+    if (this.status === "running") {
       this.status = "paused";
       this.invalidate();
     }
   }
   resume() {
-    if (this.status === "paused" || this.status === "reconnecting") {
+    if (this.status === "paused") {
       this.invalidate();
       this.status = "running";
       this.reason = "";
@@ -434,10 +417,8 @@ export class Simulation {
       lastSeen: null,
       lastHeard: null,
       damagedAt: -1000,
-      starvedAt: this.tick,
       decision: null,
       request: null,
-      nextDecision: this.tick,
     };
     this.npcs.push(n);
     return n;
@@ -729,8 +710,6 @@ export class Simulation {
     )
       reason = "duplicate";
     else if (this.tick - r.tick > 60 || r.tick > this.tick) reason = "stale";
-    else if (this.mode === "strict" && d.source !== "jev")
-      reason = "wrong_source";
     const c = r.candidates.find((c) => c.id === d.selected);
     if (!reason && (!c || !this.legal(n!, c))) reason = "illegal";
     this.logs.push({
@@ -745,7 +724,6 @@ export class Simulation {
     n!.action = c!;
     n!.actionStart = this.tick;
     n!.actionUntil = this.tick + Math.ceil(c!.duration / DT);
-    n!.starvedAt = this.tick;
     n!.decision = d;
     n!.request = null;
     n!.route =
@@ -812,8 +790,6 @@ export class Simulation {
         n.request = null;
       } else if (n.role !== "tank") {
         n.action = null;
-        n.starvedAt = this.tick;
-        n.nextDecision = this.tick;
       }
     }
   }
@@ -951,28 +927,6 @@ export class Simulation {
   }
   step(input: Input) {
     if (this.status !== "running") return;
-    if (
-      this.mode === "strict" &&
-      this.npcs.some(
-        (n) => n.hp > 0 && !n.action && this.tick - n.starvedAt >= 90,
-      )
-    ) {
-      this.lastStarvation = {
-        tick: this.tick,
-        waiting: this.npcs
-          .filter((n) => n.hp > 0 && !n.action)
-          .map((n) => ({
-            id: n.id,
-            waitTicks: this.tick - n.starvedAt,
-            nextDecision: n.nextDecision,
-            lastChoice: n.decision?.selected ?? null,
-          })),
-      };
-      this.status = "reconnecting";
-      this.reason = "Reconnecting to command";
-      this.invalidate();
-      return;
-    }
     if (this.mode === "local") this.decideLocally();
     if (this.tick >= REPLAY_TICK_LIMIT || this.recording.truncated)
       this.recording.truncated = true;
@@ -1074,14 +1028,11 @@ export class Simulation {
           n.reloadUntil = 0;
         }
         n.action = null;
-        n.starvedAt = this.tick;
         continue;
       }
       if (a.kind === "fire") {
         if (!this.visible(n) || !this.inFireRange(n) || n.ammo === 0) {
           n.action = null;
-          n.starvedAt = this.tick;
-          n.nextDecision = this.tick;
           continue;
         }
         const target = Math.atan2(p.pos.x - n.pos.x, p.pos.z - n.pos.z);
@@ -1122,8 +1073,6 @@ export class Simulation {
         const next = n.route[0];
         if (!next) {
           n.action = null;
-          n.starvedAt = this.tick;
-          n.nextDecision = this.tick;
           continue;
         }
         const len = distance(n.pos, next);
@@ -1145,8 +1094,6 @@ export class Simulation {
         if (distance(old, n.pos) < 0.001) {
           n.action = null;
           n.route = [];
-          n.starvedAt = this.tick;
-          n.nextDecision = this.tick;
         }
       }
     }

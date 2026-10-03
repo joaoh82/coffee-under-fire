@@ -30,48 +30,30 @@ export function CommandDashboard({
     .find((r) => r.request.observation.npc === npc?.id && r.decision);
   const row = frozen ?? latest;
   const observation = row?.request.observation;
-  const decisions = driver.traces.filter((r) => r.decision?.source === "jev");
-  const times = decisions
-    .map((r) => r.decision!.latencyMs)
-    .sort((a, b) => a - b);
-  const median = times.length
-    ? Math.round(times[Math.floor((times.length - 1) * 0.5)])
-    : null;
-  const p95 = times.length
-    ? Math.round(times[Math.ceil((times.length - 1) * 0.95)])
-    : null;
   const source = row?.decision?.source;
   const chosen = row?.request.candidates.find(
     (c) => c.id === row.decision?.selected,
   );
   return (
-    <aside className="command-panel" aria-label="Jev command dashboard">
+    <aside className="command-panel" aria-label="Tactics dashboard">
       <header className="command-heading">
         <div>
           <span className="command-eyebrow">Coffee Under Fire</span>
           <h2>Inside the decisions</h2>
         </div>
-        <button aria-label="Close Jev dashboard" onClick={onClose}>
+        <button aria-label="Close tactics dashboard" onClick={onClose}>
           ×
         </button>
       </header>
-      <div
-        className={`source-strip ${driver.sim.mode === "mock" ? "mock" : ""}`}
-      >
+      <div className="source-strip">
         <span className="status-dot" />
-        {driver.sim.mode === "strict"
-          ? "Jev · live mode"
-          : driver.sim.mode === "local"
-            ? "Local tactics"
-            : `${driver.sim.mode} · development`}
+        Local tactics
         <span>{driver.sim.status}</span>
       </div>
       <p className="command-intro">
-        {driver.sim.mode === "local"
-          ? "The local tactics engine scores each legal option and picks one."
-          : "Jev chooses the tactic."}{" "}
-        The game executes movement and combat. Select an NPC to view its
-        decisions. This does not control the NPC.
+        Each NPC scores its legal options and picks one; the game executes
+        movement and combat. Select an NPC to view its decisions. This does not
+        control the NPC.
       </p>
       <div className="command-metrics">
         <div>
@@ -79,26 +61,13 @@ export function CommandDashboard({
           <span>Applied choices</span>
         </div>
         <div>
-          <b>
-            {median ?? "N/A"}
-            <small> ms</small>
-          </b>
-          <span>Jev median</span>
+          <b>{driver.totals.rejected}</b>
+          <span>Rejected choices</span>
         </div>
         <div>
-          <b>
-            {p95 ?? "N/A"}
-            <small> ms</small>
-          </b>
-          <span>Jev p95</span>
+          <b>{driver.sim.npcs.filter((n) => n.hp > 0).length}</b>
+          <span>NPCs on the field</span>
         </div>
-      </div>
-      <div className="command-meta">
-        {driver.pending.size} in flight · {driver.totals.rejected} rejected ·{" "}
-        {driver.totals.errors} errors
-        <br />
-        {driver.totals.inputTokens.toLocaleString()} reported input tokens ·
-        latency over recent {times.length} Jev responses
       </div>
       <label className="soldier-select">
         Inspect NPC
@@ -125,7 +94,7 @@ export function CommandDashboard({
         <small>
           {npc?.action
             ? `${Math.max(0, (npc.actionUntil - driver.sim.tick) / 60).toFixed(1)}s remaining`
-            : "Strict mode never substitutes a tactic"}
+            : "Choosing on the next tick"}
         </small>
       </div>
       <section className="decision-card">
@@ -149,8 +118,8 @@ export function CommandDashboard({
               <span className={`decision-source ${source}`}>{source}</span>
             </div>
             <p className="decision-facts">
-              #{row.request.sequence} · {row.status} ·{" "}
-              {Math.round(row.decision.latencyMs)} ms
+              #{row.request.sequence} · {row.status} · tick{" "}
+              {row.applicationTick}
               <br />
               {row.decision.model} / {row.decision.config}
             </p>
@@ -178,7 +147,7 @@ export function CommandDashboard({
                   : "No recent sound"}
               </li>
             </ul>
-            <h4>Legal options sent to Jev</h4>
+            <h4>Legal options scored</h4>
             <div className="choice-options">
               {row.request.candidates.map((c) => {
                 const probability = row.decision?.probabilities?.[c.id];
@@ -203,9 +172,8 @@ export function CommandDashboard({
               })}
             </div>
             <p className="source-note">
-              Probabilities and confidence are provider outputs, not damage
-              modifiers. Jev does not return a written explanation for this
-              Choice.
+              Shares are a softmax of the option scores, not damage modifiers.
+              Random tie-breaking means the top share is not always chosen.
             </p>
             <details>
               <summary>Inspect observation and response</summary>
@@ -225,10 +193,10 @@ export function CommandDashboard({
         ) : (
           <p className="empty-state">
             {row
-              ? `${row.status}: ${row.reason ?? "Awaiting a provider result"}`
+              ? `${row.status}: ${row.reason ?? "No reason recorded"}`
               : driver.sim.status === "ready"
                 ? "Start a mission to see real decisions arrive. No sample results are displayed here."
-                : "No completed decision for this soldier yet. See recent activity for pending requests and errors."}
+                : "No decision for this soldier yet."}
           </p>
         )}
       </section>

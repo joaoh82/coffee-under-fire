@@ -168,6 +168,6 @@ export class InviteAccess {
 }
 function loginPage(error = false) {
   return accessPage(
-    `<span class="eyebrow">Your field pass</span><h2>Your orders are waiting.</h2><p class="muted">Enter your invite to start a coffee run.</p>${error ? '<p class="notice" role="alert">That invite and password did not match. Please try again.</p>' : ""}<form action="/access/login" method="post"><label for="invite">Invite name</label><input id="invite" name="invite" autocomplete="username" maxlength="40" required><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required><button>Enter the outpost</button></form><footer>Invite-only playtest · NPC tactics powered by Jev</footer>`,
+    `<span class="eyebrow">Your field pass</span><h2>Your orders are waiting.</h2><p class="muted">Enter your invite to start a coffee run.</p>${error ? '<p class="notice" role="alert">That invite and password did not match. Please try again.</p>' : ""}<form action="/access/login" method="post"><label for="invite">Invite name</label><input id="invite" name="invite" autocomplete="username" maxlength="40" required><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required><button>Enter the outpost</button></form><footer>Invite-only playtest</footer>`,
   );
 }

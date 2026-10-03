@@ -6,7 +6,7 @@ import { distance, path } from "../apps/web/src/game/arena";
 import { envelope } from "../packages/shared/contracts";
 function world() {
   const s = new Simulation();
-  s.start("mock", "xp_fixture");
+  s.start("scripted", "xp_fixture");
   return s;
 }
 test("enemy death emits exactly one drop and bounded death feedback", () => {
@@ -73,11 +73,9 @@ for (const choice of ["damage", "magazine", "rockets", "grenades"] as const)
           s.apply(r, {
             ...envelope(r),
             selected: n.role === "general" ? "map" : "hold",
-            source: "mock",
+            source: "scripted",
             confidence: 0,
-            latencyMs: 0,
             model: "passive-combat-fixture",
-            usage: null,
           });
         }
       const input = idleInput();

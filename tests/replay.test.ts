@@ -4,21 +4,19 @@ import { Simulation, idleInput } from "../apps/web/src/game/simulation";
 import { arena, distance, path } from "../apps/web/src/game/arena";
 import { envelope, type DecisionRequest } from "../packages/shared/contracts";
 import { replay } from "../apps/web/src/game/driver";
-// Passive NPC fixture deliberately isolates mission mechanics. It is not a Jev or combat playtest.
+// Passive NPC fixture deliberately isolates mission mechanics. It is not a tactics or combat playtest.
 function passive(r: DecisionRequest) {
   return {
     ...envelope(r),
     selected: r.observation.role === "general" ? "map" : "hold",
-    source: "mock" as const,
+    source: "scripted" as const,
     confidence: 0,
-    latencyMs: 0,
     model: "passive-mission-fixture",
-    usage: null,
   };
 }
 test("full eight-minute coffee mission and recorded decisions replay identically (passive mock)", () => {
   const s = new Simulation();
-  s.start("mock", "mission_fixture");
+  s.start("scripted", "mission_fixture");
   let route: { x: number; z: number }[] = [];
   let destination = "";
   for (let i = 0; i < 480 * 60; i++) {
@@ -65,7 +63,7 @@ test("full eight-minute coffee mission and recorded decisions replay identically
 });
 test("endless mode passes eight minutes and replays the selected mode", () => {
   const s = new Simulation();
-  s.start("mock", "endless_fixture", "endless");
+  s.start("scripted", "endless_fixture", "endless");
   for (let i = 0; i < 481 * 60; i++) s.step(idleInput());
   assert.equal(s.status, "running");
   assert.equal(s.wave, 8);
@@ -78,7 +76,7 @@ test("endless mode passes eight minutes and replays the selected mode", () => {
 
 test("replay interleaves recovery epochs at a frozen tick and includes terminal checkpoint choices", async () => {
   const s = new Simulation();
-  s.start("mock", "checkpoint-fixture");
+  s.start("scripted", "checkpoint-fixture");
   const general = s.npcs[0];
   const choose = async () => {
     const r = s.request(general);

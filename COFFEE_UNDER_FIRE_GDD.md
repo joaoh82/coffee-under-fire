@@ -1,13 +1,15 @@
 # Coffee Under Fire
 ## Game design document and Codex development handoff
 
-Version 0.2 · 19 September 2026 · Working title, not availability-checked
+Version 0.3 · 3 October 2026 · Working title, not availability-checked
+
+Version 0.3 replaces the Jev (TypeSafe AI) decision provider with local per-NPC utility tactics. The decision contract, perception limits and ownership rules are unchanged. See section 12 and `docs/decisions/local-tactics.md`.
 
 ## 1. Brief and decision status
 
-An Allied soldier must survive Nazi infantry waves while carrying coffee across a miniature WWII battlefield to a general's tent. The presentation is cozy, colorful, low-polygon 3D; the play is a readable, energetic top-down arena shooter. Every autonomous character's tactical decisions are driven by **Jev from TypeSafe AI**.
+An Allied soldier must survive Nazi infantry waves while carrying coffee across a miniature WWII battlefield to a general's tent. The presentation is cozy, colorful, low-polygon 3D; the play is a readable, energetic top-down arena shooter. Every autonomous character's tactical decisions are made individually by **local utility tactics** that weigh complete legal actions from that character's limited knowledge. Versions up to 0.2 used Jev from TypeSafe AI for these choices.
 
-Confirmed requirements: web platform, React and Three.js, Blender-authored models and arena, WWII Allied-versus-Nazi setting, wave survival plus coffee delivery, Jev-driven NPC decisions, and later implementation through Codex on a machine with Blender and a Blender MCP available.
+Confirmed requirements: web platform, React and Three.js, Blender-authored models and arena, WWII Allied-versus-Nazi setting, wave survival plus coffee delivery, autonomous per-NPC tactical decisions (Jev-driven until 2026-10-03), and later implementation through Codex on a machine with Blender and a Blender MCP available.
 
 Proposed defaults, not yet approved: single-player; desktop keyboard/mouse first; direct player movement and aiming; 8-minute missions; repeated deliveries; fictional Allied outpost; stylized non-graphic combat. The player is human-controlled. “Every soldier decision” is interpreted as every autonomous soldier's tactical decision, not overriding player inputs. Confirm this boundary before expanding AI scope.
 
@@ -17,9 +19,9 @@ This is a build specification and design proposal. No game, Blender asset, API i
 
 1. **The coffee matters.** Combat creates space to complete deliveries; killing enemies alone cannot win.
 2. **A battlefield you can read.** Clear silhouettes, slow enough enemy shots, warm lighting, and visible attack preparation.
-3. **Small soldiers with individual intentions.** Jev chooses to attack, reposition, reload, search, or retreat using each soldier's limited knowledge.
+3. **Small soldiers with individual intentions.** Each soldier chooses to attack, reposition, reload, search, or retreat using each soldier's limited knowledge.
 4. **A charmingly absurd assignment.** Humor comes from military bureaucracy and protecting a tiny cup amid chaos. The enemy remains clearly antagonistic; historical atrocities are not the joke.
-5. **Fast hands, asynchronous brains.** Player controls never wait for inference. Model-driven NPC intentions execute smoothly between decisions.
+5. **Fast hands, quick brains.** Player controls never wait for NPC decisions. NPC intentions execute smoothly between decisions, and the battlefield never pauses for them.
 
 Pitch: “Hold the line. Don't spill the coffee.”
 
@@ -37,7 +39,7 @@ The first arena has a fixed kitchen and a tent selected from three authored, rea
 - Win at 8:00 if alive with at least five accepted coffee deliveries. At the deadline, stop combat and show results immediately.
 - Lose immediately at zero health. At 8:00 with fewer than five deliveries, report “Outpost held; coffee orders missed” as a mission failure with partial score.
 - Completing five deliveries early does not skip survival. Further deliveries remain useful for recovery and score.
-- Pause stops combat, coffee decay, waves, and decision scheduling. Hidden tabs auto-pause; resume invalidates old inference results.
+- Pause stops combat, coffee decay, waves, and decision scheduling. Hidden tabs auto-pause; resume invalidates in-progress NPC actions.
 
 ### Initial controls
 
@@ -101,92 +103,74 @@ Test walking clearance using the actual collider radius. Tall props fade when th
 
 ### NPC roster
 
-| Character | Visual identity | Jev decision domain |
+| Character | Visual identity | Tactical decision domain |
 | --- | --- | --- |
 | Rifleman | Grey-green uniform, compact rounded helmet | Fire, advance, choose cover, search, reload, retreat |
 | Flanker | Lighter equipment, distinct backpack silhouette | Same actions; role instructions favor reachable side routes |
 | Heavy, later | Broad body, oversized equipment | Hold lanes, reposition slowly, choose firing opportunities |
 | General | Large moustache, tidy uniform, coffee desk | Inspect map, watch entrance, select authored reaction, sip |
 
-First playable uses riflemen and the general; add flankers after the AI feasibility gate. The general is invulnerable and does not introduce escort or base-health mechanics. Any later allied combatants must use the same Jev decision interface.
+First playable uses riflemen and the general; add flankers after the AI feasibility gate. The general is invulnerable and does not introduce escort or base-health mechanics. Any later allied combatants must use the same decision interface.
 
-Personality is a small authored profile: cautious/bold, disciplined/impatient, role objective. It influences model input rather than adding hidden tactical behavior trees. Wave timing and enemy composition are explicit game rules, not autonomous NPC decisions.
+Personality is a small authored profile: cautious/bold, disciplined/impatient, role objective. It influences scoring weights in the shared decision layer rather than adding hidden per-character behavior trees. Wave timing and enemy composition are explicit game rules, not autonomous NPC decisions.
 
-## 5. Jev integration and decision ownership
-
-### Verified provider facts
-
-Jev evaluates supplied state with typed questions. TypeSafe documents Choice, Score, and Noul primitives; multiple questions share a state and are evaluated independently. Do not assume one answer conditions another in the same request. [TypeSafe introduction](https://docs.typesafe.ai/introduction)
-
-Choice returns a selected option, a probability distribution, and confidence. The question ID is not shown to the model: an NPC identifier must appear in instructions/state, not only as the result key. [Choice documentation](https://docs.typesafe.ai/primitives/choice)
-
-The documented HTTP entry point is POST `https://api.typesafe.ai/v1/systemone`, using bearer authentication and a body with `state`, `model`, and `questions`. The quickstart uses `jev-latest`. Recheck current documentation and account access when implementing; keep the model name configurable and record returned model metadata. [Quickstart](https://docs.typesafe.ai/introduction/quickstart)
-
-TypeSafe's launch post advertises 70–500 ms response time and $0.042 per million input tokens, with free output, and describes early access. These are vendor claims and launch pricing, not measured guarantees for this game. Its Doom demo uses structured state rather than images. [Launch announcement](https://typesafe.ai/blog/introducing-system-one-models-and-jev)
+## 5. NPC tactics and decision ownership
 
 ### Ownership contract
 
-| Jev chooses | Deterministic game code executes |
+| The NPC's tactics choose | Deterministic game code executes |
 | --- | --- |
 | Whether to attack and which perceived target | Projectile spawning within the chosen attack's duration and fire cadence |
 | Which position/cover point to move toward | A* pathfinding, steering, collision, speed and arrival |
 | Whether to reload, retreat, hold, or search | Reload timer, animation, action completion |
 | Which authored general reaction to perform | Animation/audio playback |
 
-Physics, perception, action legality, and animations are mechanics. They must not quietly choose a new tactical goal. For example, a blocked path cancels an action and requests a new choice; it does not autonomously decide to flank. When a firing target disappears, stop firing and request another decision; never auto-select a new target.
+Physics, perception, action legality, and animations are mechanics. They must not quietly choose a new tactical goal. For example, a blocked path cancels an action and the NPC makes a new choice; it does not autonomously decide to flank. When a firing target disappears, stop firing and choose again; never auto-select a new target.
 
-Use **one Choice over complete legal action candidates per NPC**, such as `fire_player_01`, `move_cover_c4`, `move_flank_f2`, `reload`, and `hold`. Each option describes its target, duration, and consequences. This avoids independently choosing an incompatible action and target. Candidate generation enumerates feasible actions and nearby reachable positions; it must not hardcode the winning tactic. Aim error and turn speed are mechanical tuning values, not separate model judgments.
+Use **one choice over complete legal action candidates per NPC**, such as `fire_player`, `advance_contact`, `move_3`, `reload`, and `hold`. Each option describes its target, destination, duration and consequences. This avoids independently choosing an incompatible action and target. Candidate generation enumerates feasible actions and nearby reachable positions; it must not hardcode the winning tactic. Aim error and turn speed are mechanical tuning values, not separate tactical judgments.
+
+### Tactics scorer
+
+The tactics layer is a utility scorer over the candidate menu (`apps/web/src/game/tactics.ts`). Each enemy type has a profile: preferred and minimum engagement distance, and appetite for advancing or investigating. Riflemen and scouts close in, gunners hold mid-range, marksmen keep distance and retreat when approached, and tanks seek a clear lane onto the last sighting. Wounded NPCs prefer hidden destinations. With no contact, NPCs sweep toward rotating search waypoints instead of idling.
+
+Difficulty sets **fire discipline**: the chance an available shot is taken instead of maneuvering (Easy 0.35, Normal 0.4, Hard 0.55). A small random term keeps choices from being perfectly predictable. It is derived from the session, NPC, sequence and tick, so the same situation always yields the same choice and replays stay exact. Tuning should change profiles and weights, never move tactics into execution code.
 
 ### Perception and memory
 
-Each NPC gets its own position, health, magazine state, current action, role, recent damage, visible targets, audible events, last-seen positions with age, and reachable candidate locations with cover/route descriptors. Coordinates use a consistent named frame and include relative distances/directions.
+Each NPC gets its own position, health, magazine state, current action, role, recent damage, visible targets, audible events, last-seen positions with age, and reachable candidate locations with cover/route descriptors. Coordinates use a consistent named frame.
 
-Enemies do not receive the player's hidden current position or coffee condition through global state. Sharing information requires an explicit perception/message system; omit squad telepathy in MVP. Provide only that NPC's observation in the initial request. Multi-NPC batching is a later optimization requiring isolation checks: shared state can accidentally expose another NPC's knowledge.
+Enemies do not receive the player's hidden current position or coffee condition through global state. Sharing information requires an explicit perception/message system; omit squad telepathy in MVP. The scorer reads only that NPC's observation and candidates.
 
-The API is not asked to understand screenshots, generate geometry, write dialogue, invent coordinates, or return executable code. General reactions select from authored lines/animations.
+The tactics layer does not interpret screenshots, generate geometry, write dialogue, invent coordinates, or run generated code. General reactions select from authored lines/animations.
 
 ### Runtime pipeline
 
-1. Simulation emits a decision-needed event on spawn, completed action, new sighting, damage, or invalidated goal.
-2. Scheduler coalesces repeated events and constructs a fresh observation plus a bounded candidate list (start at 6–12).
-3. Browser sends a versioned structured snapshot to the backend; backend owns prompt templates and calls Jev.
-4. Validate transport/schema, session ID, NPC generation ID, request sequence, candidate IDs, and freshness.
+1. At the start of each fixed simulation tick, every living NPC without an action is due a decision.
+2. The simulation constructs a fresh observation plus a bounded candidate list (up to 12).
+3. The tactics layer scores the candidates and selects one, synchronously.
+4. Validate session, epoch, NPC generation, sequence, candidate ID, and freshness.
 5. Recheck the chosen action's preconditions against the current simulation.
-6. Execute that action until completion, cancellation, or its authored expiry; then query again.
+6. Execute that action until completion, cancellation, or its authored expiry; then choose again.
 
-Start at about one decision per second per engaged soldier, with adaptive/event-driven scheduling; noncombat general decisions every 3–5 seconds. One request in flight per NPC, session concurrency initially capped at four. Idle characters can use longer model-selected hold actions. Queue entries expire instead of accumulating. Measure whether these provisional budgets sustain 12 soldiers before increasing the cap.
-
-Initial action durations: fire burst up to 0.8 seconds, movement up to 2 seconds, hold up to 1 second; reload lasts the weapon's fixed reload time. A result older than 1 second of active simulation is discarded initially. Pending actions continue only while valid and within their original expiry. Death, pause, restart, and a changed NPC generation invalidate associated results.
-
-**Strict Jev mode is the production default:** no valid decision means that NPC holds without firing; if decision starvation persists beyond 1.5 seconds, pause the entire simulation and show “Reconnecting to command.” Resume after fresh actions are available. Allow retry or quit. Do not silently switch to conventional AI. An explicitly labeled mock mode is permitted for development, recorded replay, and offline mechanics testing, and cannot count as Jev integration acceptance.
-
-Use the returned Choice directly at first. Low confidence is telemetry, not a probability that the action will succeed. Do not multiply attack damage by confidence. Later, compare controlled sampling for personality variation against the straightforward choice baseline.
+Action durations: fire burst up to 0.8 seconds, movement up to 2 seconds, hold up to 1 second, general reactions 3–5 seconds; reload lasts the weapon's fixed reload time. Death, pause, restart, and a changed NPC generation invalidate in-progress actions. A choice whose action stalls immediately (for example a move blocked by a squadmate) is penalized on the next choice, so a wedged NPC pauses briefly instead of re-planning every tick.
 
 ### Debugging and measurable acceptance
 
-Debug overlay: NPC ID, observation age, candidate list, selected action, confidence, action expiry, inference latency, and decision source (Jev/mock/replay). Render target and path overlays. Log request sequence, decision application tick, selected candidate, rejection reason, provider usage, and model/config version. Avoid logging credentials.
+Tactics dashboard: NPC ID, observation, candidate list with score shares, selected action, action expiry, and decision source (local/scripted/replay). Log decision application tick, selected candidate, rejection reason, and tactics/config version.
 
-Record player inputs, simulation seed, and applied AI decisions for replay. A fixed seed alone cannot reproduce live model responses. Aim for repeatability within the same build; do not promise cross-browser bit-identical physics.
+Record player inputs, simulation seed, and applied decisions for replay. Aim for repeatability within the same build; do not promise cross-browser bit-identical physics.
 
-AI scenario suite: exposed player; player behind cover; empty magazine; low health; lost target; destroyed/occupied cover; simultaneous target death; restart with delayed responses; 429/timeout; long inference stall. Legality is mechanically enforceable; tactical quality requires repeated evaluation and playtesting. Model output types do not guarantee sensible tactics.
-
-### Cost and capacity model
-
-Estimated input tokens = active NPCs × decisions per second × run seconds × average billed input tokens per request. Include instructions, option descriptions, and observations in the token measurement.
-
-Example assumption: 12 NPCs × 1 Hz × 480 s × 1,000 tokens = 5.76 million input tokens, about $0.242 at the quoted launch price, before general decisions, retries, and hosting. This is a budgeting example, not a forecast. At 100 concurrent games the same assumptions imply roughly 1,200 requests/second; account limits and inference concurrency may matter more than token price.
-
-Prototype budget target: less than $0.50 model cost per 8-minute run, configurable and verified using actual usage. Backend enforces per-session request/token budgets and global concurrency; alerts before exhaustion. At the hard cap, strict mode pauses with a clear explanation. No runaway retries. Retry rate-limit responses with bounded backoff and respect provider guidance.
+AI scenario suite: exposed player; player behind cover; empty magazine; low health; lost target; destroyed/occupied cover; simultaneous target death; blocked movement; no contact. Legality and determinism are mechanically enforceable; tactical quality and difficulty require repeated evaluation and playtesting.
 
 ## 6. Technical architecture
 
-Proposed stack: TypeScript, React, Three.js via React Three Fiber, Vite for the client, and a small TypeScript backend for Jev requests. No Java runtime is required by this design. Choose exact compatible package versions when implementation starts and lock them.
+Proposed stack: TypeScript, React, Three.js via React Three Fiber, Vite for the client, and a small TypeScript backend for sessions, access and the leaderboard. No Java runtime is required by this design. Choose exact compatible package versions when implementation starts and lock them.
 
 Keep the game simulation independent of React and rendering. A 60 Hz fixed simulation step with capped catch-up updates owns entities, projectiles, coffee, waves, navigation, and action execution. Rendering interpolates state. React owns menus and HUD; avoid per-frame React state writes for transforms. Keep active gameplay state in plain objects/typed structures behind a narrow interface.
 
 Use a flat XZ gameplay plane, circular character colliders, static box/capsule obstacle colliders, and a grid-based A* navigation system initially. A general rigid-body engine is unnecessary unless a later mechanic needs it. Character locomotion must not depend on animation root motion.
 
-Browser → session-limited backend → TypeSafe. Provider credentials stay server-side. Validate finite coordinates, enum values, observation sizes, candidate count, request rate, and session ownership. The backend constructs trusted question templates; it is not an unrestricted prompt proxy. A public demo needs server-enforced abuse budgets even if gameplay authority remains in the browser.
+NPC tactics run in the browser simulation; the backend never sees per-decision traffic. It owns game session leases, invite/guest access, and leaderboard submission. Secrets stay server-side. A public demo needs server-enforced abuse limits (admission, concurrency, session ownership) even though gameplay authority remains in the browser.
 
 Client authority is acceptable for the solo prototype. Do not promise secure leaderboards. Multiplayer would require a separate networking and authority design.
 
@@ -194,7 +178,7 @@ Suggested repository layout:
 
 ```text
 apps/web/src/{game,render,ui,input,audio}
-apps/server/src/{routes,jev,sessions,budgets}
+apps/server/src/{routes,sessions,access,leaderboard}
 packages/shared/{contracts,config}
 assets/blender/{characters,props,arena}
 assets/scripts/
@@ -203,7 +187,7 @@ tests/{simulation,ai,scenarios}
 docs/{design,decisions,benchmarks}
 ```
 
-Initial targets, to measure on a named reference laptop: 60 fps at 1080p with 12 enemies; adjustable resolution scale and shadows; initial compressed download below 15 MB; no inference on the render thread. Track CPU/GPU frame time, draw calls, memory growth, p50/p95 decision latency, stale decisions, and pauses. These are gates, not guaranteed capabilities.
+Initial targets, to measure on a named reference laptop: 60 fps at 1080p with 12 enemies; adjustable resolution scale and shadows; initial compressed download below 15 MB; tactics run in the fixed simulation step, not per rendered frame. Track CPU/GPU frame time, draw calls, memory growth, and tactics time per tick. These are gates, not guaranteed capabilities.
 
 ## 7. Art direction and Blender production brief
 
@@ -251,11 +235,13 @@ Deliver both editable source and runtime exports. Document regeneration commands
 
 HUD: health, ammo, cup volume/warmth, deliveries out of five, mission timer, and tent direction. Use distinct shapes and labels for volume versus temperature. Show a route hint only during onboarding. The first 30 seconds teach moving, firing, pickup, and delivery in a safe introductory segment before wave pressure ramps.
 
-Soft percussion and playful military-band instrumentation can support the tone. Prioritize cup pickup clink, spill splash, successful-delivery chime, enemy attack cue, and satisfying muted weapon impacts. Use authored general quips; Jev selects which permitted reaction fits the situation.
+Soft percussion and playful military-band instrumentation can support the tone. Prioritize cup pickup clink, spill splash, successful-delivery chime, enemy attack cue, and satisfying muted weapon impacts. Use authored general quips; the general's tactics select which permitted reaction fits the situation.
 
 Provide remappable inputs, independent sound sliders, reduced screen shake, reduced flashes, subtitles for quips, and faction indicators that do not depend on color. Browser audio starts after user interaction. Touch controls and controller support are later scope.
 
 ## 9. Development sequence and acceptance gates
+
+Phases 0–4 record the original plan. Phase 0 and the live-provider gates were completed with Jev, then superseded on 2026-10-03 by local tactics. Equivalent gates now apply to the local scorer: legal choices only, traceable decision provenance, exact replay, and playtested difficulty.
 
 ### Phase 0 — Prove the defining AI requirement
 
@@ -277,13 +263,13 @@ Exit: player and enemy distinguishable at game scale; coffee visible; animation 
 
 ### Phase 3 — Build the vertical slice
 
-Complete the outpost, general, riflemen/flankers, UI/audio, eight wave configurations, delivery feedback, and Jev observation profiles. Add debug tools and applied-decision replay.
+Complete the outpost, general, riflemen/flankers, UI/audio, eight wave configurations, delivery feedback, and NPC observation profiles. Add debug tools and applied-decision replay.
 
-Exit: repeated live runs demonstrate attack/reposition/reload/search choices; every autonomous tactical action has traceable Jev provenance; five deliveries are achievable without an easy camping exploit. Gather observations from at least three external playtesters before expanding scope.
+Exit: repeated live runs demonstrate attack/reposition/reload/search choices; every autonomous tactical action has traceable decision provenance; five deliveries are achievable without an easy camping exploit. Gather observations from at least three external playtesters before expanding scope.
 
 ### Phase 4 — Harden the web demo
 
-Profile the named target laptop and current desktop Chrome/Firefox/Safari. Test inference failure, rate limits, missing assets, restart, hidden tabs, resizing, and long sessions. Add backend abuse controls, loading progress, settings, and clear unsupported-device handling.
+Profile the named target laptop and current desktop Chrome/Firefox/Safari. Test missing assets, restart, hidden tabs, resizing, and long sessions. Add backend abuse controls, loading progress, settings, and clear unsupported-device handling.
 
 Exit: agreed frame/download/cost targets met or deviations documented; no secret in client build; no runaway requests; no unbounded memory growth; complete win/lose/retry flow verified. Deployment is a later implementation deliverable, not performed by this document.
 
@@ -295,18 +281,17 @@ Additional arenas, daily seeded scenarios, run modifiers, new coffee containers,
 
 | Risk | Evidence required / response |
 | --- | --- |
-| Jev feels slow or indecisive | Measure decision age, expired actions, and pause time; adjust action horizons and concurrency |
-| Jev is only cosmetic | Trace each tactical action to a returned choice; verify no hidden target-selection behavior |
+| Enemies feel slow, indecisive or too deadly | Measure idle ticks, blocked moves and shots taken; tune action horizons, profiles and fire discipline |
+| Tactics hide in mechanics | Trace each tactical action to a scored choice; verify no hidden target-selection behavior |
 | NPCs appear omniscient | Inspect per-NPC observations in occlusion scenarios |
 | All soldiers behave identically | Compare role profiles and position options across recorded scenarios |
 | Coffee is an annoying chore | Playtest carry penalty, route length, spill severity, and reward before adding content |
 | Cozy art obscures combat | Evaluate at actual zoom with effects active and reduced color discrimination |
-| Independent model requests collide over cover | Revalidate reservations; rejected action requests a fresh choice rather than retargeting |
-| Model availability blocks development | Keep mock/replay mechanics workflow; explicitly distinguish it from the live acceptance gate |
+| NPC choices collide over cover | Revalidate reservations; a rejected action leads to a fresh choice rather than retargeting |
 | Blender exports look wrong | Prove one character and asymmetric marker scene before bulk generation |
-| Public usage costs grow unexpectedly | Enforce backend per-session and global caps; measure all billable input |
+| Public play is abused | Enforce guest admission limits, per-network concurrency and session ownership |
 
-Automated tests should cover outcome rules, coffee boundaries, action preconditions, stale/session-mismatched responses, collision tunneling, and replay application order. Use live integration tests selectively with budgets. Human playtesting judges feel and tactical plausibility; unit tests cannot certify fun.
+Automated tests should cover outcome rules, coffee boundaries, action preconditions, stale/session-mismatched responses, collision tunneling, and replay application order. Human playtesting judges feel and tactical plausibility; unit tests cannot certify fun.
 
 ## 11. Paste-ready Codex kickoff
 
@@ -320,23 +305,21 @@ challenge: visible sloshing, small spills on hits/dodges, no balancing minigame
 or volume loss from normal movement. React + Three.js is required. Blender
 is installed here, with an MCP intended for asset and map authoring.
 
-The defining requirement is Jev by TypeSafe AI for every autonomous NPC's
-tactical choice. This is not Java and not a generic chat-model substitute.
-Read current TypeSafe documentation before implementing the adapter.
-Jev selects complete legal action candidates; deterministic code executes
-physics, paths, aiming mechanics, animation and combat rules. Do not hide
-conventional tactical AI behind the Jev integration. Use strict mode on
-service failure and label development mocks clearly.
+The defining requirement is an individual tactical choice for every
+autonomous NPC, made by a local, deterministic utility scorer over complete
+legal action candidates using only that NPC's perception. Deterministic code
+executes physics, paths, aiming mechanics, animation and combat rules. Do not
+hide tactical choices inside physics or execution code. Label scripted test
+fixtures clearly.
 
 First inspect the repository, applicable AGENTS.md instructions, installed
 tools, Blender version, MCP capabilities, and available configuration.
 Preserve existing work. Record the document's proposed defaults as assumptions.
 Do not ask again about requirements explicitly confirmed in the conversation.
 
-Begin with Phase 0: a narrow Jev feasibility spike and measured decision
-pipeline. Keep credentials server-side. Implement fixtures if credentials
-are absent, but report the live-validation gap. Do not fabricate API results,
-performance measurements, asset verification, or provider capabilities.
+Begin with Phase 0: candidate enumeration, the tactics scorer and a measured
+decision pipeline. Keep secrets server-side. Do not fabricate performance
+measurements, asset verification, or playtest results.
 
 Then build Phase 1, the complete greybox mission loop, before mass-producing
 art. Prove one Blender-to-GLB animated character and marker export before
@@ -345,11 +328,11 @@ runtime exports, and reproducible commands in the repository.
 
 Keep simulation separate from React rendering. Use versioned observation and
 decision contracts, limited NPC perception, cancellation and expiry, logged
-decision provenance, bounded backend budgets, and recorded-decision replay.
+decision provenance, bounded backend abuse limits, and recorded-decision replay.
 
 Work incrementally with the acceptance gates in the document. At the end of
 each phase report what works, evidence from tests/playthroughs, measured
-latency/cost where available, remaining issues, and the next concrete step.
+performance where available, remaining issues, and the next concrete step.
 Do not implement multiplayer, a campaign, or permanent progression yet.
 ```
 
@@ -357,14 +340,14 @@ Do not implement multiplayer, a campaign, or permanent progression yet.
 
 These user-confirmed decisions supersede conflicting proposed defaults above.
 
-1. Keep human-directed mouse aiming. Auto-fire and auto-reload are optional toggles. The player's direct inputs and these mechanical conveniences stay outside autonomous NPC tactical selection; every autonomous NPC tactic remains Jev-selected.
-2. Offer both an eight-minute mission and endless survival. The finite mission retains its five-delivery survival goal. Endless balancing is provisional; existing backend usage limits are not waived.
+1. Keep human-directed mouse aiming. Auto-fire and auto-reload are optional toggles. The player's direct inputs and these mechanical conveniences stay outside autonomous NPC tactical selection; every autonomous NPC tactic remains selected by that NPC's own decision layer (Jev until 2026-10-03, local tactics since).
+2. Offer both an eight-minute mission and endless survival. The finite mission retains its five-delivery survival goal. Endless balancing is provisional.
 3. Coffee spilling remains a light penalty with expressive sloshing and splashes. Normal movement does not lose coffee volume, and balancing must not become a skill minigame.
 4. Use creative, fictional, stylized WWII-inspired uniforms and settings rather than historical accuracy. No swastikas or Nazi symbols anywhere in game art, uniforms, flags, UI, or promotional assets.
-5. Jev account access and a server-side API key are already available. Do not ask for access again. No dollar budget or increased concurrent-player allowance has been confirmed; retain bounded backend request/token/concurrency limits.
+5. *(Superseded 2026-10-03.)* Jev account access and a server-side API key were available. The game no longer uses Jev; no provider key or inference budget is required.
 6. Chromium is the primary browser target, without a named minimum laptop. Aim for broad laptop support and mobile-browser compatibility with touch controls. Other browsers and physical mobile devices still need testing; compatibility and performance are not assumed proven.
 
-Still to establish through testing: pursuit/difficulty tuning, sustained live Jev reliability, pricing-based cost estimates, physical mobile usability/performance, and acceptance of the first integrated art sample. Multiplayer, campaigns and permanent progression remain outside current scope.
+Still to establish through testing: pursuit/difficulty tuning of local tactics, physical mobile usability/performance, and acceptance of the first integrated art sample. Multiplayer, campaigns and permanent progression remain outside current scope.
 
 ### Camera and art clarification — 2026-09-19
 
@@ -380,4 +363,8 @@ Introduce feedback sound during greyboxing, before final art: shots, hits, death
 
 ### Battlefield variety and pressure clarification — 2026-09-19
 
-User approved a battered woodland treatment, varied infantry silhouettes/gear, and a tank prototype around wave 4–5. Raise difficulty through earlier/larger infantry groups, keeping basic infantry at 30 HP. Establish one battlefield before separately validating two or three scenery layouts (woodland, autumn ravine, ruined village). Every autonomous tank tactic is also Jev-selected. The first tank balance values in `docs/decisions/playtest-08.md` are implementation assumptions for playtesting, not user-confirmed balance targets.
+User approved a battered woodland treatment, varied infantry silhouettes/gear, and a tank prototype around wave 4–5. Raise difficulty through earlier/larger infantry groups, keeping basic infantry at 30 HP. Establish one battlefield before separately validating two or three scenery layouts (woodland, autumn ravine, ruined village). Every autonomous tank tactic is also selected by its own decision layer. The first tank balance values in `docs/decisions/playtest-08.md` are implementation assumptions for playtesting, not user-confirmed balance targets.
+
+### Local tactics replace Jev — 2026-10-03
+
+User approved removing Jev completely after persistent reconnect freezes made the game unplayable. Strict mode froze the whole battlefield whenever any NPC went 1.5 seconds without a fresh remote decision. Every autonomous NPC still makes its own choice over legal candidates from limited perception; a local deterministic utility scorer replaces the remote model. The server keeps sessions, access, leaderboard and admin; token and dollar budgets are removed. Difficulty tuning of local tactics requires human playtesting. Details: `docs/decisions/local-tactics.md` and `docs/npc-tactics.md`.

@@ -123,16 +123,8 @@ export class GuestAccess {
     }
   }
   private landing(res: ServerResponse, message = "", status = 200) {
-    const budget = this.store.dailyBudget();
-    let exhausted = false;
-    try {
-      this.store.checkDaily();
-    } catch {
-      exhausted = true;
-    }
-    const available =
-      this.store.publicSettings().publicEnabled && this.ready() && !exhausted;
-    const text = exhausted ? limitMessage("daily_budget_exhausted") : message;
+    const available = this.store.publicSettings().publicEnabled && this.ready();
+    const text = message;
     res.writeHead(status, {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
@@ -154,11 +146,10 @@ export class GuestAccess {
         <div class="cf-turnstile" data-sitekey="${esc(this.config.siteKey)}" data-action="guest-play" data-theme="light" data-size="flexible"></div>
         <button>Play as guest</button></form>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`
-          : `<p>Guest play is ${exhausted ? "resting for today" : "currently unavailable"}.</p>`
+          : `<p>Guest play is currently unavailable.</p>`
       }
       <details><summary>Have an invite? Sign in</summary><form method="post" action="/access/login"><label for="invite">Invite name</label><input id="invite" name="invite" autocomplete="username" required maxlength="40"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256"><button>Sign in</button></form></details>
-      <details><summary>Guest access & privacy</summary><p>A secure cookie remembers this browser. We record approximate play time and AI usage, and use a keyed network identifier for spending and concurrent-play limits. Shared networks share an allowance. Cloudflare checks for automated abuse.</p><p>Names submitted to the leaderboard are public. Use a nickname, not personal information.</p></details>
-      <p class="reset">Daily allowance resets at <time>${esc(new Date(budget.resetAt).toUTCString())}</time>.</p>
+      <details><summary>Guest access & privacy</summary><p>A secure cookie remembers this browser. We record approximate play time and use a keyed network identifier for guest sign-up and concurrent-play limits. Shared networks share those limits. Cloudflare checks for automated abuse.</p><p>Names submitted to the leaderboard are public. Use a nickname, not personal information.</p></details>
     `,
         true,
       ),
@@ -223,7 +214,8 @@ export class GuestAccess {
           this.active >= 4
         )
           throw new AccessLimit("guest_retry_limit");
-        this.store.checkDaily(identity ?? undefined, network);
+        if (!this.store.publicSettings().publicEnabled)
+          throw new AccessLimit("public_closed");
         if (!identity) {
           this.active++;
           let verified = false;

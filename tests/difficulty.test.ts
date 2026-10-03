@@ -39,7 +39,7 @@ test("easy reduces actual bullet and shell damage; tank health follows the armor
   for (const difficulty of levels)
     for (const shell of [false, true]) {
       const s = new Simulation();
-      s.start("mock", "damage-fixture", "mission", difficulty);
+      s.start("scripted", "damage-fixture", "mission", difficulty);
       s.npcs = [];
       s.player.pos = { x: 0, z: 5 };
       s.player.previous = { ...s.player.pos };
@@ -58,7 +58,7 @@ test("easy reduces actual bullet and shell damage; tank health follows the armor
 test("each difficulty is recorded and replayed; recordings without a preset retain normal", () => {
   for (const difficulty of levels) {
     const s = new Simulation();
-    s.start("mock", "replay-fixture", "endless", difficulty);
+    s.start("scripted", "replay-fixture", "endless", difficulty);
     for (let i = 0; i < 1800; i++) s.step(idleInput());
     const again = replay(s.recording);
     assert.equal(again.difficulty, difficulty);
@@ -70,7 +70,7 @@ test("each difficulty is recorded and replayed; recordings without a preset reta
     assert.equal(again.recording.difficulty, difficulty);
   }
   const old = new Simulation();
-  old.start("mock", "old-fixture");
+  old.start("scripted", "old-fixture");
   for (let i = 0; i < 600; i++) old.step(idleInput());
   delete old.recording.difficulty;
   assert.equal(replay(old.recording).difficulty, "normal.v1");
@@ -82,7 +82,7 @@ test("each difficulty is recorded and replayed; recordings without a preset reta
 test("tank eligibility starts at wave four on every difficulty, independently of XP level", () => {
   for (const difficulty of levels) {
     const s = new Simulation();
-    s.start("mock", "tank-wave-fixture", "mission", difficulty);
+    s.start("scripted", "tank-wave-fixture", "mission", difficulty);
     for (let i = 0; i < 183 * 60; i++) {
       // Offline spawn fixture keeps a free slot; no autonomous tactics are simulated.
       s.npcs = s.npcs.filter((n) => n.role !== "rifleman");
@@ -98,11 +98,11 @@ test("tank eligibility starts at wave four on every difficulty, independently of
 test("driver passes the chosen difficulty into the session's simulation", async () => {
   const driver = new Driver(
     async () =>
-      new Response(JSON.stringify({ mode: "strict", session: "fixture" }), {
+      new Response(JSON.stringify({ session: "fixture" }), {
         status: 200,
       }),
   );
-  await driver.start("strict", "mission", "easy.v1");
+  await driver.start("mission", "easy.v1");
   assert.equal(driver.sim.difficulty, "easy.v1");
   assert.equal(driver.sim.recording.difficulty, "easy.v1");
 });

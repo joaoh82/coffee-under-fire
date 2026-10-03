@@ -85,8 +85,6 @@ test("guest names persist separately, omitted names use full guest ID, and score
     };
     function run(session: string, player: string) {
       store.startSession(session, player, "network", DEFAULT_BOARD);
-      const usage = store.reserveUsage(session, 10);
-      store.settleUsage(usage, 10);
       now += 20000;
       store.endSession(session);
     }

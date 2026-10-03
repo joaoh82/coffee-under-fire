@@ -62,15 +62,11 @@ export class ManagedAccess {
     readonly store: Store,
     private ownerToken: string,
     private origin: string,
-    private endGame: (id: string) => void,
     private secure = true,
     private now = Date.now,
-    private inputRate = 0.042,
     private reconcileGames: () => void = () => {},
     private guests?: GuestAccess,
   ) {
-    if (!Number.isFinite(inputRate) || inputRate < 0)
-      throw Error("Invalid Jev input price");
     if (ownerToken.length < 32)
       throw Error("ADMIN_TOKEN must contain at least 32 characters");
     if (
@@ -123,7 +119,7 @@ export class ManagedAccess {
     });
     res.end(
       accessPage(
-        `<span class="eyebrow">${admin ? "Owner access" : "Your field pass"}</span><h2>${admin ? "Welcome back, commander." : "Your orders are waiting."}</h2><p class="muted">${admin ? "Sign in to manage invites and gameplay budgets." : "Enter your invite to start a coffee run."}</p>${error ? '<p class="notice" role="alert">Unable to sign in. Check your credentials or try again later.</p>' : ""}<form method="post" action="${admin ? "/admin/login" : "/access/login"}">${admin ? "" : '<label for="invite">Invite name</label><input id="invite" name="invite" maxlength="40" autocomplete="username" required>'}<label for="password">${admin ? "Owner token" : "Password"}</label><input id="password" name="password" type="password" maxlength="256" autocomplete="current-password" required><button>Sign in</button></form><p class="muted">${admin ? "Owner credentials never grant player access." : "Login times, approximate play time and Jev usage are recorded."}</p><footer><a href="/">Back to the game</a></footer>`,
+        `<span class="eyebrow">${admin ? "Owner access" : "Your field pass"}</span><h2>${admin ? "Welcome back, commander." : "Your orders are waiting."}</h2><p class="muted">${admin ? "Sign in to manage invites and public play." : "Enter your invite to start a coffee run."}</p>${error ? '<p class="notice" role="alert">Unable to sign in. Check your credentials or try again later.</p>' : ""}<form method="post" action="${admin ? "/admin/login" : "/access/login"}">${admin ? "" : '<label for="invite">Invite name</label><input id="invite" name="invite" maxlength="40" autocomplete="username" required>'}<label for="password">${admin ? "Owner token" : "Password"}</label><input id="password" name="password" type="password" maxlength="256" autocomplete="current-password" required><button>Sign in</button></form><p class="muted">${admin ? "Owner credentials never grant player access." : "Login times and approximate play time are recorded."}</p><footer><a href="/">Back to the game</a></footer>`,
       ),
     );
   }
@@ -291,16 +287,10 @@ export class ManagedAccess {
         try {
           this.store.savePublicSettings({
             publicEnabled: enabled,
-            dailyCents: Math.round(Number(form.get("dailyUsd")) * 100),
-            guestCents: Math.round(Number(form.get("guestUsd")) * 100),
-            ipCents: Math.round(Number(form.get("ipUsd")) * 100),
             ipConcurrent: Number(form.get("ipConcurrent")),
           });
           this.reconcileGames();
-          this.dashboard(
-            res,
-            "Public play settings saved. Daily limits include a 5% safety margin and reset at midnight UTC.",
-          );
+          this.dashboard(res, "Public play settings saved.");
         } catch {
           this.dashboard(
             res,
@@ -359,7 +349,7 @@ export class ManagedAccess {
           );
           return true;
         }
-        // Invalidated games are closed before they can spend more provider budget.
+        // Revoked invites lose their running games immediately.
         this.reconcileGames();
         this.dashboard(
           res,
@@ -372,10 +362,7 @@ export class ManagedAccess {
       }
       if (path === "/admin/end-session") {
         const id = this.store.sessionIdForManagement(form.get("session") ?? "");
-        if (id) {
-          this.store.endSession(id);
-          this.endGame(id);
-        }
+        if (id) this.store.endSession(id);
         res.writeHead(303, { Location: "/admin" });
         res.end();
         return true;
@@ -398,23 +385,16 @@ export class ManagedAccess {
     draft = { id: "", password: "", maxSessions: "1", enabled: true },
     query = new URLSearchParams(),
   ) {
-    const reports = renderReports(
-      this.store,
-      query,
-      this.now(),
-      this.inputRate,
-    );
+    const reports = renderReports(this.store, query, this.now());
     const sessions = this.store.activeSessions();
-    const budget = this.store.budget();
     const settings = this.store.publicSettings();
-    const daily = this.store.dailyBudget();
     this.html(
       res,
       200,
       "Field command",
-      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label for="one-time-password">One-time password</label><input id="one-time-password" readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Player identities</small><strong>${reports.totalPlayers}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section><section><small>Monthly token safety budget</small><strong>${Math.round((100 * budget.charged) / budget.cap)}% used</strong><small>${budget.charged.toLocaleString()} / ${budget.cap.toLocaleString()} tokens · ${escape(budget.month)} UTC. Includes conservative reservations, not an invoice.</small></section></div>
+      `<header><div><small>OWNER CONSOLE</small><h1>Field command</h1></div><form method="post" action="/admin/logout"><button>Sign out</button></form></header>${notice ? `<p class="notice" role="status">${escape(notice)}</p>` : ""}${password ? `<label for="one-time-password">One-time password</label><input id="one-time-password" readonly value="${escape(password)}">` : ""}<div class="grid stats"><section><small>Player identities</small><strong>${reports.totalPlayers}</strong></section><section><small>Active games</small><strong>${sessions.length}</strong></section></div>
     ${reports.activity}
-    <section><h2>Public play and daily spending</h2><p>Today: $${daily.chargedUsd.toFixed(4)} charged or reserved / $${daily.limitUsd.toFixed(2)} configured. Requests stop at $${daily.effectiveUsd.toFixed(2)} to leave a 5% safety margin. Resets midnight UTC. Includes invited players; estimates are not an invoice.</p><p class="muted">Guest setup: ${this.guests?.ready() ? "Configured. Verify a live browser check before sharing." : "Not ready: configure Turnstile keys, PUBLIC_IP_SALT and trusted IP source."} Guests use one concurrent game. Browser IDs and networks are not verified people.</p><form method="post" action="/admin/public-settings"><div class="grid"><div><label for="publicEnabled">Access mode</label><select id="publicEnabled" name="publicEnabled"><option value="no" ${!settings.publicEnabled ? "selected" : ""}>Invite only</option><option value="yes" ${settings.publicEnabled ? "selected" : ""}>Public guests + invites</option></select></div><div><label for="dailyUsd">Daily total (USD)</label><input id="dailyUsd" name="dailyUsd" type="number" min="0" max="100" step="0.01" value="${settings.dailyCents / 100}" required></div><div><label for="guestUsd">Daily per guest (USD)</label><input id="guestUsd" name="guestUsd" type="number" min="0" max="100" step="0.01" value="${settings.guestCents / 100}" required></div><div><label for="ipUsd">Daily per network (USD)</label><input id="ipUsd" name="ipUsd" type="number" min="0" max="100" step="0.01" value="${settings.ipCents / 100}" required></div><div><label for="ipConcurrent">Concurrent games per network</label><input id="ipConcurrent" name="ipConcurrent" type="number" min="1" max="8" value="${settings.ipConcurrent}" required></div></div><button>Save public play settings</button></form></section>
+    <section><h2>Public play</h2><p class="muted">Guest setup: ${this.guests?.ready() ? "Configured. Verify a live browser check before sharing." : "Not ready: configure Turnstile keys, PUBLIC_IP_SALT and trusted IP source."} Guests use one concurrent game. Browser IDs and networks are not verified people.</p><form method="post" action="/admin/public-settings"><div class="grid"><div><label for="publicEnabled">Access mode</label><select id="publicEnabled" name="publicEnabled"><option value="no" ${!settings.publicEnabled ? "selected" : ""}>Invite only</option><option value="yes" ${settings.publicEnabled ? "selected" : ""}>Public guests + invites</option></select></div><div><label for="ipConcurrent">Concurrent games per network</label><input id="ipConcurrent" name="ipConcurrent" type="number" min="1" max="8" value="${settings.ipConcurrent}" required></div></div><button>Save public play settings</button></form></section>
     <section><h2>Create or update an invite</h2><p class="muted">Use an existing name to update it. Leave its password blank to keep it. A new invite gets a generated password when blank. Resetting a password or disabling access revokes its sessions.</p><form method="post" action="/admin/invite"><div class="grid"><div><label for="id">Invite name</label><input id="id" name="id" pattern="[A-Za-z0-9_-]{1,40}" maxlength="40" value="${escape(draft.id)}" required></div><div><label for="new-password">Password (16+ characters)</label><input id="new-password" name="password" type="${draft.password ? "text" : "password"}" value="${escape(draft.password)}" minlength="16" maxlength="256" autocomplete="new-password"></div><div><label for="maxSessions">Concurrent games</label><input id="maxSessions" name="maxSessions" type="number" min="1" max="8" value="${escape(draft.maxSessions)}" required></div><div><label for="enabled">Access</label><select id="enabled" name="enabled"><option value="yes" ${draft.enabled ? "selected" : ""}>Enabled</option><option value="no" ${!draft.enabled ? "selected" : ""}>Disabled</option></select></div></div><button>Save invite</button><button type="submit" formaction="/admin/generate-password" formnovalidate>Generate password</button></form></section>
     ${reports.playerSection}
     <section><h2>Active games</h2><div class="scroll"><table><thead><tr><th>Invite</th><th>Session</th><th>Action</th></tr></thead><tbody>${sessions.map((s: any) => `<tr><td>${escape(s.inviteId)}</td><td>${escape(s.managementId.slice(0, 12))}<br>Started ${date(s.started)}<br>Last seen ${date(s.heartbeat)}</td><td><form method="post" action="/admin/end-session"><input type="hidden" name="session" value="${escape(s.managementId)}"><button class="danger">End game</button></form></td></tr>`).join("") || '<tr><td colspan="3">No active games.</td></tr>'}</tbody></table></div></section>
@@ -427,7 +407,7 @@ export class ManagedAccess {
         )
         .join("") || '<tr><td colspan="4">No submitted scores.</td></tr>'
     }</tbody></table></div></section>
-    ${reports.loginSection}<p class="muted">Statistics persist across restarts. Running games do not. Estimated cost uses reported input tokens at $${this.inputRate}/million. Unknown provider charges are excluded. Cookie lifetime does not imply the player is online. <a href="/">Open game</a></p>`,
+    ${reports.loginSection}<p class="muted">Statistics persist across restarts. Running games do not. Cookie lifetime does not imply the player is online. <a href="/">Open game</a></p>`,
     );
   }
 }
