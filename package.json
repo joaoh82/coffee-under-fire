@@ -28,7 +28,7 @@
     "assets:web-brand": "node --import tsx scripts/generate-web-brand.ts"
   },
   "dependencies": {
-    "@react-three/fiber": "9.7.0",
+    "@react-three/fiber": "9.8.1",
     "obscenity": "0.4.6",
     "react": "19.2.8",
     "react-dom": "19.2.8",
