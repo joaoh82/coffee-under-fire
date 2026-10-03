@@ -5,6 +5,7 @@ import {
   type RosterProfile,
 } from "./enemyRoster";
 import { weaponOrigin } from "./weaponOrigins";
+import { chooseLocally } from "./tactics";
 import { mapPreset, type MapId } from "./maps";
 import { armorSettings } from "./armor";
 import { type Difficulty, difficultyPreset } from "./difficulty";
@@ -160,7 +161,7 @@ export class Simulation {
       lastChoice: string | null;
     }[];
   } | null = null;
-  mode: "strict" | "mock" | "replay" = "strict";
+  mode: "strict" | "mock" | "replay" | "local" = "strict";
   player: Actor = {
     id: "player",
     generation: 0,
@@ -357,7 +358,7 @@ export class Simulation {
     return this.rng / 4294967296;
   }
   start(
-    mode: "strict" | "mock" | "replay",
+    mode: "strict" | "mock" | "replay" | "local",
     session: string,
     missionMode: MissionMode = "mission",
     difficulty: Difficulty = "normal.v1",
@@ -651,6 +652,24 @@ export class Simulation {
     };
     n.request = r;
     return r;
+  }
+  // Idle NPCs choose synchronously before the tick, so replay can apply the
+  // recorded choices at the same tick without re-running the tactics.
+  onLocalDecision?: (r: DecisionRequest, d: Decision, applied: boolean) => void;
+  decideLocally() {
+    for (const n of this.npcs)
+      if (n.hp > 0 && !n.action) {
+        const r = this.request(n);
+        // A choice that ended within a few ticks was blocked; try another.
+        const d = chooseLocally(
+          r,
+          n.decision?.selected ?? null,
+          Boolean(n.decision) && this.tick - n.actionStart <= 3,
+          difficultyPreset(this.difficulty).fireDiscipline,
+        );
+        const applied = this.apply(r, d);
+        this.onLocalDecision?.(r, d, applied);
+      }
   }
   legal(n: NPC, c: Candidate) {
     if (n.hp <= 0) return false;
@@ -954,6 +973,7 @@ export class Simulation {
       this.invalidate();
       return;
     }
+    if (this.mode === "local") this.decideLocally();
     if (this.tick >= REPLAY_TICK_LIMIT || this.recording.truncated)
       this.recording.truncated = true;
     else

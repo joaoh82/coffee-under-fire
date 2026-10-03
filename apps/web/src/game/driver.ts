@@ -29,6 +29,16 @@ export class Driver {
     private now: () => number = () => performance.now(),
   ) {}
   sim = new Simulation();
+  // Local tactics decide in-process every tick; "remote" keeps the legacy Jev
+  // network path for comparison while it is being retired.
+  tactics: "local" | "remote" =
+    typeof location !== "undefined" &&
+    new URLSearchParams(location.search).get("tactics") === "jev"
+      ? "remote"
+      : "local";
+  get localTactics() {
+    return this.sim.mode === "local";
+  }
   renderStats: { fps: number; frameMs: number } | null = null;
   input: Input = idleInput();
   autoReload = true;
@@ -223,7 +233,7 @@ export class Driver {
       this.blockAccess(data);
       throw new Error(data.message || data.error);
     }
-    if (mode === "mock" && data.mode !== "mock") {
+    if (this.tactics === "remote" && mode === "mock" && data.mode !== "mock") {
       await this.transport("/api/session", {
         method: "DELETE",
         headers: { Authorization: `Bearer ${data.session}` },
@@ -237,8 +247,27 @@ export class Driver {
     clearInterval(this.heartbeatTimer);
     if (data.heartbeat)
       this.heartbeatTimer = setInterval(() => void this.heartbeat(), 10_000);
+    this.sim.onLocalDecision = (request, decision, applied) => {
+      this.traces.push({
+        id: ++this.traceSerial,
+        request,
+        decision,
+        status: applied ? "applied" : "rejected",
+        reason: applied ? undefined : this.sim.logs.at(-1)?.reason,
+        applicationTick: this.sim.tick,
+        elapsedMs: 0,
+      });
+      if (this.traces.length > 200) this.traces.shift();
+      this.totals.requested++;
+      if (applied) this.totals.applied++;
+      else this.totals.rejected++;
+    };
     this.sim.start(
-      data.mode === "mock" ? "mock" : "strict",
+      this.tactics === "local"
+        ? "local"
+        : data.mode === "mock"
+          ? "mock"
+          : "strict",
       data.session,
       missionMode,
       difficulty,
@@ -247,11 +276,9 @@ export class Driver {
   async submitScore(name: string) {
     if (
       !["won", "lost"].includes(this.sim.status) ||
-      this.sim.recording.mode !== "strict"
+      !["strict", "local"].includes(this.sim.recording.mode)
     )
-      throw new Error(
-        "Only completed live Jev runs can enter the leaderboard.",
-      );
+      throw new Error("Only completed hosted runs can enter the leaderboard.");
     const s = this.sim;
     const response = await this.transport("/api/leaderboard", {
       method: "POST",
@@ -316,7 +343,8 @@ export class Driver {
     this.autoRecoveryAt = Infinity;
     this.sim.pause();
     this.input = idleInput();
-    void this.syncEpoch();
+    if (this.localTactics) this.cancel();
+    else void this.syncEpoch();
   }
   async resume() {
     if (
@@ -327,6 +355,10 @@ export class Driver {
     )
       return;
     this.autoRecoveryAt = Infinity;
+    if (this.localTactics) {
+      this.sim.resume();
+      return;
+    }
     this.recovering = true;
     this.sim.resume();
     const epoch = this.sim.epoch;
@@ -421,7 +453,8 @@ export class Driver {
         return;
       }
       this.flush();
-      if (!this.busy && this.now() >= this.backoff) this.schedule();
+      if (!this.localTactics && !this.busy && this.now() >= this.backoff)
+        this.schedule();
     } else this.accumulator = 0;
   }
   schedule() {

@@ -154,7 +154,7 @@ export const responseSchema = z
     tick: z.number().int(),
     npc: id,
     selected: id,
-    source: z.enum(["jev", "mock", "replay"]),
+    source: z.enum(["jev", "mock", "replay", "local"]),
     confidence: z.number().min(0).max(1),
     probabilities: z.record(z.string(), z.number().min(0).max(1)).optional(),
     latencyMs: z.number().nonnegative(),

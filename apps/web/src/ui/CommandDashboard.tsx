@@ -61,12 +61,17 @@ export function CommandDashboard({
         <span className="status-dot" />
         {driver.sim.mode === "strict"
           ? "Jev · live mode"
-          : `${driver.sim.mode} · development`}
+          : driver.sim.mode === "local"
+            ? "Local tactics"
+            : `${driver.sim.mode} · development`}
         <span>{driver.sim.status}</span>
       </div>
       <p className="command-intro">
-        Jev chooses the tactic. The game executes movement and combat. Select an
-        NPC to view its decisions. This does not control the NPC.
+        {driver.sim.mode === "local"
+          ? "The local tactics engine scores each legal option and picks one."
+          : "Jev chooses the tactic."}{" "}
+        The game executes movement and combat. Select an NPC to view its
+        decisions. This does not control the NPC.
       </p>
       <div className="command-metrics">
         <div>

@@ -4,16 +4,20 @@ export const DIFFICULTIES = {
     label: "Easy",
     description: "Fewer enemies. Gentler hits.",
     damageScale: 0.625,
+    // Chance a local-tactics NPC takes an available shot instead of maneuvering.
+    fireDiscipline: 0.35,
   },
   "normal.v1": {
     label: "Normal",
     description: "The current battlefield balance.",
     damageScale: 1,
+    fireDiscipline: 0.4,
   },
   "hard.v1": {
     label: "Hard",
     description: "Faster, larger enemy groups.",
     damageScale: 1,
+    fireDiscipline: 0.55,
   },
 } as const;
 export type Difficulty = keyof typeof DIFFICULTIES;

@@ -598,7 +598,7 @@ export default function App({ layoutDriver }: { layoutDriver?: Driver } = {}) {
               onRestart={restart}
               onSave={save}
               onSubmitScore={
-                s.recording.mode === "strict"
+                s.recording.mode === "strict" || s.recording.mode === "local"
                   ? (name) => driver.submitScore(name)
                   : undefined
               }
